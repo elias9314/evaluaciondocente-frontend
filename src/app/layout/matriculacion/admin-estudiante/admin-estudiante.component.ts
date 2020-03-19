@@ -26,7 +26,7 @@ export class AdminEstudianteComponent implements OnInit {
               correo: 'Correo',
               carrera: 'Carrera',
               estado: 'Estado',
-              estadoEvaluacion: 'Estado de Evaluación'
+              estadoEvaluacion: 'Estado Evaluación'
           }
       ];
       this.respuesta = [{

@@ -42,8 +42,15 @@
             <i class="fa fa-fw fa-id-card"></i>&nbsp;
             <span>{{ 'Teacher Evaluation' | translate }}</span>
         </a>
-        <a [routerLink]="['/admin-estudiante']">admin estudiantes</a>
-        <a [routerLink]="['/admin-resultados']">admin resultados</a>
+        <a [routerLink]="['/admin-estudiante']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
+            <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;
+            admin-estudiante
+        </a>
+
+        <a [routerLink]="['/admin-resultados']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
+             <i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp; 
+            admin resultados
+        </a>
 
 
         <!--    <div class="nested-menu">-->

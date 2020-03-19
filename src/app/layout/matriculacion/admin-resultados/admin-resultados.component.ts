@@ -19,7 +19,7 @@ export class AdminResultadosComponent implements OnInit {
         }
       };
       public barChartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  public barChartType: ChartType = 'bar';
+  public barChartType: ChartType = 'line';
   public barChartLegend = true;
 //   public barChartPlugins = [pluginDataLabels];
 public barChartData: ChartDataSets[] = [
