@@ -19,12 +19,11 @@ export class AdminEstudianteComponent implements OnInit {
   ngOnInit() {
       this.parametrosEstudiante = [
           {
-              id: 'id',
+              id: 'Id',
               cedula: 'Cedula',
               nombre: 'Nombre',
               apellido: 'Apellido',
-              correo: 'Correo',
-              carrera: 'Carrera',
+              correo: 'Correo Institucional',
               estado: 'Estado',
               estadoEvaluacion: 'Estado de Evaluación'
           }

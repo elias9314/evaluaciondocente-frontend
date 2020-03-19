@@ -1,0 +1,29 @@
+<h1>ADMINISTRADOR DOCENTE</h1>
+<br>
+<form class="form-inline waves-light" mdbWavesEffect>
+  <div class="md-form mt-0">
+    <input class="form-control mr-sm-2" type="text" placeholder="Filtrar por carrera">
+    
+  </div>
+</form>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr mdbTableCol *ngFor="let el of elements">
+        <th scope="row">{{el.id}}</th>
+        <td>{{el.cedula}}</td>
+        <td>{{el.nombre}}</td>
+        <td>{{el.apellido}}</td>
+        <td>{{el.correo}}</td>
+        <td>{{el.telefono}}</td>
+        <td>{{el.estado}}</td>
+
+      </tr>
+    </tbody>
+  </table>
+
+ 

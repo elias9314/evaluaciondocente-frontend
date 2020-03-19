@@ -1,5 +1,6 @@
 import { AdminResultadosComponent } from './matriculacion/admin-resultados/admin-resultados.component';
 import { AdminEstudianteComponent } from './matriculacion/admin-estudiante/admin-estudiante.component';
+import { AdmDocentesComponent } from './matriculacion/adm-docentes/adm-docentes.component';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {LayoutComponent} from './layout.component';
@@ -65,7 +66,10 @@ const routes: Routes = [
                         .then(m => m.EvaEstudianteDocenteModule), canActivate: [AuthGuard]
             },
             {path: 'admin-estudiante', component: AdminEstudianteComponent},
-            {path: 'admin-resultados', component: AdminResultadosComponent}
+            {path: 'admin-resultados', component: AdminResultadosComponent},
+            {
+                path:'admin-docentes',component: AdmDocentesComponent  
+            }
         ]
     }
 ];
