@@ -1,57 +1,49 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
     <div class="list-group">
-        <a routerLink="/dashboard-matricula" [routerLinkActive]="['router-link-active']" class="list-group-item"
-           *ngIf="user.role.rol=='3' || user.role.rol=='4' || user.role.rol=='6'">
+        <a routerLink="/dashboard-matricula" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='3' || user.role.rol=='4' || user.role.rol=='6'">
             <i class="fa fa-fw fa-dashboard"></i>&nbsp;
             <span>{{ 'Dashboard' | translate }}</span>
         </a>
 
-        <a routerLink="/dashboard-cupo" [routerLinkActive]="['router-link-active']" class="list-group-item"
-           *ngIf="user.role.rol=='1'">
+        <a routerLink="/dashboard-cupo" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='1'">
             <i class=" fa fa-fw fa-dashboard"></i>&nbsp;
             <span>{{ 'Dashboard' | translate }}</span>
         </a>
         <!--Perfil Estudiante-->
-        <a [routerLink]="['/perfil-estudiante']" [routerLinkActive]="['router-link-active']" class="list-group-item"
-           *ngIf="user.role.rol=='2'">
+        <a [routerLink]="['/perfil-estudiante']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
             <i class="fa fa-fw fa-user"></i>&nbsp;
             <span>{{ 'Profile' | translate }}</span>
         </a>
-        <a [routerLink]="['/matricula']" [routerLinkActive]="['router-link-active']" class="list-group-item"
-           *ngIf="user.role.rol=='3' || user.role.rol=='4'">
+        <a [routerLink]="['/matricula']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='3' || user.role.rol=='4'">
             <i class="fa fa-fw fa-address-card"></i>&nbsp;
             <span>{{ 'Registration' | translate }}</span>
         </a>
-        <a [routerLink]="['/cupos']" [routerLinkActive]="['router-link-active']" class="list-group-item"
-           *ngIf="user.role.rol=='1' || user.role.rol=='4'">
+        <a [routerLink]="['/cupos']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='1' || user.role.rol=='4'">
             <i class="fa fa-fw fa-users"></i>&nbsp;
             <span>{{ 'Quotas' | translate }}</span>
         </a>
-        <a [routerLink]="['/estudiantes']" [routerLinkActive]="['router-link-active']" class="list-group-item"
-           *ngIf="user.role.rol=='0'">
+        <a [routerLink]="['/estudiantes']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='0'">
             <i class="fa fa-fw fa-graduation-cap"></i>&nbsp;
             <span>{{ 'Students' | translate }}</span>
         </a>
-        <a [routerLink]="['/ajustes']" [routerLinkActive]="['router-link-active']" class="list-group-item"
-           *ngIf="user.role.rol=='4'">
+        <a [routerLink]="['/ajustes']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='4'">
             <i class="fa fa-fw fa-wrench"></i>&nbsp;
             <span>{{ 'Settings' | translate }}</span>
         </a>
-        <a [routerLink]="['/usuarios']" [routerLinkActive]="['router-link-active']" class="list-group-item"
-           *ngIf="user.role.rol=='5'">
+        <a [routerLink]="['/usuarios']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='5'">
             <i class="fa fa-fw fa-users"></i>&nbsp;
             <span>{{ 'Users' | translate }}</span>
         </a>
-        <a [routerLink]="['/perfil-estudiante-secretaria']" [routerLinkActive]="['router-link-active']" class="list-group-item"
-           *ngIf="user.role.rol=='4'">
+        <a [routerLink]="['/perfil-estudiante-secretaria']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='4'">
             <i class="fa fa-fw fa-graduation-cap"></i>&nbsp;
             <span>{{ 'Student Profile' | translate }}</span>
         </a>
-        <a [routerLink]="['/eva-estudiante-docente']" [routerLinkActive]="['router-link-active']" class="list-group-item"
-           *ngIf="user.role.rol=='2'">
+        <a [routerLink]="['/eva-estudiante-docente']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
             <i class="fa fa-fw fa-id-card"></i>&nbsp;
             <span>{{ 'Teacher Evaluation' | translate }}</span>
         </a>
+        <a [routerLink]="['/admin-estudiante']">admin estudiantes</a>
+        <a [routerLink]="['/admin-resultados']">admin resultados</a>
 
 
         <!--    <div class="nested-menu">-->
@@ -108,9 +100,7 @@
                             </a>
                         </li>
                         <li>
-                            <a [routerLink]="['/perfil-estudiante']" [routerLinkActive]="['router-link-active']"
-                               class="dropdown-item"
-                               *ngIf="user.role.rol == '2'">
+                            <a [routerLink]="['/perfil-estudiante']" [routerLinkActive]="['router-link-active']" class="dropdown-item" *ngIf="user.role.rol == '2'">
                                 <i class="fa fa-fw fa-user"></i>&nbsp;
                                 <span>{{ 'Profile' | translate }}</span>
                             </a>

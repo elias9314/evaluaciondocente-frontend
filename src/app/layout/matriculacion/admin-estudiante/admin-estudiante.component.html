@@ -1,0 +1,46 @@
+<div class="div">
+    <h2>ADMINISTRADOR DE ESTUDIANTES</h2>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <input type="text" class="form-control" name="busquedaPost" placeholder="Buscar...." [(ngModel)]="filterPost">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+        </div>
+    </div>
+    <table>
+        <thead *ngFor="let item of parametrosEstudiante">
+            <th>{{item.id}}</th>
+            <th>{{item.cedula}}</th>
+            <th>{{item.nombre}}</th>
+            <th>{{item.apellido}}</th>
+            <th>{{item.correo}}</th>
+            <th>{{item.carrera}}</th>
+            <th>{{item.estado}}</th>
+            <th>{{item.estadoEvaluacion}}</th>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of respuesta | filtros:filterPost">
+                <td>{{item.id}}</td>
+                <td>{{item.cedula}}</td>
+                <td>{{item.nombre}}</td>
+                <td>{{item.apellido}}</td>
+                <td>{{item.correo}}</td>
+                <td>{{item.carrera}}</td>
+                <td>{{item.estado}}</td>
+                <td>{{item.estadoEvaluacion}}</td>
+                <!-- <td>
+                    <button value="Editar" title="Actualizar" class="form-control" (click)="editar(item.id)">Editar</button>
+                </td>
+                <td>
+                    <button value="Eliminar" title="Eliminar" class="form-control" (click)="borrarDocente(item.id)">Eliminar</button>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+</div>

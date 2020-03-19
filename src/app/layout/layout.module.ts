@@ -7,16 +7,20 @@ import {LayoutRoutingModule} from './layout-routing.module';
 import {LayoutComponent} from './layout.component';
 import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {HeaderComponent} from './components/header/header.component';
-
+import { AdminEstudianteComponent } from './matriculacion/admin-estudiante/admin-estudiante.component';
+import { FiltrosPipe } from './matriculacion/pipes/filtros.pipe';
+import { AdminResultadosComponent } from './matriculacion/admin-resultados/admin-resultados.component';
+import { ChartsModule } from 'ng2-charts';
 @NgModule({
     imports: [
         CommonModule,
         LayoutRoutingModule,
         TranslateModule,
         NgbDropdownModule,
-        FormsModule
+        FormsModule,
+        ChartsModule
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, AdminEstudianteComponent, FiltrosPipe, AdminResultadosComponent]
 })
 export class LayoutModule {
 }
