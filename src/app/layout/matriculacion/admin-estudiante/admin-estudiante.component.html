@@ -1,16 +1,13 @@
 <div class="div">
     <h2>ADMINISTRADOR DE ESTUDIANTES</h2>
     <div class="row">
-        <div class="col">
-            <div class="form-group">
-                <input type="text" class="form-control" name="busquedaPost" placeholder="Buscar...." [(ngModel)]="filterPost">
+        <div class="col-md-4">  
+            <div class="container-fluid">
+            <input type="text" class="form-control" name="busquedaPost" placeholder="Buscar...." [(ngModel)]="filterPost">
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-        </div>
-    </div>
+    </div><br>
+    <div class="container-fluid">
     <table>
         <thead *ngFor="let item of parametrosEstudiante">
             <th>{{item.id}}</th>
@@ -43,4 +40,5 @@
             </tr>
         </tbody>
     </table>
+ </div>
 </div>
