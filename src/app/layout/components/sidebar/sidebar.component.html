@@ -43,7 +43,7 @@
             <span>{{ 'Teacher Evaluation' | translate }}</span>
         </a>
         <a [routerLink]="['/admin-docentes']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
-            <i class="fa fa-users" aria-hidden="true"></i>&nbsp;
+            <i class="fa fa-users" aria-hidden="true"></i>&nbsp; 
             Admin Docentes
         </a>
         <a [routerLink]="['/admin-estudiante']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
@@ -55,6 +55,11 @@
              <i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp; 
             Admin Resultados
         </a>
+
+        <a [routerLink]="['/tipo-evaluacion']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
+            <i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp; 
+           Tipo Evaluación
+       </a>
 
       
 

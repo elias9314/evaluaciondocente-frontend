@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot) {
         this.user = JSON.parse(localStorage.getItem('user')) as User;
         this.getUsuario();
-        console.log(route['_routerState']['url']);
+        // console.log(route['_routerState']['url']);
         if (localStorage.getItem('isLoggedin') === 'true') {
             switch (route['_routerState']['url']) {
                 case '/':

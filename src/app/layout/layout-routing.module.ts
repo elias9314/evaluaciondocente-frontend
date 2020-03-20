@@ -5,6 +5,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {LayoutComponent} from './layout.component';
 import {AuthGuard} from '../shared/guard';
+import { TipoEvaluacionComponent } from './matriculacion/tipo-evaluacion/tipo-evaluacion.component';
 
 const routes: Routes = [
     {
@@ -67,9 +68,8 @@ const routes: Routes = [
             },
             {path: 'admin-estudiante', component: AdminEstudianteComponent},
             {path: 'admin-resultados', component: AdminResultadosComponent},
-            {
-                path: 'admin-docentes', component: AdminDocentesComponent
-            }
+            {path: 'admin-docentes', component: AdminDocentesComponent },
+            {path: 'tipo-evaluacion', component: TipoEvaluacionComponent}
         ]
     }
 ];
