@@ -68,7 +68,7 @@ const routes: Routes = [
             {path: 'admin-estudiante', component: AdminEstudianteComponent},
             {path: 'admin-resultados', component: AdminResultadosComponent},
             {
-                path:'admin-docentes',component: AdminDocentesComponent  
+                path: 'admin-docentes', component: AdminDocentesComponent
             }
         ]
     }

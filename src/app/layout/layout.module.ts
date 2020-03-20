@@ -21,7 +21,8 @@ import { AdminDocentesComponent } from './matriculacion/admin-docentes/admin-doc
         FormsModule,
         ChartsModule
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, AdminEstudianteComponent, FiltrosPipe, AdminResultadosComponent, AdminDocentesComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, AdminEstudianteComponent, FiltrosPipe, AdminResultadosComponent,
+         AdminDocentesComponent]
 })
 export class LayoutModule {
 }
