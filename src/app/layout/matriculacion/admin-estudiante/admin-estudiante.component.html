@@ -10,7 +10,7 @@
     <div class="container-fluid">
     <table>
         <thead *ngFor="let item of parametrosEstudiante">
-            <th>{{item.id}}</th>
+           
             <th>{{item.cedula}}</th>
             <th>{{item.nombre}}</th>
             <th>{{item.apellido}}</th>
@@ -23,7 +23,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of respuesta | filtros:filterPost">
-                <td>{{item.id}}</td>
+                
                 <td>{{item.cedula}}</td>
                 <td>{{item.nombre}}</td>
                 <td>{{item.apellido}}</td>
