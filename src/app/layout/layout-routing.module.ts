@@ -69,17 +69,14 @@ const routes: Routes = [
             },
             {path: 'admin-estudiante', component: AdminEstudianteComponent},
             {path: 'admin-resultados', component: AdminResultadosComponent},
-<<<<<<< HEAD
-            {
-                path:'admin-docentes',component: AdminDocentesComponent  
-            },
+
             {
                 path:'perfil-docentes', component: PerfilDocenteComponent
-            }
-=======
+            },
+
             {path: 'admin-docentes', component: AdminDocentesComponent },
             {path: 'tipo-evaluacion', component: TipoEvaluacionComponent}
->>>>>>> 8894340a03e97f3624a4b081485462b365cd969a
+
         ]
     }
 ];
