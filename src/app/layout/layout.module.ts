@@ -11,6 +11,7 @@ import { AdminEstudianteComponent } from './matriculacion/admin-estudiante/admin
 import { FiltrosPipe } from './matriculacion/pipes/filtros.pipe';
 import { AdminResultadosComponent } from './matriculacion/admin-resultados/admin-resultados.component';
 import { ChartsModule } from 'ng2-charts';
+import { AdminDocentesComponent } from './matriculacion/admin-docentes/admin-docentes.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -20,7 +21,7 @@ import { ChartsModule } from 'ng2-charts';
         FormsModule,
         ChartsModule
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, AdminEstudianteComponent, FiltrosPipe, AdminResultadosComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, AdminEstudianteComponent, FiltrosPipe, AdminResultadosComponent, AdminDocentesComponent]
 })
 export class LayoutModule {
 }
