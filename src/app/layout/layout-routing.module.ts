@@ -1,6 +1,7 @@
 import { AdminResultadosComponent } from './matriculacion/admin-resultados/admin-resultados.component';
 import { AdminEstudianteComponent } from './matriculacion/admin-estudiante/admin-estudiante.component';
 import { AdminDocentesComponent } from './matriculacion/admin-docentes/admin-docentes.component';
+import { PerfilDocenteComponent} from './matriculacion/perfil-docente/perfil-docente.component';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {LayoutComponent} from './layout.component';
@@ -68,8 +69,14 @@ const routes: Routes = [
             },
             {path: 'admin-estudiante', component: AdminEstudianteComponent},
             {path: 'admin-resultados', component: AdminResultadosComponent},
+
+            {
+                path:'perfil-docentes', component: PerfilDocenteComponent
+            },
+
             {path: 'admin-docentes', component: AdminDocentesComponent },
             {path: 'tipo-evaluacion', component: TipoEvaluacionComponent}
+
         ]
     }
 ];

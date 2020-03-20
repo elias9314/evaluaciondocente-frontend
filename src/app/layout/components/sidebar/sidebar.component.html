@@ -56,12 +56,14 @@
             Admin Resultados
         </a>
 
+        <a [routerLink]="['/perfil-docentes']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='7'">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 
+           Autoevaluación
+       </a>
         <a [routerLink]="['/tipo-evaluacion']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 
            Tipo Evaluación
        </a>
-
-      
 
 
         <!--    <div class="nested-menu">-->
