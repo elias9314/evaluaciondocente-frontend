@@ -6,24 +6,70 @@
     
   </div>
 </form>
-<table class="table table-striped">
-    <thead>
+
+<br>
+  <table class="table">
+    <thead class="thead-dark">
       <tr>
-        <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+        <th scope="col">CÉDULA</th>
+        <th scope="col">APELLIDO</th>
+        <th scope="col">NOMBRE</th>
+        <th scope="col">CORREO INSTITUCIONAL</th>
+        <th scope="col">ESTADO</th>
+        <th scope="col"></th>
+        
       </tr>
     </thead>
     <tbody>
-      <tr mdbTableCol *ngFor="let el of elements">
-        <th scope="row">{{el.id}}</th>
-        <td>{{el.cedula}}</td>
-        <td>{{el.nombre}}</td>
-        <td>{{el.apellido}}</td>
-        <td>{{el.correo}}</td>
-        <td>{{el.telefono}}</td>
-        <td>{{el.estado}}</td>
-
-      </tr>
+      <tr *ngFor="let d of docentes">
+        <td>{{d.identificacion}}</td>
+        <td>{{d.apellido1}}</td>
+        <td>{{d.nombre1}}</td>
+        <td>{{d.correo_institucional}}</td>
+        <td class="text-center">
+                    <select name="estado" id="estado" 
+                           
+                            class="form-control-sm"
+                           >
+                        <option value="ACTIVO">ACTIVO</option>
+                        <option value="INACTIVO">INACTIVO</option>
+                    </select>
+                </td>
+        <!-- <td>{{d.estado}}</td> -->
+        <td><button class="btn btn-success ml-1 btn-sm text-white"  title="Actualizar">
+      <i class="fa fa-edit"></i>
+  </button></td>
+   
     </tbody>
   </table>
+    <!--Paginacion-->
+    <div class="row">
+      <div class="col-lg-6">
+          <nav>
+              <ul class="pagination">
+                  <li class="page-item">
+                      <a class="page-link bg-dark text-white" href="javascript:void(0)" tabindex="-1"
+                         (click)="firstPagina()">First</a>
+                  </li>
+                  <li class="page-item">
+                      <a class="page-link" href="javascript:void(0)" tabindex="-1"
+                         (click)="paginacion(false)">Previous</a>
+                  </li>
+                  <li class="page-item " [ngClass]="{'active':page === actual_page}"
+                      *ngFor="let page of total_pages_pagination"
+                      (click)="getUsuarios(page)">
+                      <a class="page-link" href="javascript:void(0)">{{page}}</a>
+                  </li>
+                  <li class="page-item">
+                      <a class="page-link" href="javascript:void(0)" (click)="paginacion(true)">Next</a>
+                  </li>
+                  <li class="page-item">
+                      <a class="page-link bg-dark text-white" href="javascript:void(0)"
+                         (click)="lastPagina()">Last</a>
+                  </li>
+              </ul>
+          </nav>
+      </div>
+  </div>
 
  

@@ -5,5 +5,4 @@ export class TipoEvaluacion{
     evaluacion: string;
     estado:string;
 
-
 }

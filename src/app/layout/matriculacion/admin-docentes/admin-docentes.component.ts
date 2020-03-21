@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Docente} from '../modelos/docente.model';
+import { ServiceService } from '../service.service';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-admin-docentes',
@@ -6,20 +9,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-docentes.component.scss']
 })
 export class AdminDocentesComponent implements OnInit {
-
+  docentes:any;
+  docente:Docente;
   
-  
-  elements: any = [
-    {id: 1,cedula:'1324141', nombre: 'Mark', apellido: 'Otto', correo: 'mark@yavirac.edu.ec',telefono:'0939451323',estado:'ACTIVO'},
-    {id: 2,cedula:'1234231', nombre: 'Roger', apellido: 'Pozo', correo: 'roger@yavirac.edu.ec',telefono:'0979538999',estado:'ACTIVO'},
-    {id: 3,cedula:'1324141', nombre: 'Anahi', apellido: 'Andrade', correo: 'kimi@yavirac.edu.ec',telefono:'0989104178',estado:'ACTIVO'},
-
-  ];
-
-  headElements = ['Id','Cédula', 'Nombre', 'Apellido', 'Correo Institucional','Teléfono','Estado'];
+  constructor(private spinner:NgxSpinnerService,private service:ServiceService){}
 
   ngOnInit() {
+    this.getDocente();
 
+  }
+
+  getDocente(){
+    this.spinner.show();
+    this.service.get('docentes').subscribe(
+      response=>{
+        this.docentes=response;
+        console.log(response);
+        this.spinner.hide();
+      },
+      error=>{
+        this.spinner.hide();
+        console.log('error');
+
+      });
   }
 
 

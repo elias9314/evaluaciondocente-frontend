@@ -13,10 +13,5 @@ export class Docente {
     fecha_nacimiento: Date;
     estado: string;
   
-    constructor() {
-        this.tipo_identificacion = '';
-        this.sexo = '';
-        this.fecha_nacimiento = new Date();
-    }
   }
   
