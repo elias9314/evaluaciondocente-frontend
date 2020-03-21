@@ -1,8 +1,9 @@
 
-export class TipoEvaluacion{
+export class TipoEvaluacion {
     id?: number;
     nombre: string;
     evaluacion: string;
-    estado:string;
+    estado: string;
+
 
 }

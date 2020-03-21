@@ -1,29 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import {TipoEvaluacion} from '../modelos/tipo-evaluacion.model';
 import { ServiceService } from '../service.service';
 import {NgxSpinnerService} from 'ngx-spinner';
-
-
+import {EvaPregunta} from '../modelos/eva-pregunta.model';
 @Component({
-  selector: 'app-tipo-evaluacion',
-  templateUrl: './tipo-evaluacion.component.html',
-  styleUrls: ['./tipo-evaluacion.component.scss']
+  selector: 'app-eva-pregunta',
+  templateUrl: './eva-pregunta.component.html',
+  styleUrls: ['./eva-pregunta.component.scss']
 })
-export class TipoEvaluacionComponent implements OnInit {
-  tipoevaluaciones: any;
-  tipoevaluacion: TipoEvaluacion;
+export class EvaPreguntaComponent implements OnInit {
+  preguntas: any;
+  pregunta: EvaPregunta;
 
   constructor(private spinner: NgxSpinnerService, private service: ServiceService) { }
 
   ngOnInit() {
-    this.getTipoEvaluacion();
+    this.getEvaPregunta();
   }
 
-  getTipoEvaluacion() {
+  getEvaPregunta() {
     this.spinner.show();
-    this.service.get('tipo_evaluaciones').subscribe(
+    this.service.get('evaluacion_preguntas').subscribe(
       response => {
-        this.tipoevaluaciones = response;
+        this.preguntas = response;
         console.log(response);
         this.spinner.hide();
                  },
@@ -32,5 +30,4 @@ export class TipoEvaluacionComponent implements OnInit {
         console.log('error');
               });
         }
-
-  }
+}

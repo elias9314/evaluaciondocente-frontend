@@ -64,6 +64,10 @@
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 
            Tipo Evaluación
        </a>
+       <a [routerLink]="['/eva-pregunta']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 
+       Preguntas Evaluación
+      </a>
 
 
         <!--    <div class="nested-menu">-->
