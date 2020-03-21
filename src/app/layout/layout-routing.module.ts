@@ -7,6 +7,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {LayoutComponent} from './layout.component';
 import {AuthGuard} from '../shared/guard';
 import { TipoEvaluacionComponent } from './matriculacion/tipo-evaluacion/tipo-evaluacion.component';
+import { EvaPreguntaComponent } from './matriculacion/eva-pregunta/eva-pregunta.component';
 
 const routes: Routes = [
     {
@@ -71,11 +72,12 @@ const routes: Routes = [
             {path: 'admin-resultados', component: AdminResultadosComponent},
 
             {
-                path:'perfil-docentes', component: PerfilDocenteComponent
+                path: 'perfil-docentes', component: PerfilDocenteComponent
             },
 
             {path: 'admin-docentes', component: AdminDocentesComponent },
-            {path: 'tipo-evaluacion', component: TipoEvaluacionComponent}
+            {path: 'tipo-evaluacion', component: TipoEvaluacionComponent},
+            {path: 'eva-pregunta', component: EvaPreguntaComponent}
 
         ]
     }

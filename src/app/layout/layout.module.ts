@@ -15,6 +15,7 @@ import { AdminDocentesComponent } from './matriculacion/admin-docentes/admin-doc
 
 import { PerfilDocenteComponent } from './matriculacion/perfil-docente/perfil-docente.component';
 import { TipoEvaluacionComponent } from './matriculacion/tipo-evaluacion/tipo-evaluacion.component';
+import { EvaPreguntaComponent } from './matriculacion/eva-pregunta/eva-pregunta.component';
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { TipoEvaluacionComponent } from './matriculacion/tipo-evaluacion/tipo-ev
 
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent, AdminEstudianteComponent, FiltrosPipe, AdminResultadosComponent,
          AdminDocentesComponent, PerfilDocenteComponent,
-         TipoEvaluacionComponent]
+         TipoEvaluacionComponent,
+         EvaPreguntaComponent]
 })
 export class LayoutModule {
 }

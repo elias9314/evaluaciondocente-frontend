@@ -1,0 +1,29 @@
+<h1>EVALUACIÓN PREGUNTAS</h1><br>
+<div>
+  <button type="button" class="btn btn-primary">AGREGAR</button>
+</div><br>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">TIPO</th>
+      <th scope="col">CODIGO</th>
+      <th scope="col">ORDEN</th>
+      <th scope="col">PREGUNTA</th>
+      <th scope="col">TIPO</th>
+      <th scope="col">ESTADO</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of preguntas">
+      <td>{{p.tipo_evaluacion_id}}</td>
+      <td>{{p.codigo}}</td>
+      <td>{{p.orden}}</td>
+      <td>{{p.nombre}}</td>
+      <td>{{p.tipo}}</td>
+      <td>{{p.estado}}</td>
+      <div class="container">
+        <button type="button" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+      </div>
+ 
+  </tbody>
+</table>
