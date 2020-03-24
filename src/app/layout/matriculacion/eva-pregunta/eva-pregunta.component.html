@@ -14,8 +14,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let p of preguntas">
-      <td>{{p.tipo_evaluacion_id}}</td>
+    <tr *ngFor="let p of preguntas | paginate: { itemsPerPage: 5, currentPage: p }">
+      <td>{{p.tipo_evaluacion.nombre}}</td>
       <td>{{p.codigo}}</td>
       <td>{{p.orden}}</td>
       <td>{{p.nombre}}</td>
@@ -24,6 +24,7 @@
       <div class="container">
         <button type="button" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i></button>
       </div>
- 
   </tbody>
 </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  

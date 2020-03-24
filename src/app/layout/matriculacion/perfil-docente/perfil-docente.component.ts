@@ -13,20 +13,20 @@ import {NgxSpinnerService} from 'ngx-spinner';
 export class PerfilDocenteComponent implements OnInit {
   evaPreguntas: Array<any>;
   evaRespuestas: Array<any>;
-  user:User;
+  user: User;
   cantidadRespuestas: Array<number>;
-  constructor (private spinner: NgxSpinnerService,private service: ServiceService) { }
+  constructor (private spinner: NgxSpinnerService, private service: ServiceService) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user')) as User;
-        
+
 
     this.getDocente();
 
   }
 
-  getDocente(){
-   
+  getDocente() {
+
   }
 
 

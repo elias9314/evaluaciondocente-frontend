@@ -4,6 +4,4 @@ export class TipoEvaluacion {
     nombre: string;
     evaluacion: string;
     estado: string;
-
-
 }
