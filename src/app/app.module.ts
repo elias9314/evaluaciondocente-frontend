@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgxPaginationModule} from 'ngx-pagination';
 @NgModule({
     imports: [
         CommonModule,
@@ -19,8 +20,9 @@ import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
         NgxSpinnerModule,
         LanguageTranslationModule,
         AppRoutingModule,
-        NgbModule,
-        NgbPaginationModule, NgbAlertModule
+        NgbModule.forRoot(),
+        NgbPaginationModule, NgbAlertModule,
+        NgxPaginationModule
     ],
     declarations: [AppComponent],
     providers: [AuthGuard],

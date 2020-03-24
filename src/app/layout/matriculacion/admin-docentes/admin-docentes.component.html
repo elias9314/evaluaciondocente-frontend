@@ -16,60 +16,160 @@
         <th scope="col">NOMBRE</th>
         <th scope="col">CORREO INSTITUCIONAL</th>
         <th scope="col">ESTADO</th>
-        <th scope="col"></th>
-        
+        <th width="5%">
+          <button type="button" class="btn btn-warning ml-1 btn-sm" title="Añadir nuevo Usuario" (click)="open(content)">
+              
+            </button>          
+      </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let d of docentes">
+      <tr *ngFor="let d of docentes let i = index">
+        <th>{{ i + 1 }}</th>
         <td>{{d.identificacion}}</td>
         <td>{{d.apellido1}}</td>
         <td>{{d.nombre1}}</td>
         <td>{{d.correo_institucional}}</td>
         <td class="text-center">
-                    <select name="estado" id="estado" 
-                           
-                            class="form-control-sm"
-                           >
+                    <select name="estado" id="estado"                             
+                            class="form-control-sm" 
+                             (change)="updateDocente(docente)">
                         <option value="ACTIVO">ACTIVO</option>
                         <option value="INACTIVO">INACTIVO</option>
                     </select>
                 </td>
         <!-- <td>{{d.estado}}</td> -->
-        <td><button class="btn btn-success ml-1 btn-sm text-white"  title="Actualizar">
-      <i class="fa fa-edit"></i>
+        <td><button class="btn btn-success ml-1 btn-md text-white"  title="Actualizar"
+          (click)="open(content,docente)">
+          <span class="{{messages['buttonUpdate']['icon']}}"></span>
+      
   </button></td>
-   
+      </tr>
     </tbody>
   </table>
-    <!--Paginacion-->
-    <div class="row">
-      <div class="col-lg-6">
-          <nav>
-              <ul class="pagination">
-                  <li class="page-item">
-                      <a class="page-link bg-dark text-white" href="javascript:void(0)" tabindex="-1"
-                         (click)="firstPagina()">First</a>
-                  </li>
-                  <li class="page-item">
-                      <a class="page-link" href="javascript:void(0)" tabindex="-1"
-                         (click)="paginacion(false)">Previous</a>
-                  </li>
-                  <li class="page-item " [ngClass]="{'active':page === actual_page}"
-                      *ngFor="let page of total_pages_pagination"
-                      (click)="getUsuarios(page)">
-                      <a class="page-link" href="javascript:void(0)">{{page}}</a>
-                  </li>
-                  <li class="page-item">
-                      <a class="page-link" href="javascript:void(0)" (click)="paginacion(true)">Next</a>
-                  </li>
-                  <li class="page-item">
-                      <a class="page-link bg-dark text-white" href="javascript:void(0)"
-                         (click)="lastPagina()">Last</a>
-                  </li>
-              </ul>
-          </nav>
-      </div>
-  </div>
+  
 
- 
+  
+
+    
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Registrar Docente</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+      <div class="modal-body">
+    <form  method="post" #formCtrl="ngForm"(ngSubmit)="crearDocente()">
+
+          <!--Identificacion-->
+          <div class="form-group row">
+              <div class="col-lg-12">
+                  <label for="identificacion">
+                      <b class="text-danger">*</b> Identificación:
+                  </label>
+                  <input id="identificacion" name="identificacion" type="text"
+                         [(ngModel)]="docenteSeleccionado.identificacion"
+                         class="text-uppercase form-control" required>
+              </div>
+          </div>
+          <!--Nombre-->
+          <div class="form-group row">
+              <div class="col-lg-6">
+                  <label for="apellido1">
+                      <b class="text-danger">*</b> Primer Apellido
+                  </label>
+                  <input id="apellido1" name="apellido1" type="text" [(ngModel)]="docenteSeleccionado.apellido1"
+                         class="text-uppercase form-control" placeholder="Pérez" required>
+              </div>
+              <div class="col-lg-6">
+                <label for="apellido2">
+                    <b class="text-danger">*</b> Segundo Apellido
+                </label>
+                <input id="apellido2" name="apellido2" type="text" [(ngModel)]="docenteSeleccionado.apellido2"
+                      class="text-uppercase form-control" placeholder="Lucero" required>
+            </div>
+          </div>
+          <!--Nombre-->
+          <div class="form-group row">
+            <div class="col-lg-6">
+                <label for="nombre1">
+                    <b class="text-danger">*</b> Primer Nombre
+                </label>
+                <input id="nombre1" name="nombre1" type="text" [(ngModel)]="docenteSeleccionado.nombre1"
+                       class="text-uppercase form-control" placeholder="Juan" required>
+            </div>
+            <div class="col-lg-6">
+              <label for="nombre2">
+                  <b class="text-danger">*</b> Segundo Nombre
+              </label>
+              <input id="nombre2" name="nombre2" type="text" [(ngModel)]="docenteSeleccionado.nombre2"
+                     class="text-uppercase form-control" placeholder="Leonardo" required>
+          </div>
+        </div>
+          <!--Correo-->
+          <div class="form-group row">
+              <div class="col-lg-12">
+                  <label for="correo_institucional">
+                      <b class="text-danger">*</b> Correo Electrónico Institucional:
+                  </label>
+                  <input id="correo_institucional" name="correo_institucional" type="email" [(ngModel)]="docenteSeleccionado.correo_institucional"
+                         class="text-lowercase form-control" required>
+              </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="telefono">
+                    <b class="text-danger">*</b> Teléfono
+                </label>
+                <input id="telefono" name="telefono" type="text"
+                       [(ngModel)]="docenteSeleccionado.telefono"
+                       class="text-uppercase form-control" required>
+            </div>
+        </div>
+          <!--Carreras-->
+          <div class="form-group row">
+            <div class="col-lg-12">
+              <label for="sexo">
+                  <b class="text-danger">*</b> Sexo
+              </label>
+              <input id="sexo" name="sexo" type="text"
+                     [(ngModel)]="docenteSeleccionado.sexo"
+                     class="text-uppercase form-control" required>
+          </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-12">
+              <label for="estado">
+                  <b class="text-danger">*</b> Estado
+              </label>
+              <select name="estadoEdit" id="estadoEdit" [(ngModel)]="docenteSeleccionado.estado"
+                  [ngClass]="{'bg-danger text-white': docenteSeleccionado.estado=='INACTIVO'}"
+                    class="form-control" required>
+                <option value="ACTIVO">ACTIVO</option>
+                <option value="INACTIVO">INACTIVO</option>
+              </select>
+          </div>
+          </div>
+  </form>
+
+      </div>
+      <!-- <div class="modal-footer">
+          <h6 class="text-muted">
+              <b class="text-danger">{{messages['requiredFields']['icon']}} </b>
+              {{messages['requiredFields']['text']}}
+          </h6>
+          <button type="button" class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
+      <span
+          class="{{messages['saveConfirmationDialog']['iconOk']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['ok']}}
+          </button>
+          <button type="button" class="btn btn-danger" (click)="c('close')">
+      <span
+          class="{{messages['saveConfirmationDialog']['iconCancel']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['cancel']}}
+          </button>
+      </div> -->
+      
+     <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="crearDocente()" [disabled]="formCtrl.form.invalid">Registrar</button>
+    </div>
+  </ng-template>
