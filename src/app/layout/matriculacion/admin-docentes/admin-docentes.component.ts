@@ -36,13 +36,7 @@ export class AdminDocentesComponent implements OnInit {
 
   }
   open(content) {
-    this.modalService.open(content)
-      .result
-      .then((resultModal => {
-        if(resultModal === 'save'){
-          this.crearDocente();
-        }
-      }));
+    this.modalService.open(content);
   }
 
   getDocente(){
