@@ -60,7 +60,7 @@
                         <option value="{{rol.id}}" *ngFor="let rol of roles">{{rol.descripcion}}</option>
                     </select>
                 </td>
-                <td class="text-center">
+                <td class="text-center"> 
                     <select name="estado" id="estado" [(ngModel)]="usuario.estado" *ngIf="usuario.id != user.id"
                             [ngClass]=" {'bg-danger text-white': usuario.estado=='INACTIVO'}"
                             class="form-control-sm"

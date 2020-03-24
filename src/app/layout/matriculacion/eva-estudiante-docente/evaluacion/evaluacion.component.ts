@@ -63,7 +63,7 @@ export class EvaluacionComponent implements OnInit {
 
     updateEstudiante(): void {
         if (this.validateCampos()) {
-            if (this.informacionEstudiante.telefono_fijo != null && this.informacionEstudiante.telefono_fijo != '') {
+            if (this.informacionEstudiante.telefono_fijo != null && this.informacionEstudiante.telefono_fijo !== '') {
                 this.informacionEstudiante.telefono_fijo = this.codigoProvincial + this.informacionEstudiante.telefono_fijo;
             }
             this.service.update('estudiantes/update_perfil',
@@ -114,7 +114,7 @@ export class EvaluacionComponent implements OnInit {
                 this.estudiante = response['estudiante'];
                 this.informacionEstudiante = response['informacion_estudiante'];
                 this.estadoDatos = '';
-                if (this.informacionEstudiante.telefono_fijo != null && this.informacionEstudiante.telefono_fijo != '') {
+                if (this.informacionEstudiante.telefono_fijo != null && this.informacionEstudiante.telefono_fijo !== '') {
                     this.codigoProvincial = this.informacionEstudiante.telefono_fijo.substring(0, 2);
                     this.informacionEstudiante.telefono_fijo =
                         this.informacionEstudiante.telefono_fijo.substring(2, this.informacionEstudiante.telefono_fijo.length);
@@ -186,17 +186,17 @@ export class EvaluacionComponent implements OnInit {
         //     this.errors.push('Formato Incorrecto: Teléfono convencional');
         //     flag = false;
         // }
-        if (this.informacionEstudiante.telefono_celular != null && this.informacionEstudiante.telefono_celular != ''
+        if (this.informacionEstudiante.telefono_celular != null && this.informacionEstudiante.telefono_celular !== ''
             && this.informacionEstudiante.telefono_celular.length !== 10) {
             this.errors.push('Formato Incorrecto: Teléfono celular');
             flag = false;
         }
-        if (this.informacionEstudiante.direccion != null && this.informacionEstudiante.direccion != ''
+        if (this.informacionEstudiante.direccion != null && this.informacionEstudiante.direccion !== ''
             && this.informacionEstudiante.direccion.length < 12) {
             this.errors.push('Dirección Incompleta');
             flag = false;
         }
-        if (this.informacionEstudiante.codigo_postal != null && this.informacionEstudiante.codigo_postal != ''
+        if (this.informacionEstudiante.codigo_postal != null && this.informacionEstudiante.codigo_postal !== ''
             && this.informacionEstudiante.codigo_postal.length !== 6) {
             this.errors.push('Formato Incorrecto: Código Postal');
             flag = false;

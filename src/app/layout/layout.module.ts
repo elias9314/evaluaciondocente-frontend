@@ -16,7 +16,7 @@ import { AdminDocentesComponent } from './matriculacion/admin-docentes/admin-doc
 import { PerfilDocenteComponent } from './matriculacion/perfil-docente/perfil-docente.component';
 import { TipoEvaluacionComponent } from './matriculacion/tipo-evaluacion/tipo-evaluacion.component';
 import { EvaPreguntaComponent } from './matriculacion/eva-pregunta/eva-pregunta.component';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 @NgModule({
     imports: [
         CommonModule,
@@ -24,7 +24,8 @@ import { EvaPreguntaComponent } from './matriculacion/eva-pregunta/eva-pregunta.
         TranslateModule,
         NgbDropdownModule,
         FormsModule,
-        ChartsModule
+        ChartsModule,
+        NgxPaginationModule
     ],
 
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent, AdminEstudianteComponent, FiltrosPipe, AdminResultadosComponent,
