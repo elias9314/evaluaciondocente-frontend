@@ -11,12 +11,6 @@ export class EvaPregunta {
     estado: string;
 
     constructor() {
-        this.id = 0;
-        this.tipo_evaluacion = new TipoEvaluacion();
-        this.codigo = '';
-        this.orden = 0;
-        this.nombre = '';
-        this.tipo = '';
-        this.estado = '';
+      this.tipo_evaluacion = new TipoEvaluacion();
       }
 }

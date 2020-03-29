@@ -42,16 +42,16 @@
             <i class="fa fa-fw fa-id-card"></i>&nbsp;
             <span>{{ 'Teacher Evaluation' | translate }}</span>
         </a>
-        <a [routerLink]="['/admin-docentes']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
+        <a [routerLink]="['/admin-docentes']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
             <i class="fa fa-users" aria-hidden="true"></i>&nbsp; 
             Admin Docentes
         </a>
-        <a [routerLink]="['/admin-estudiante']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
+        <a [routerLink]="['/admin-estudiante']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
             <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;
             Admin Estudiantes
         </a>
 
-        <a [routerLink]="['/admin-resultados']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
+        <a [routerLink]="['/admin-resultados']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
              <i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp; 
             Admin Resultados
         </a>
@@ -60,15 +60,14 @@
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 
            Autoevaluación
        </a>
-        <a [routerLink]="['/tipo-evaluacion']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
+        <a [routerLink]="['/tipo-evaluacion']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 
            Tipo Evaluación
        </a>
-       <a [routerLink]="['/eva-pregunta']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='2'">
+       <a [routerLink]="['/eva-pregunta']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 
        Preguntas Evaluación
       </a>
-
 
         <!--    <div class="nested-menu">-->
         <!--      <a class="list-group-item" (click)="addExpandClass('pages')">-->

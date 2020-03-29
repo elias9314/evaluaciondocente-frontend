@@ -11,29 +11,21 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./tipo-evaluacion.component.scss']
 })
 export class TipoEvaluacionComponent implements OnInit {
-  tipoevaluaciones: any;
+  tipoevaluaciones: Array<TipoEvaluacion>;
+  tipoevaluacionSeleccionado: TipoEvaluacion;
   tipoevaluacion: TipoEvaluacion;
-  listar: boolean;
-  crear: boolean;
-  modificar: boolean;
 
   constructor(private spinner: NgxSpinnerService, private service: ServiceService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.getTipoEvaluacion();
     this.tipoevaluacion = new TipoEvaluacion();
+    this.tipoevaluacionSeleccionado = new TipoEvaluacion();
+    this.tipoevaluaciones = new Array<TipoEvaluacion>();
   }
-
-  dataModel(dat: any) {
-    return this.tipoevaluacion = dat;
-  }
-
 
 //////////// método para traer los tipo de evaluación/////////////
   getTipoEvaluacion() {
-    // this.listar = true;
-    // this.crear = false;
-    this.modificar = false;
     this.spinner.show();
     this.service.get('tipo_evaluaciones').subscribe(
       response => {
@@ -49,39 +41,22 @@ export class TipoEvaluacionComponent implements OnInit {
 ////////////////// método para ingresar un nuevo tipo de evaluación////////////////////////////
         postEvaluacion() {
           this.spinner.show();
-          this.service.post('tipo_evaluacion', {'tipo_evaluacion': this.tipoevaluacion}).subscribe(
+          this.service.post('tipo_evaluacion', {'tipo_evaluacion': this.tipoevaluacionSeleccionado}).subscribe(
             response => {
-              this.tipoevaluacion = new TipoEvaluacion();
               this.getTipoEvaluacion();
               console.log(response);
             },
             error => {
               this.spinner.hide();
-              this.tipoevaluacion = new TipoEvaluacion();
               console.log('error');
             }
           );
         }
-/////////////////// método para los datos individuales al formulario para editar////////////////////
 
-editarTipoEvaluacion(id) {
-  this.listar = false;
-  this.crear = false;
-  this.modificar = true;
-  this.service.get('tipo_evaluaciones/' + id).subscribe(
-    response => {
-      this.tipoevaluacion = response['tipo_evaluacion'];
-      this.dataModel(this.tipoevaluacion[0]);
-    },
-    error => {
-      console.log('error');
-    }
-  );
-}
 //////////// método para editar un registro tipo de evaluación//////////////////////////////////
-actualizarTipoEvaluacion() {
+actualizarTipoEvaluacion(eva: TipoEvaluacion) {
    this.spinner.show();
-   this.service.update('tipo_evaluaciones', {'tipo_evaluacion': this.tipoevaluacion}).subscribe(
+   this.service.update('tipo_evaluaciones', {'tipo_evaluacion': eva}).subscribe(
    response => {
       this.getTipoEvaluacion();
       console.log(response);
@@ -93,19 +68,27 @@ actualizarTipoEvaluacion() {
    );
 }
 
-
-agregarTipoEvaluacion(content) {
-  /// this.listar = false;
-// this.crear = true;
-  this.modificar = false;
+////////////////// método que permite actualizar o crear dependiendo de lo que eliga el cliente ////////////
+agregarTipoEvaluacion(content, eva) {
+  if (eva != null) {
+    this.tipoevaluacionSeleccionado = eva;
+}
   this.modalService.open(content)
-          .result
-          .then((resultModal => {
-              if (resultModal === 'save') {
-                     this.postEvaluacion();
+            .result
+            .then((resultModal => {
+                if (resultModal === 'save') {
+                    if (eva == null) {
+                        this.postEvaluacion();
+                    } else {
+                        this.actualizarTipoEvaluacion(eva);
                     }
+                     } else {
+                      this.getTipoEvaluacion();
+                  }
+              }), (resultCancel => {
+                  this.getTipoEvaluacion();
               }));
-            }
 
-  }
+      }
+}
 //////////////////////////////////////////////////////////

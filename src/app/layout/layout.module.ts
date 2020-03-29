@@ -17,6 +17,7 @@ import { PerfilDocenteComponent } from './matriculacion/perfil-docente/perfil-do
 import { TipoEvaluacionComponent } from './matriculacion/tipo-evaluacion/tipo-evaluacion.component';
 import { EvaPreguntaComponent } from './matriculacion/eva-pregunta/eva-pregunta.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { AdminEvaluacionComponent } from './matriculacion/admin-evaluacion/admin-evaluacion.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -31,7 +32,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent, AdminEstudianteComponent, FiltrosPipe, AdminResultadosComponent,
          AdminDocentesComponent, PerfilDocenteComponent,
          TipoEvaluacionComponent,
-         EvaPreguntaComponent]
+         EvaPreguntaComponent,
+         AdminEvaluacionComponent]
 })
 export class LayoutModule {
 }
