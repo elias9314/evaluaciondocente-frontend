@@ -81,17 +81,14 @@ const routes: Routes = [
             {
                 path: 'datos-docente', component: DatosDocenteComponent
             },
-            
+
 
 
             {path: 'admin-docentes', component: AdminDocentesComponent },
             {path: 'tipo-evaluacion', component: TipoEvaluacionComponent},
             {path: 'eva-pregunta', component: EvaPreguntaComponent},
-            {path: 'admin-evaluacion',
-            loadChildren: () =>
-                    import('./matriculacion/admin-evaluacion/admin-evaluacion.module')
-                        .then(m => m.AdminEvaluacionModule), canActivate: [AuthGuard] }
-          
+            {path: 'admin-evaluacion', component: AdminEvaluacionComponent}
+
         ]
     }
 ];
