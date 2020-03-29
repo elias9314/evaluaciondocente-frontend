@@ -92,6 +92,8 @@ const routes: Routes = [
                     import('./matriculacion/admin-evaluacion/admin-evaluacion.module')
                         .then(m => m.AdminEvaluacionModule), canActivate: [AuthGuard] }
 
+
+           //angie             
         ]
     }
 ];

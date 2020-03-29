@@ -27,5 +27,7 @@ import { NgxPaginationModule} from 'ngx-pagination';
     declarations: [AppComponent],
     providers: [AuthGuard],
     bootstrap: [AppComponent]
+
+    
 })
 export class AppModule {}
