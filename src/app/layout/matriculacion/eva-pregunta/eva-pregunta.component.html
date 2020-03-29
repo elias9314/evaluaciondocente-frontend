@@ -1,30 +1,121 @@
 <h1>EVALUACIÓN PREGUNTAS</h1><br>
 <div>
-  <button type="button" class="btn btn-primary">AGREGAR</button>
+  <button type="button" class="btn btn-primary"  (click)="modalEvaPregunta(contentPregunta,null)">AGREGAR</button>
 </div><br>
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">TIPO</th>
-      <th scope="col">CODIGO</th>
+      <th scope="col">TIPO EVALUACIÓN</th>
+      <th scope="col">CÓDIGO</th>
       <th scope="col">ORDEN</th>
       <th scope="col">PREGUNTA</th>
       <th scope="col">TIPO</th>
-      <th scope="col">ESTADO</th>
+      <th scope="col">ESTADO</th> 
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let p of preguntas | paginate: { itemsPerPage: 5, currentPage: p }">
-      <td>{{p.tipo_evaluacion.nombre}}</td>
-      <td>{{p.codigo}}</td>
-      <td>{{p.orden}}</td>
-      <td>{{p.nombre}}</td>
-      <td>{{p.tipo}}</td>
-      <td>{{p.estado}}</td>
+    <tr *ngFor="let evapregunta of preguntas | paginate: { itemsPerPage: 5, currentPage: p }">
+      <!-- <td class="text-center">
+        <select name="tipo" id="tipo" [(ngModel)]="evapregunta.tipo_evaluacion.id" class="form-control-sm"
+                (change)="actualizarEvaPregunta(evapregunta)" *ngIf="evapregunta.id != pregunta.id">
+            <option value="{{tipo.id}}" *ngFor="let tipo of tipos">{{tipo.nombre}}</option>
+        </select>
+    </td> -->
+      <td>{{evapregunta.tipo_evaluacion.nombre}}</td>
+      <td>{{evapregunta.codigo}}</td>
+      <td>{{evapregunta.orden}}</td>
+      <td>{{evapregunta.nombre}}</td>
+      <td>{{evapregunta.tipo}}</td>
+      <td>{{evapregunta.estado}}</td>
       <div class="container">
-        <button type="button" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+        <button type="button" class="btn btn-warning ml-1 btn-sm text-white" (click)="modalEvaPregunta(contentPregunta,evapregunta)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
       </div>
   </tbody>
 </table>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
   
+      <!-- Formulario para crear y actualizar preguntas de evaluacion docente-->
+
+      <ng-template #contentPregunta let-c="close" let-d="dismiss" >
+        <div class="modal-header">
+          <div class="row">
+              <h3 class="col-12 text-center" name="titulo">Evaluación Preguntas</h3>
+          </div>
+      </div>
+      <div class="modal-body">
+        <form  name="evaluacionpregunta" method="post" #formCtrl="ngForm">
+          <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="nombre">
+                    <b class="text-danger">*</b> Tipo de Evaluación
+                </label>
+                <td class="text-center">
+                  <select name="evaluacion" id="evaluacion" [(ngModel)]="preguntaSeleccionada.tipo_evaluacion.id" class="form-control"
+                  required>
+                      <option value="{{tipo.id}}" *ngFor="let tipo of tipos">{{tipo.nombre}}</option>
+                  </select>
+              </td>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="codigo">
+                    <b class="text-danger">*</b>Código
+                </label>
+                <input id="codigo" name="codigo" type="text"
+                       [(ngModel)]="preguntaSeleccionada.codigo"
+                       class="text-uppercase form-control" required>
+            </div>
+          </div>
+      
+           <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="orden">
+                    <b class="text-danger">*</b> Orden
+                </label>
+                <input id="orden" name="orden" type="number"
+                [(ngModel)]="preguntaSeleccionada.orden"
+                class="text-uppercase form-control" required>
+            </div>
+           </div>
+
+           <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="preguntanombre">
+                    <b class="text-danger">*</b> Pregunta
+                </label>
+                <input id="preguntanombre" name="preguntanombre" type="text"
+                [(ngModel)]="preguntaSeleccionada.nombre"
+                class="text-uppercase form-control" required>
+            </div>
+           </div>
+
+           <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="tipopregunta">
+                    <b class="text-danger">*</b> Tipo
+                </label>
+                <input id="tipopregunta" name="tipopregunta" type="text"
+                [(ngModel)]="preguntaSeleccionada.tipo"
+                class="text-uppercase form-control" required>
+            </div>
+           </div>
+
+           <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="estado">
+                    <b class="text-danger">*</b> Estado
+                </label>
+                <input id="estado" name="estado" type="text"
+                [(ngModel)]="preguntaSeleccionada.estado"
+                class="text-uppercase form-control" required>
+            </div>
+           </div>
+          <br>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid"><i class="fa fa-check" aria-hidden="true">&nbsp; Ok</i></button>
+            <button type="button" class="btn btn-danger" (click)="c('close')"><i class="fa fa-times-circle" aria-hidden="true">&nbsp; Cerrar</i></button>
+          </div>
+        </form>
+      </div>
+      </ng-template>

@@ -17,7 +17,11 @@ import { PerfilDocenteComponent } from './matriculacion/perfil-docente/perfil-do
 import { TipoEvaluacionComponent } from './matriculacion/tipo-evaluacion/tipo-evaluacion.component';
 import { EvaPreguntaComponent } from './matriculacion/eva-pregunta/eva-pregunta.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+<<<<<<< HEAD
 import { DatosDocenteComponent } from './matriculacion/perfil-docente/datos-docente/datos-docente.component';
+=======
+import { AdminEvaluacionComponent } from './matriculacion/admin-evaluacion/admin-evaluacion.component';
+>>>>>>> 2fe11d07ad7bed57032f050ab891ba61e22ba377
 @NgModule({
     imports: [
         CommonModule,
@@ -33,7 +37,11 @@ import { DatosDocenteComponent } from './matriculacion/perfil-docente/datos-doce
          AdminDocentesComponent, PerfilDocenteComponent,
          TipoEvaluacionComponent,
          EvaPreguntaComponent,
+<<<<<<< HEAD
          DatosDocenteComponent]
+=======
+         AdminEvaluacionComponent]
+>>>>>>> 2fe11d07ad7bed57032f050ab891ba61e22ba377
 })
 export class LayoutModule {
 }

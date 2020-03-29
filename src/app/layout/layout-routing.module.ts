@@ -8,7 +8,11 @@ import {LayoutComponent} from './layout.component';
 import {AuthGuard} from '../shared/guard';
 import { TipoEvaluacionComponent } from './matriculacion/tipo-evaluacion/tipo-evaluacion.component';
 import { EvaPreguntaComponent } from './matriculacion/eva-pregunta/eva-pregunta.component';
+
 import { DatosDocenteComponent} from './matriculacion/perfil-docente/datos-docente/datos-docente.component';
+
+import { AdminEvaluacionComponent } from './matriculacion/admin-evaluacion/admin-evaluacion.component';
+
 const routes: Routes = [
     {
         path: '',
@@ -82,7 +86,11 @@ const routes: Routes = [
 
             {path: 'admin-docentes', component: AdminDocentesComponent },
             {path: 'tipo-evaluacion', component: TipoEvaluacionComponent},
-            {path: 'eva-pregunta', component: EvaPreguntaComponent}
+            {path: 'eva-pregunta', component: EvaPreguntaComponent},
+            {path: 'admin-evaluacion',
+            loadChildren: () =>
+                    import('./matriculacion/admin-evaluacion/admin-evaluacion.module')
+                        .then(m => m.AdminEvaluacionModule), canActivate: [AuthGuard] }
 
         ]
     }
