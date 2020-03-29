@@ -10,7 +10,7 @@ import {EvaPregunta} from '../modelos/eva-pregunta.model';
 export class EvaPreguntaComponent implements OnInit {
   preguntas: any;
   pregunta: EvaPregunta;
-  p = 1;
+  p = 2;
   constructor(private spinner: NgxSpinnerService, private service: ServiceService) { }
 
   ngOnInit() {

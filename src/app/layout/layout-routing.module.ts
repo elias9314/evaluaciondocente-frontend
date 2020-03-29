@@ -8,7 +8,7 @@ import {LayoutComponent} from './layout.component';
 import {AuthGuard} from '../shared/guard';
 import { TipoEvaluacionComponent } from './matriculacion/tipo-evaluacion/tipo-evaluacion.component';
 import { EvaPreguntaComponent } from './matriculacion/eva-pregunta/eva-pregunta.component';
-
+import { DatosDocenteComponent} from './matriculacion/perfil-docente/datos-docente/datos-docente.component';
 const routes: Routes = [
     {
         path: '',
@@ -74,6 +74,11 @@ const routes: Routes = [
             {
                 path: 'perfil-docentes', component: PerfilDocenteComponent
             },
+            {
+                path: 'datos-docente', component: DatosDocenteComponent
+            },
+            
+
 
             {path: 'admin-docentes', component: AdminDocentesComponent },
             {path: 'tipo-evaluacion', component: TipoEvaluacionComponent},
