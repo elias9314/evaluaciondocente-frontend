@@ -43,8 +43,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/src/app/layout/layout-routing.module.ts
-/src/app/layout/components/sidebar/sidebar.component.html
-/src/app/layout/layout.module.ts
-/src/app/layout/matriculacion/eva-pregunta/eva-pregunta.component.ts
-/src/app/layout/matriculacion/eva-pregunta/eva-pregunta.component.ts
+# /src/app/layout/layout-routing.module.ts
+# /src/app/layout/components/sidebar/sidebar.component.html
+# /src/app/layout/layout.module.ts
+# /src/app/layout/matriculacion/eva-pregunta/eva-pregunta.component.ts
+# /src/app/layout/matriculacion/eva-pregunta/eva-pregunta.component.ts

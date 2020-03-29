@@ -47,7 +47,7 @@ export class AdminDocentesComponent implements OnInit {
     this.flagPagination = true;
     this.total_pages_pagination = new Array<any>();
     this.total_pages_temp = 10;
-    this.records_per_page = 2;
+    this.records_per_page = 6;
     this.actual_page = 1;
     this.total_pages = 1; 
     this.getUsuarioDocentes(1);
@@ -179,7 +179,7 @@ getUsuario() {
           
         }else{
         this.crearDocente();
-        console.log('no vale')
+        console.log('Excelente!!')
       }
 
       }else{

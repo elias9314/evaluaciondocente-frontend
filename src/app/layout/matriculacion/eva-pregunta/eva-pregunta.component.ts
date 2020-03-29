@@ -14,14 +14,10 @@ export class EvaPreguntaComponent implements OnInit {
   preguntas: Array<EvaPregunta>;
   preguntaSeleccionada: EvaPregunta;
   pregunta: EvaPregunta;
-<<<<<<< HEAD
   p = 2;
-  constructor(private spinner: NgxSpinnerService, private service: ServiceService) { }
-=======
   tipos: Array<TipoEvaluacion>;
-  p = 1;
+  
   constructor(private spinner: NgxSpinnerService, private service: ServiceService, private modalService: NgbModal) { }
->>>>>>> 2fe11d07ad7bed57032f050ab891ba61e22ba377
 
   ngOnInit() {
     this.getEvaPregunta();

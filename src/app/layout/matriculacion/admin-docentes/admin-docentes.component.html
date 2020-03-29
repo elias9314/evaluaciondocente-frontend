@@ -22,12 +22,10 @@
   <table class="table">
     <thead class="thead-dark">
       <tr>
-        <!-- <th scope="col">#</th> 
-        <th scope="col">CÉDULA</th>
-        <th scope="col">APELLIDO</th>-->
-        <th scope="col">CEDULA</th>
-        <th scope="col">CORREO INSTITUCIONAL</th>
-        <th scope="col">ESTADO</th>
+        <th scope="col">Identificación</th>
+        <th scope="col">Usuario</th>
+        <th scope="col">Correo Institucional</th>
+        <th scope="col">Estado</th>
         <th width="5%">
           <a type="button" class="btn btn-success ml-1 btn-sm" (click)="abrirModalDocente(content,false,null)">Añadir
             <span class="{{messages['buttonAdd']['icon']}}"></span>
@@ -38,12 +36,8 @@
     <tbody>
       <!-- <tr *ngFor="let docente of docentes | paginate: { itemsPerPage: 7, currentPage: p }"> -->
       <tr *ngFor="let docente of docentes">
-
-        <!-- <th>{{ i + 1 }}</th> -->
-         <!-- <td>{{usuario.user_name}}</td>
-         <td>{{usuario.name}}</td> 
-         <td>{{usuario.email}}</td>  -->
         <td>{{docente.user.user_name}}</td>
+        <td>{{docente.user.name}}</td>
         <td>{{docente.user.email}}</td>
         <td>{{docente.user.estado}}</td> 
        <td><button class="btn btn-warning ml-1 btn-md text-white"  title="Actualizar"
@@ -116,26 +110,6 @@
                          class="text-uppercase form-control" required>
               </div>
           </div>
-          <div class="form-group row">
-            <!-- <div class="col-lg-6">
-                <label for="tipoidentificacion">
-                    <b class="text-danger">*</b> Tipo Identificación:
-                </label>
-                <input id="tipoidentificacion" name="tipoidentificacion" type="number"
-                       [(ngModel)]="docenteSeleccionado.tipo_identificacion"
-                       class="text-uppercase form-control" required>
-            </div> -->
-            <!--Fecha de Nacimiento--> 
-          <!-- <div class="col-lg-6">
-            <label for="fecha">
-                <b class="text-danger">*</b> Fecha Nacimiento
-            </label>
-            <input id="fecha" name="fecha" type="date"
-                   [(ngModel)]="usuario.fecha_nacimiento"
-                   class="text-uppercase form-control" required>
-          </div>-->
-        
-        </div> 
         <div class="form-group row">
           <div class="col-lg-6">
               <label for="name">
@@ -155,54 +129,6 @@
         </div>
           </div>
         
-          <!--Nombre-->
-          <!-- <div class="form-group row">
-              <div class="col-lg-6">
-                  <label for="apellido1">
-                      <b class="text-danger">*</b> Primer Apellido
-                  </label>
-                  <input id="apellido1" name="apellido1" type="text" [(ngModel)]="usuario.apellido1"
-                         class="text-uppercase form-control" placeholder="Pérez" required>
-              </div>
-              <div class="col-lg-6">
-                <label for="apellido2">
-                    <b class="text-danger">*</b> Segundo Apellido
-                </label>
-                <input id="apellido2" name="apellido2" type="text" [(ngModel)]="usuario.apellido2"
-                      class="text-uppercase form-control" placeholder="Lucero" required>
-            </div>
-          </div> -->
-          <!--Nombre-->
-          <!-- <div class="form-group row">
-            <div class="col-lg-6">
-                <label for="nombre1">
-                    <b class="text-danger">*</b> Primer Nombre
-                </label>
-                <input id="nombre1" name="nombre1" type="text" [(ngModel)]="usuario.nombre1"
-                       class="text-uppercase form-control" placeholder="Juan" required>
-            </div>
-            <div class="col-lg-6">
-              <label for="nombre2">
-                  <b class="text-danger">*</b> Segundo Nombre
-              </label>
-              <input id="nombre2" name="nombre2" type="text" [(ngModel)]="usuario.nombre2"
-                     class="text-uppercase form-control" placeholder="Leonardo" required>
-          </div>
-        </div> -->
-
-          <!--Telefono-->
-          <!-- <div class="form-group row">
-            <div class="col-lg-6">
-                <label for="telefono">
-                    <b class="text-danger">*</b> Teléfono
-                </label>
-                <input id="telefono" name="telefono" type="text"
-                       [(ngModel)]="usuario.telefono"
-                       class="text-uppercase form-control" required>
-            </div>
-              
-          </div> -->
-              <!--Correo Institucional-->
               <div class="form-group row">
                 <div class="col-lg-12">
                     <label for="correo_institucional">
@@ -212,30 +138,6 @@
                            class="text-lowercase form-control" required>
                 </div>
             </div>
-            <!--Correo-->
-          <!-- <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="correo_personal">
-                    <b class="text-danger">*</b> Correo Personal:
-                </label>
-                <input id="correo_personal" name="correo_personal" type="email" [(ngModel)]="usuario.correo_personal"
-                       class="text-lowercase form-control" required>
-            </div>
-        </div> -->
-        <!--Sexo-->
-        <!-- <div class="form-group row">
-        <div class="col-lg-6">
-          <label for="sexo">
-              <b class="text-danger">*</b> Sexo
-          </label>
-          <select  class="text-uppercase form-control" required name="sexo" id="sexo" [(ngModel)]="usuario.sexo" 
-              class="form-control-sm">
-          <option value="FEMENINO">FEMENINO</option>
-          <option value="MASCULINO">MASCULINO</option>
-          <option value="OTRO">OTRO</option>
-      </select>
-    </div>
-        </div> -->
         <!--Estado-->
         <div class="form-group row">
           <div class="col-lg-12">
