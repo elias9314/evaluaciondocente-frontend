@@ -1,172 +1,150 @@
 <h1>ADMINISTRADOR DOCENTE</h1>
 <div class="container">
- <!-- <div>
+    <!-- <div>
     <a type="button" class="btn btn-primary" (click)="agregarDocente(content)">Añadir</a>
   </div><br> -->
 
     <!--Buscador-->
     <div class="row">
-      <div class="col-lg-4 col-xs-12">
-          <div class="input-group mb-3">
-              <input type="text" class="form-control text-uppercase" [(ngModel)]="buscador"
-                     (keyup)="filter($event)"
-                     placeholder="Identificación, apellidos o nombres">
-              <div class="input-group-prepend">
-                  <span class="btn input-group-text fa fa-search" id="basic-addon-buscar"
-                        (click)="filter($event)"></span>
-              </div>
-          </div>
-      </div>
-  </div>
-  <br>
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Identificación</th>
-        <th scope="col">Usuario</th>
-        <th scope="col">Correo Institucional</th>
-        <th scope="col">Estado</th>
-        <th width="5%">
-          <a type="button" class="btn btn-success ml-1 btn-sm" (click)="abrirModalDocente(content,false,null)">Añadir
+        <div class="col-lg-4 col-xs-12">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control text-uppercase" [(ngModel)]="buscador" (keyup)="filter($event)" placeholder="Identificación, apellidos o nombres">
+                <div class="input-group-prepend">
+                    <span class="btn input-group-text fa fa-search" id="basic-addon-buscar" (click)="filter($event)"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Identificación</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Correo Institucional</th>
+                <th scope="col">Estado</th>
+                <th width="5%">
+                    <a type="button" class="btn btn-success ml-1 btn-sm" (click)="abrirModalDocente(content,false,null)">Añadir
             <span class="{{messages['buttonAdd']['icon']}}"></span>
-          </a>        
-      </th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- <tr *ngFor="let docente of docentes | paginate: { itemsPerPage: 7, currentPage: p }"> -->
-      <tr *ngFor="let docente of docentes">
-        <td>{{docente.user.user_name}}</td>
-        <td>{{docente.user.name}}</td>
-        <td>{{docente.user.email}}</td>
-        <td>{{docente.user.estado}}</td> 
-       <td><button class="btn btn-warning ml-1 btn-md text-white"  title="Actualizar"
-          (click)="abrirModalDocente(content,true,docente)"  
-          >
+          </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr *ngFor="let docente of docentes | paginate: { itemsPerPage: 7, currentPage: p }"> -->
+            <tr *ngFor="let docente of docentes">
+                <td>{{docente.user_name}}</td>
+                <td>{{docente.name}}</td>
+                <td>{{docente.email}}</td>
+                <td>{{docente.estado}}</td>
+                <td><button class="btn btn-warning ml-1 btn-md text-white" title="Actualizar" (click)="abrirModalDocente(content,true,docente)">
           <span class="{{messages['buttonUpdate']['icon']}}"></span>
   </button></td>
-      </tr>
-    </tbody>
-  </table>
-      <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
-        <!--Paginacion-->
-        <div class="row">
-          <div class="col-lg-6">
-              <nav>
-                  <ul class="pagination">
-                      <li class="page-item">
-                          <a class="page-link bg-dark text-white" href="javascript:void(0)" tabindex="-1"
-                             (click)="firstPagina()">First</a>
-                      </li>
-                      <li class="page-item">
-                          <a class="page-link" href="javascript:void(0)" tabindex="-1"
-                             (click)="paginacion(false)">Previous</a>
-                      </li>
-                      <li class="page-item " [ngClass]="{'active':page === actual_page}"
-                          *ngFor="let page of total_pages_pagination"
-                          (click)="getUsuarioDocentes(page)">
-                          <a class="page-link" href="javascript:void(0)">{{page}}</a>
-                      </li>
-                      <li class="page-item">
-                          <a class="page-link" href="javascript:void(0)" (click)="paginacion(true)">Next</a>
-                      </li>
-                      <li class="page-item">
-                          <a class="page-link bg-dark text-white" href="javascript:void(0)"
-                             (click)="lastPagina()">Last</a>
-                      </li>
-                  </ul>
-              </nav>
-          </div>
-      </div>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+    <!--Paginacion-->
+    <div class="row">
+        <div class="col-lg-6">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link bg-dark text-white" href="javascript:void(0)" tabindex="-1" (click)="firstPagina()">First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)" tabindex="-1" (click)="paginacion(false)">Previous</a>
+                    </li>
+                    <li class="page-item " [ngClass]="{'active':page === actual_page}" *ngFor="let page of total_pages_pagination" (click)="getUsuarioDocentes(page)">
+                        <a class="page-link" href="javascript:void(0)">{{page}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)" (click)="paginacion(true)">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link bg-dark text-white" href="javascript:void(0)" (click)="lastPagina()">Last</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 
 </div>
 
-    
-  <ng-template #content let-c="close" let-d="dismiss">
+
+<ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title" name="titulo">Docente</h4>
+        <h4 class="modal-title" id="modal-basic-title" name="titulo">Docente</h4>
     </div>
     <div class="modal-body">
-      <form name="usuario"  method="post" #formCtrl="ngForm">
+        <form name="usuario" method="post" #formCtrl="ngForm">
 
-        <div class="form-group row">
-          <div class="col-lg-12">
-              <label for="identificacion">
+            <div class="form-group row">
+                <div class="col-lg-12">
+                    <label for="identificacion">
                   <b class="text-danger">*</b> Tipo Identificación:
               </label>
-              <input id="tipo" name="tipo" type="number"
-                     [(ngModel)]="docenteSeleccionado.tipo_identificacion"
-                     class="text-uppercase form-control" required>
-          </div>
-      </div>
-          <!--Identificacion-->
-          <div class="form-group row">
-              <div class="col-lg-12">
-                  <label for="identificacion">
+                    <input id="tipo" name="tipo" type="number" [(ngModel)]="docenteSeleccionado.tipo_identificacion" class="text-uppercase form-control" required>
+                </div>
+            </div>
+            <!--Identificacion-->
+            <div class="form-group row">
+                <div class="col-lg-12">
+                    <label for="identificacion">
                       <b class="text-danger">*</b> Identificación:
                   </label>
-                  <input id="identificacion" name="identificacion" type="number"
-                         [(ngModel)]="docenteSeleccionado.identificacion"
-                         class="text-uppercase form-control" required>
-              </div>
-          </div>
-        <div class="form-group row">
-          <div class="col-lg-6">
-              <label for="name">
+                    <input id="identificacion" name="identificacion" type="number" [(ngModel)]="docenteSeleccionado.identificacion" class="text-uppercase form-control" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label for="name">
                   <b class="text-danger">*</b> Primer Apellido:
               </label>
-              <input id="apellido1" name="apellido1" type="text"
-                     [(ngModel)]="docenteSeleccionado.apellido1"
-                     class="text-uppercase form-control" required>
-          </div>
-          <div class="col-lg-6">
-            <label for="name">
+                    <input id="apellido1" name="apellido1" type="text" [(ngModel)]="docenteSeleccionado.apellido1" class="text-uppercase form-control" required>
+                </div>
+                <div class="col-lg-6">
+                    <label for="name">
                 <b class="text-danger">*</b> Primer Nombre:
             </label>
-            <input id="nombre1" name="nombre1" type="text"
-                   [(ngModel)]="docenteSeleccionado.nombre1"
-                   class="text-uppercase form-control" required>
-        </div>
-          </div>
-        
-              <div class="form-group row">
+                    <input id="nombre1" name="nombre1" type="text" [(ngModel)]="docenteSeleccionado.nombre1" class="text-uppercase form-control" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
                 <div class="col-lg-12">
                     <label for="correo_institucional">
                         <b class="text-danger">*</b> Correo Electrónico Institucional:
                     </label>
-                    <input id="correo" name="correo" type="email" [(ngModel)]="docenteSeleccionado.correo_institucional"
-                           class="text-lowercase form-control" required>
+                    <input id="correo" name="correo" type="email" [(ngModel)]="docenteSeleccionado.correo_institucional" class="text-lowercase form-control" required>
                 </div>
             </div>
-        <!--Estado-->
-        <div class="form-group row">
-          <div class="col-lg-12">
-              <label for="estado">
+            <!--Estado-->
+            <div class="form-group row">
+                <div class="col-lg-12">
+                    <label for="estado">
                   <b class="text-danger">*</b> Estado
               </label>
-              <select name="estado" id="estado" [(ngModel)]="docenteSeleccionado.estado"
-                            [ngClass]=" {'bg-danger text-white': docenteSeleccionado.estado=='INACTIVO'}"
-                            class="form-control-sm">
+                    <select name="estado" id="estado" [(ngModel)]="docenteSeleccionado.estado" [ngClass]=" {'bg-danger text-white': docenteSeleccionado.estado=='INACTIVO'}" class="form-control-sm">
                             <option value="ACTIVO">ACTIVO</option>
                         <option value="INACTIVO">INACTIVO</option>
           </select>
-          </div>
-      </div>
-        <br>
-        <div class="modal-footer">
-          <h6 class="text-muted">
-              <b class="text-danger">{{messages['requiredFields']['icon']}} </b>
-              {{messages['requiredFields']['text']}}
-          </h6>
-          <button type="button" class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
+                </div>
+            </div>
+            <br>
+            <div class="modal-footer">
+                <h6 class="text-muted">
+                    <b class="text-danger">{{messages['requiredFields']['icon']}} </b> {{messages['requiredFields']['text']}}
+                </h6>
+                <button type="button" class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
       <span
           class="{{messages['saveConfirmationDialog']['iconOk']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['ok']}}
           </button>
-          <button type="button" class="btn btn-danger" (click)="c('close')">
+                <button type="button" class="btn btn-danger" (click)="c('close')">
       <span
           class="{{messages['saveConfirmationDialog']['iconCancel']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['cancel']}}
           </button>
-      </div>
-      </form>
+            </div>
+        </form>
     </div>
-  </ng-template>
+</ng-template>
