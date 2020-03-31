@@ -33,10 +33,10 @@
         <tbody>
             <!-- <tr *ngFor="let docente of docentes | paginate: { itemsPerPage: 7, currentPage: p }"> -->
             <tr *ngFor="let docente of docentes">
-                <td>{{docente.user_name}}</td>
-                <td>{{docente.name}}</td>
-                <td>{{docente.email}}</td>
-                <td>{{docente.estado}}</td>
+                <td>{{docente.user.user_name}}</td>
+                <td>{{docente.user.name}}</td>
+                <td>{{docente.user.email}}</td>
+                <td>{{docente.user.estado}}</td>
                 <td><button class="btn btn-warning ml-1 btn-md text-white" title="Actualizar" (click)="abrirModalDocente(content,true,docente)">
           <span class="{{messages['buttonUpdate']['icon']}}"></span>
   </button></td>
