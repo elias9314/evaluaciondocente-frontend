@@ -17,6 +17,7 @@ export class AdminEstudianteComponent implements OnInit {
     data: any;
     respuesta: any[];
     filterPost = '';
+    pageActual = 1;
     // carreraUses: Carrera_users;
   constructor(private http: HttpClient, private service: ServiceService, ) { }
 
