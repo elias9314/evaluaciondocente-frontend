@@ -81,7 +81,7 @@ const routes: Routes = [
             {
                 path: 'datos-docente', component: DatosDocenteComponent
             },
-            
+
 
 
             {path: 'admin-docentes', component: AdminDocentesComponent },

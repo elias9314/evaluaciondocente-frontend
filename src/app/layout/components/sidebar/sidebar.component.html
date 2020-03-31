@@ -43,35 +43,28 @@
             <span>{{ 'Teacher Evaluation' | translate }}</span>
         </a>
         <a [routerLink]="['/admin-docentes']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
-            <i class="fa fa-users" aria-hidden="true"></i>&nbsp; 
-            Admin Docentes
+            <i class="fa fa-users" aria-hidden="true"></i>&nbsp; Admin Docentes
         </a>
         <a [routerLink]="['/admin-estudiante']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
-            <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;
-            Admin Estudiantes
+            <i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Admin Estudiantes
         </a>
 
         <a [routerLink]="['/admin-resultados']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
-             <i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp; 
-            Admin Resultados
+            <i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp; Admin Resultados
         </a>
 
         <a [routerLink]="['/datos-docente']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='7'">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 
-           Datos Personales
-       </a>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; Datos Personales
+        </a>
         <a [routerLink]="['/perfil-docentes']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='7'">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 
-           Autoevaluación
-       </a>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; Autoevaluación
+        </a>
         <a [routerLink]="['/tipo-evaluacion']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 
-           Tipo Evaluación
-       </a>
-       <a [routerLink]="['/eva-pregunta']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
-        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 
-       Preguntas Evaluación
-      </a>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; Tipo Evaluación
+        </a>
+        <a [routerLink]="['/eva-pregunta']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; Preguntas Evaluación
+        </a>
 
         <!--    <div class="nested-menu">-->
         <!--      <a class="list-group-item" (click)="addExpandClass('pages')">-->

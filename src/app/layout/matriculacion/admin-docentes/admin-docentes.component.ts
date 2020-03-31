@@ -10,18 +10,17 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   selector: 'app-admin-docentes',
   templateUrl: './admin-docentes.component.html',
   styleUrls: ['./admin-docentes.component.scss'],
-  
 })
 export class AdminDocentesComponent implements OnInit {
-  docentes:Array<Docente>;
-  docente:Docente;
+  docentes: Array<Docente>;
+  docente: Docente;
 
-  docenteSeleccionado:Docente;
+  docenteSeleccionado: Docente;
   messages: any;
-  usuario:User;
+  usuario: User;
   buscador: string;
 
-  usuarios:Array<User>;
+  usuarios: Array<User>;
   usuarioSeleccionado: User;
   actual_page: number;
   records_per_page: number;
@@ -32,39 +31,35 @@ export class AdminDocentesComponent implements OnInit {
   flagPagination: boolean;
 
   p = 1;
-  
-  constructor(config: NgbModalConfig, private modalService: NgbModal,private spinner:NgxSpinnerService,private service:ServiceService){
-    
+  constructor(config: NgbModalConfig, private modalService: NgbModal, private spinner: NgxSpinnerService, private service: ServiceService) {
   }
-  
   ngOnInit() {
 
     this.messages = catalogos.messages;
-    this.docente= new Docente;
-    this.docenteSeleccionado= new Docente();
-    this.usuario=new User;
+    this.docente = new Docente;
+    this.docenteSeleccionado = new Docente();
+    this.usuario = new User;
     this.usuarioSeleccionado = new User();
     this.flagPagination = true;
     this.total_pages_pagination = new Array<any>();
     this.total_pages_temp = 10;
     this.records_per_page = 6;
     this.actual_page = 1;
-    this.total_pages = 1; 
+    this.total_pages = 1;
     this.getUsuarioDocentes(1);
 
 
   }
-  
 
-  getDocente(){
+  getDocente() {
     this.spinner.show();
     this.service.get('docentes').subscribe(
-      response=>{
+      response => {
         this.docentes = response['profesor'];
         console.log(response);
         this.spinner.hide();
       },
-      error=>{
+      error => {
         this.spinner.hide();
         console.log('error');
 
@@ -76,7 +71,7 @@ export class AdminDocentesComponent implements OnInit {
     this.actual_page = page;
     const parameters = '?' + 'records_per_page=' + this.records_per_page
             + '&page=' + page;
-    this.service.get('usuarios'+ parameters).subscribe(
+    this.service.get('usuarios' + parameters).subscribe(
         response => {
             this.docentes = response['usuarios']['data'];
             console.log(response);
@@ -108,27 +103,24 @@ getUsuario() {
 }
 
   // CREATE
-  crearDocente(){
-    this.docenteSeleccionado.user.user_name= this.docenteSeleccionado.identificacion;
-    this.docenteSeleccionado.user.email= this.docenteSeleccionado.correo_institucional ;
-    this.docenteSeleccionado.user.name=this.docenteSeleccionado.apellido1 + ' ' + this.docenteSeleccionado.nombre1;
-    this.docenteSeleccionado.user.estado= this.docenteSeleccionado.estado ;
+  crearDocente() {
+    this.docenteSeleccionado.user.user_name = this.docenteSeleccionado.identificacion;
+    this.docenteSeleccionado.user.email = this.docenteSeleccionado.correo_institucional ;
+    this.docenteSeleccionado.user.name = this.docenteSeleccionado.apellido1 + ' ' + this.docenteSeleccionado.nombre1;
+    this.docenteSeleccionado.user.estado = this.docenteSeleccionado.estado ;
 
     console.log(this.docenteSeleccionado);
-          
     this.spinner.show();
-    this.service.post('usuarios',{'usuario': this.docenteSeleccionado.user, 'docente': this.docenteSeleccionado}).subscribe(
-        response =>{
+    this.service.post('usuarios', {'usuario': this.docenteSeleccionado.user, 'docente': this.docenteSeleccionado}).subscribe(
+        response => {
           this.spinner.hide();
           // this.getDocente();
          // console.log(response);
-          
           swal.fire(this.messages['createSuccess']);
         },
         error => {
           this.spinner.hide();
           console.log('error');
-          
           if (error.error.errorInfo[0] === '23505') {
               swal.fire(this.messages['error23505']);
 
@@ -139,13 +131,11 @@ getUsuario() {
           }
         });
       }
-    
- 
   updateDocente(docente: Docente) {
-    this.docenteSeleccionado.user.user_name= this.docenteSeleccionado.identificacion;
-    this.docenteSeleccionado.user.email= this.docenteSeleccionado.correo_institucional ;
-    this.docenteSeleccionado.user.name=this.docenteSeleccionado.apellido1 + ' ' + this.docenteSeleccionado.nombre1;
-    this.docenteSeleccionado.user.estado= this.docenteSeleccionado.estado ;
+    this.docenteSeleccionado.user.user_name = this.docenteSeleccionado.identificacion;
+    this.docenteSeleccionado.user.email = this.docenteSeleccionado.correo_institucional ;
+    this.docenteSeleccionado.user.name = this.docenteSeleccionado.apellido1 + ' ' + this.docenteSeleccionado.nombre1;
+    this.docenteSeleccionado.user.estado = this.docenteSeleccionado.estado ;
       console.log(docente);
     this.spinner.show();
     this.service.update('usuarios', {'docente': docente, 'usuario': docente.user}).subscribe(
@@ -161,31 +151,29 @@ getUsuario() {
           console.log('errors');
       });
 }
- abrirModalDocente(content,editar:boolean, docente:Docente) {  
+ abrirModalDocente(content, editar: boolean, docente: Docente) {
 
-  if(editar){
-    this.docenteSeleccionado= docente;
-  }else{
-    this.docenteSeleccionado= new Docente();
+  if (editar) {
+    this.docenteSeleccionado = docente;
+  } else {
+    this.docenteSeleccionado = new Docente();
   }
-  
+
   this.modalService.open(content)
     .result
-    .then((resultModal=> {
+    .then((resultModal => {
       console.log(resultModal);
-      if( resultModal === 'save'){
-        if(editar){
+      if ( resultModal === 'save') {
+        if (editar) {
           this.updateDocente(docente);
-          
-        }else{
+        } else {
         this.crearDocente();
-        console.log('Excelente!!')
+        console.log('Excelente!!');
       }
 
-      }else{
-      
+      } else {
       }
-    }),error=>{
+    }), error => {
       console.log('error');
     });
   }
@@ -261,7 +249,7 @@ getUsuario() {
   //       error => {
   //         this.spinner.hide();
   //         console.log('error');
-          
+
   //         if (error.error.errorInfo[0] === '23505') {
   //             swal.fire(this.messages['error23505']);
 
@@ -272,5 +260,5 @@ getUsuario() {
   //         }
   //       });
   //     }
-  
+
 }
