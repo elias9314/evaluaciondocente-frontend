@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormControlName } from
   selector: 'app-admin-docentes',
   templateUrl: './admin-docentes.component.html',
   styleUrls: ['./admin-docentes.component.scss'],
+
 })
 export class AdminDocentesComponent implements OnInit {
   docentes: Array<Docente>;
@@ -34,8 +35,11 @@ export class AdminDocentesComponent implements OnInit {
   FormBuilder: any;
 
   p = 1;
+
   constructor(config: NgbModalConfig, private modalService: NgbModal, private spinner: NgxSpinnerService, private service: ServiceService) {
+
   }
+
   ngOnInit() {
 
     this.messages = catalogos.messages;
@@ -53,6 +57,7 @@ export class AdminDocentesComponent implements OnInit {
     this.formularioProfesores();
 
   }
+
 
   getDocente() {
     this.spinner.show();
@@ -114,17 +119,20 @@ getUsuario() {
     this.docenteSeleccionado.user.estado = this.docenteSeleccionado.estado ;
 
     console.log(this.docenteSeleccionado);
+
     this.spinner.show();
     this.service.post('usuarios', {'usuario': this.docenteSeleccionado.user, 'docente': this.docenteSeleccionado}).subscribe(
         response => {
           this.spinner.hide();
           // this.getDocente();
          // console.log(response);
+
           swal.fire(this.messages['createSuccess']);
         },
         error => {
           this.spinner.hide();
           console.log('error');
+
           if (error.error.errorInfo[0] === '23505') {
               swal.fire(this.messages['error23505']);
 
@@ -138,6 +146,7 @@ getUsuario() {
         alert ('no valido');
     }
       }
+
   updateDocente(docente: Docente) {
     this.docenteSeleccionado.user.user_name = this.docenteSeleccionado.identificacion;
     this.docenteSeleccionado.user.email = this.docenteSeleccionado.correo_institucional ;
@@ -173,12 +182,14 @@ getUsuario() {
       if ( resultModal === 'save') {
         if (editar) {
           this.updateDocente(docente);
-        } else {
+
+         } else {
         this.crearDocente();
         console.log('Excelente!!');
       }
 
       } else {
+
       }
     }), error => {
       console.log('error');

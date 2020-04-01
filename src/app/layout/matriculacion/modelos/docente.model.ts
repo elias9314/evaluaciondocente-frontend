@@ -12,13 +12,12 @@ export class Docente {
     correo_institucional: string;
     fecha_nacimiento: Date;
     estado: string;
-    telefono:number;
+    telefono: number;
     user: User;
 
-  constructor(){
-    this.tipo_identificacion='1';
-    this.user= new User();
+  constructor() {
+    this.tipo_identificacion = '1';
+    this.user = new User();
   }
-    
+
   }
-  
