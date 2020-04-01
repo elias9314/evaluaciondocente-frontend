@@ -1,121 +1,140 @@
 <h1>EVALUACIÓN PREGUNTAS</h1><br>
 <div>
-  <button type="button" class="btn btn-primary"  (click)="modalEvaPregunta(contentPregunta,null)">AGREGAR</button>
+    <button type="button" class="btn btn-primary" (click)="modalEvaPregunta(contentPregunta,null)">AGREGAR</button>
 </div><br>
 <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">TIPO EVALUACIÓN</th>
-      <th scope="col">CÓDIGO</th>
-      <th scope="col">ORDEN</th>
-      <th scope="col">PREGUNTA</th>
-      <th scope="col">TIPO</th>
-      <th scope="col">ESTADO</th> 
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let evapregunta of preguntas | paginate: { itemsPerPage: 5, currentPage: p }">
-      <!-- <td class="text-center">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">TIPO EVALUACIÓN</th>
+            <th scope="col">CÓDIGO</th>
+            <th scope="col">ORDEN</th>
+            <th scope="col">PREGUNTA</th>
+            <th scope="col">TIPO</th>
+            <th scope="col">ESTADO</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let evapregunta of preguntas | paginate: { itemsPerPage: 5, currentPage: p }">
+            <!-- <td class="text-center">
         <select name="tipo" id="tipo" [(ngModel)]="evapregunta.tipo_evaluacion.id" class="form-control-sm"
                 (change)="actualizarEvaPregunta(evapregunta)" *ngIf="evapregunta.id != pregunta.id">
             <option value="{{tipo.id}}" *ngFor="let tipo of tipos">{{tipo.nombre}}</option>
         </select>
     </td> -->
-      <td>{{evapregunta.tipo_evaluacion.nombre}}</td>
-      <td>{{evapregunta.codigo}}</td>
-      <td>{{evapregunta.orden}}</td>
-      <td>{{evapregunta.nombre}}</td>
-      <td>{{evapregunta.tipo}}</td>
-      <td>{{evapregunta.estado}}</td>
-      <div class="container">
-        <button type="button" class="btn btn-warning ml-1 btn-sm text-white" (click)="modalEvaPregunta(contentPregunta,evapregunta)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-      </div>
-  </tbody>
+            <td>{{evapregunta.tipo_evaluacion.nombre}}</td>
+            <td>{{evapregunta.codigo}}</td>
+            <td>{{evapregunta.orden}}</td>
+            <td>{{evapregunta.nombre}}</td>
+            <td>{{evapregunta.tipo}}</td>
+            <td>{{evapregunta.estado}}</td>
+            <div class="container">
+                <button type="button" class="btn btn-warning ml-1 btn-sm text-white" (click)="modalEvaPregunta(contentPregunta,evapregunta)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+            </div>
+    </tbody>
 </table>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-  
-      <!-- Formulario para crear y actualizar preguntas de evaluacion docente-->
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
 
-      <ng-template #contentPregunta let-c="close" let-d="dismiss" >
-        <div class="modal-header">
-          <div class="row">
-              <h3 class="col-12 text-center" name="titulo">Evaluación Preguntas</h3>
-          </div>
-      </div>
-      <div class="modal-body">
-        <form  name="evaluacionpregunta" method="post" #formCtrl="ngForm">
-          <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="nombre">
+<!-- Formulario para crear y actualizar preguntas de evaluacion docente-->
+
+<ng-template #contentPregunta let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <div class="row">
+            <h3 class="col-12 text-center" name="titulo">Evaluación Preguntas</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="eva_preguntasForm" name="evaluacionpregunta" method="post" #formCtrl="ngForm">
+            <div class="form-group row">
+                <div class="col-lg-12">
+                    <label for="nombre">
                     <b class="text-danger">*</b> Tipo de Evaluación
                 </label>
-                <td class="text-center">
-                  <select name="evaluacion" id="evaluacion" [(ngModel)]="preguntaSeleccionada.tipo_evaluacion.id" class="form-control"
-                  required>
+                    <td class="text-center">
+                        <select formControlName="evaluacion" name="evaluacion" id="evaluacion" [(ngModel)]="preguntaSeleccionada.tipo_evaluacion.id" class="form-control" required>
                       <option value="{{tipo.id}}" *ngFor="let tipo of tipos">{{tipo.nombre}}</option>
                   </select>
-              </td>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="codigo">
+                    </td>
+                    <div class="alert-danger" *ngIf="evaluacion.invalid &&(evaluacion.dirty || evaluacion.touched)">
+                        <div class="container-error-mensage " *ngIf="evaluacion.errors.required"> Tipo de Evaluación es requerida
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <label for="codigo">
                     <b class="text-danger">*</b>Código
                 </label>
-                <input id="codigo" name="codigo" type="text"
-                       [(ngModel)]="preguntaSeleccionada.codigo"
-                       class="text-uppercase form-control" required>
-            </div>
-          </div>
-      
-           <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="orden">
+                        <input formControlName="codigo" id="codigo" name="codigo" type="text" [(ngModel)]="preguntaSeleccionada.codigo" class="text-uppercase form-control" required>
+                        <div class="alert-danger" *ngIf="codigo.invalid &&(codigo.dirty || codigo.touched)">
+                            <div class="container-error-mensage " *ngIf="codigo.errors.required"> Codigo es requerida
+                            </div>
+                            <div class="container-error-mensage " *ngIf="codigo.invalid && (codigo.dirty || codigo.touched)">
+                                Codigo no valida
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <label for="orden">
                     <b class="text-danger">*</b> Orden
                 </label>
-                <input id="orden" name="orden" type="number"
-                [(ngModel)]="preguntaSeleccionada.orden"
-                class="text-uppercase form-control" required>
-            </div>
-           </div>
+                        <input formControlName="orden" id="orden" name="orden" type="number" [(ngModel)]="preguntaSeleccionada.orden" class="text-uppercase form-control" required>
+                        <div class="alert-danger" *ngIf="orden.invalid &&(orden.dirty || orden.touched)">
+                            <div class="container-error-mensage " *ngIf="orden.errors.required"> Orden es requerida
+                            </div>
+                            <div class="container-error-mensage " *ngIf="orden.invalid && (orden.dirty || orden.touched)">
+                                Orden no valida
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-           <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="preguntanombre">
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <label for="preguntanombre">
                     <b class="text-danger">*</b> Pregunta
                 </label>
-                <input id="preguntanombre" name="preguntanombre" type="text"
-                [(ngModel)]="preguntaSeleccionada.nombre"
-                class="text-uppercase form-control" required>
-            </div>
-           </div>
+                        <input formControlName="preguntanombre" id="preguntanombre" name="preguntanombre" type="text" [(ngModel)]="preguntaSeleccionada.nombre" class="text-uppercase form-control" required>
+                        <div class="alert-danger" *ngIf="preguntanombre.invalid &&(preguntanombre.dirty || preguntanombre.touched)">
+                            <div class="container-error-mensage " *ngIf="preguntanombre.errors.required"> Pregunta es requerida
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-           <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="tipopregunta">
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <label for="tipopregunta">
                     <b class="text-danger">*</b> Tipo
                 </label>
-                <input id="tipopregunta" name="tipopregunta" type="text"
-                [(ngModel)]="preguntaSeleccionada.tipo"
-                class="text-uppercase form-control" required>
-            </div>
-           </div>
+                        <input formControlName="tipopregunta" id="tipopregunta" name="tipopregunta" type="text" [(ngModel)]="preguntaSeleccionada.tipo" class="text-uppercase form-control" required>
+                        <div class="alert-danger" *ngIf="tipopregunta.invalid &&(tipopregunta.dirty || tipopregunta.touched)">
+                            <div class="container-error-mensage " *ngIf="tipopregunta.errors.required"> Tipo es requerida
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-           <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="estado">
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <label for="estado">
                     <b class="text-danger">*</b> Estado
                 </label>
-                <input id="estado" name="estado" type="text"
-                [(ngModel)]="preguntaSeleccionada.estado"
-                class="text-uppercase form-control" required>
+                        <input formControlName="estado" id="estado" name="estado" type="text" [(ngModel)]="preguntaSeleccionada.estado" class="text-uppercase form-control" required>
+                        <div class="alert-danger" *ngIf="estado.invalid &&(estado.dirty || estado.touched)">
+                            <div class="container-error-mensage " *ngIf="estado.errors.required"> Estado es requerida
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid"><i class="fa fa-check" aria-hidden="true">&nbsp; Ok</i></button>
+                    <button type="button" class="btn btn-danger" (click)="c('close')"><i class="fa fa-times-circle" aria-hidden="true">&nbsp; Cerrar</i></button>
+                </div>
             </div>
-           </div>
-          <br>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid"><i class="fa fa-check" aria-hidden="true">&nbsp; Ok</i></button>
-            <button type="button" class="btn btn-danger" (click)="c('close')"><i class="fa fa-times-circle" aria-hidden="true">&nbsp; Cerrar</i></button>
-          </div>
         </form>
-      </div>
-      </ng-template>
+    </div>
+</ng-template>

@@ -6,6 +6,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import swal from 'sweetalert2';
 import {catalogos} from '../../../../environments/catalogos';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators, FormControl, FormControlName } from '@angular/forms';
 @Component({
   selector: 'app-admin-docentes',
   templateUrl: './admin-docentes.component.html',
@@ -29,6 +30,8 @@ export class AdminDocentesComponent implements OnInit {
   total_pages_pagination: Array<any>;
   total_pages_temp: number;
   flagPagination: boolean;
+  profesoresForm: FormGroup;
+  FormBuilder: any;
 
   p = 1;
   constructor(config: NgbModalConfig, private modalService: NgbModal, private spinner: NgxSpinnerService, private service: ServiceService) {
@@ -47,7 +50,7 @@ export class AdminDocentesComponent implements OnInit {
     this.actual_page = 1;
     this.total_pages = 1;
     this.getUsuarioDocentes(1);
-
+    this.formularioProfesores();
 
   }
 
@@ -104,6 +107,7 @@ getUsuario() {
 
   // CREATE
   crearDocente() {
+      if (this.profesoresForm.valid) {
     this.docenteSeleccionado.user.user_name = this.docenteSeleccionado.identificacion;
     this.docenteSeleccionado.user.email = this.docenteSeleccionado.correo_institucional ;
     this.docenteSeleccionado.user.name = this.docenteSeleccionado.apellido1 + ' ' + this.docenteSeleccionado.nombre1;
@@ -130,6 +134,9 @@ getUsuario() {
             swal.fire(this.messages['error500']);
           }
         });
+    } else {
+        alert ('no valido');
+    }
       }
   updateDocente(docente: Docente) {
     this.docenteSeleccionado.user.user_name = this.docenteSeleccionado.identificacion;
@@ -260,5 +267,22 @@ getUsuario() {
   //         }
   //       });
   //     }
-
+ formularioProfesores() {
+     return this.profesoresForm = new FormGroup({
+        tipo_identificacion: new FormControl('', [Validators.required]),
+         // tslint:disable-next-line:max-line-length
+         identificacion: new FormControl ('', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^([0-9])*$')]),
+         apellido1: new FormControl('', [Validators.required, Validators.minLength(4)]),
+         nombre1: new FormControl('', [Validators.required, Validators.minLength(4)]),
+         // tslint:disable-next-line:max-line-length
+         correo_institucional: new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern('^[a-z]+\.[a-z]+@' + 'yavirac.edu.ec')]),
+         estado: new FormControl('', [Validators.required])
+     });
+ }
+ get tipo_identificacion() {return this.profesoresForm.get('tipo_identificacion'); }
+ get identificacion() {return this.profesoresForm.get('identificacion'); }
+ get apellido1() {return this.profesoresForm.get('apellido1'); }
+ get nombre1() {return this.profesoresForm.get('nombre1'); }
+ get correo_institucional() {return this.profesoresForm.get('correo_institucional'); }
+ get estado() {return this.profesoresForm.get('estado'); }
 }

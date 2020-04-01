@@ -77,14 +77,14 @@
         <h4 class="modal-title" id="modal-basic-title" name="titulo">Docente</h4>
     </div>
     <div class="modal-body">
-        <form name="usuario" method="post" #formCtrl="ngForm">
+        <form [formGroup]="profesoresForm" name="usuario" method="post" #formCtrl="ngForm">
 
             <div class="form-group row">
                 <div class="col-lg-12">
                     <label for="identificacion">
                   <b class="text-danger">*</b> Tipo Identificación:
               </label>
-                    <input id="tipo" name="tipo" type="number" [(ngModel)]="docenteSeleccionado.tipo_identificacion" class="text-uppercase form-control" required>
+                    <input formControlName="tipo_identificacion" id="tipo" name="tipo" type="number" [(ngModel)]="docenteSeleccionado.tipo_identificacion" class="text-uppercase form-control" required>
                 </div>
             </div>
             <!--Identificacion-->
@@ -93,7 +93,15 @@
                     <label for="identificacion">
                       <b class="text-danger">*</b> Identificación:
                   </label>
-                    <input id="identificacion" name="identificacion" type="number" [(ngModel)]="docenteSeleccionado.identificacion" class="text-uppercase form-control" required>
+                    <input formControlName="identificacion" id="identificacion" name="identificacion" type="number" [(ngModel)]="docenteSeleccionado.identificacion" class="text-uppercase form-control" required>
+                    <div class="alert-danger" *ngIf="identificacion.invalid &&(identificacion.dirty || identificacion.touched)">
+                        <div class="container-error-mensage " *ngIf="identificacion.errors.required">
+                            identificacion es requerida
+                        </div>
+                        <div class="container-error-mensage " *ngIf="identificacion.invalid && (identificacion.dirty || identificacion.touched)">
+                            identificacion no valida
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-group row">
@@ -101,13 +109,27 @@
                     <label for="name">
                   <b class="text-danger">*</b> Primer Apellido:
               </label>
-                    <input id="apellido1" name="apellido1" type="text" [(ngModel)]="docenteSeleccionado.apellido1" class="text-uppercase form-control" required>
+                    <input formControlName="apellido1" id="apellido1" name="apellido1" type="text" [(ngModel)]="docenteSeleccionado.apellido1" class="text-uppercase form-control" required>
+                    <div class="alert-danger" *ngIf="apellido1.invalid &&(apellido1.dirty || apellido1.touched)">
+                        <div class="container-error-mensage " *ngIf="apellido1.errors.required"> Apellido es requerida
+                        </div>
+                        <div class="container-error-mensage " *ngIf="apellido1.invalid">
+                            Apellido necesita almenos 4 letras
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-6">
                     <label for="name">
                 <b class="text-danger">*</b> Primer Nombre:
             </label>
-                    <input id="nombre1" name="nombre1" type="text" [(ngModel)]="docenteSeleccionado.nombre1" class="text-uppercase form-control" required>
+                    <input formControlName="nombre1" id="nombre1" name="nombre1" type="text" [(ngModel)]="docenteSeleccionado.nombre1" class="text-uppercase form-control" required>
+                    <div class="alert-danger" *ngIf="nombre1.invalid &&(nombre1.dirty || nombre1.touched)">
+                        <div class="container-error-mensage " *ngIf="nombre1.errors.required"> Nombre es requerida
+                        </div>
+                        <div class="container-error-mensage " *ngIf="nombre1.invalid">
+                            Nombre necesita almenos 4 letras
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -116,7 +138,17 @@
                     <label for="correo_institucional">
                         <b class="text-danger">*</b> Correo Electrónico Institucional:
                     </label>
-                    <input id="correo" name="correo" type="email" [(ngModel)]="docenteSeleccionado.correo_institucional" class="text-lowercase form-control" required>
+                    <input formControlName="correo_institucional" id="correo" name="correo" type="email" [(ngModel)]="docenteSeleccionado.correo_institucional" class="text-lowercase form-control" required>
+                    <div class="alert-danger" *ngIf="correo_institucional.invalid &&(correo_institucional.dirty || correo_institucional.touched)">
+                        <div class="container-error-mensage " *ngIf="correo_institucional.errors.required"> Email es requerida
+                        </div>
+                        <div class="container-error-mensage " *ngIf="correo_institucional.invalid">
+                            El email no tiene la caracteristicas correctas
+                        </div>
+                        <div class="container-error-mensage " *ngIf="(correo_institucional.dirty || correo_institucional.touched) && correo_institucional.invalid && correo_institucional.errors.pattern">
+                            Email no valida
+                        </div>
+                    </div>
                 </div>
             </div>
             <!--Estado-->
@@ -125,10 +157,14 @@
                     <label for="estado">
                   <b class="text-danger">*</b> Estado
               </label>
-                    <select name="estado" id="estado" [(ngModel)]="docenteSeleccionado.estado" [ngClass]=" {'bg-danger text-white': docenteSeleccionado.estado=='INACTIVO'}" class="form-control-sm">
+                    <select formControlName="estado" name="estado" id="estado" [(ngModel)]="docenteSeleccionado.estado" [ngClass]=" {'bg-danger text-white': docenteSeleccionado.estado=='INACTIVO'}" class="form-control-sm">
                             <option value="ACTIVO">ACTIVO</option>
                         <option value="INACTIVO">INACTIVO</option>
           </select>
+                    <div class="alert-danger" *ngIf="estado.invalid &&(estado.dirty || estado.touched)">
+                        <div class="container-error-mensage " *ngIf="estado.errors.required"> El estado es requerido
+                        </div>
+                    </div>
                 </div>
             </div>
             <br>
