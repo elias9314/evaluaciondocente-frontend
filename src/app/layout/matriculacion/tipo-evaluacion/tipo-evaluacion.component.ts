@@ -3,7 +3,7 @@ import {TipoEvaluacion} from '../modelos/tipo-evaluacion.model';
 import { ServiceService } from '../service.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { FormBuilder, FormGroup, Validators, FormControl, FormControlName, FormGroupName } from '@angular/forms';
 
 @Component({
   selector: 'app-tipo-evaluacion',
@@ -14,7 +14,8 @@ export class TipoEvaluacionComponent implements OnInit {
   tipoevaluaciones: Array<TipoEvaluacion>;
   tipoevaluacionSeleccionado: TipoEvaluacion;
   tipoevaluacion: TipoEvaluacion;
-
+  tipoevaluacionForm: FormGroup;
+  FormBuilder: any;
   constructor(private spinner: NgxSpinnerService, private service: ServiceService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -22,6 +23,7 @@ export class TipoEvaluacionComponent implements OnInit {
     this.tipoevaluacion = new TipoEvaluacion();
     this.tipoevaluacionSeleccionado = new TipoEvaluacion();
     this.tipoevaluaciones = new Array<TipoEvaluacion>();
+    this.formularioTipo();
   }
 
 //////////// método para traer los tipo de evaluación/////////////
@@ -40,6 +42,7 @@ export class TipoEvaluacionComponent implements OnInit {
         }
 ////////////////// método para ingresar un nuevo tipo de evaluación////////////////////////////
         postEvaluacion() {
+            if (this.tipoevaluacionForm.valid) {
           this.spinner.show();
           this.service.post('tipo_evaluacion', {'tipo_evaluacion': this.tipoevaluacionSeleccionado}).subscribe(
             response => {
@@ -51,12 +54,15 @@ export class TipoEvaluacionComponent implements OnInit {
               console.log('error');
             }
           );
+        } else {
+            alert('Registros no validos');
         }
+    }
 
 //////////// método para editar un registro tipo de evaluación//////////////////////////////////
 actualizarTipoEvaluacion(eva: TipoEvaluacion) {
    this.spinner.show();
-   this.service.update('tipo_evaluaciones', {'tipo_evaluacion': eva}).subscribe(
+   this.service.update('tipo_evaluacion', {'tipo_evaluacion': eva}).subscribe(
    response => {
       this.getTipoEvaluacion();
       console.log(response);
@@ -90,5 +96,15 @@ agregarTipoEvaluacion(content, eva) {
               }));
 
       }
+      formularioTipo() {
+          return this.tipoevaluacionForm = new FormGroup({
+              nombre: new FormControl('', [Validators.required, Validators.minLength(4)]),
+              evaluacion: new FormControl('', [Validators.required]),
+              estado: new FormControl('', [Validators.required])
+          });
+      }
+      get nombre() {return this.tipoevaluacionForm.get('nombre'); }
+      get evaluacion() {return this.tipoevaluacionForm.get('evaluacion'); }
+      get estado() {return this.tipoevaluacionForm.get('estado'); }
 }
 //////////////////////////////////////////////////////////

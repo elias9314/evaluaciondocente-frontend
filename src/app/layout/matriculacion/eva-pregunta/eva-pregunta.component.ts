@@ -5,6 +5,7 @@ import {EvaPregunta} from '../../notas/modelos/eva-pregunta.model';
 import { TipoEvaluacion } from '../../matriculacion/modelos/tipo-evaluacion.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { error } from 'util';
+import { FormBuilder, FormGroup, Validators, FormControl, FormControlName } from '@angular/forms';
 @Component({
   selector: 'app-eva-pregunta',
   templateUrl: './eva-pregunta.component.html',
@@ -16,7 +17,8 @@ export class EvaPreguntaComponent implements OnInit {
   pregunta: EvaPregunta;
   p = 2;
   tipos: Array<TipoEvaluacion>;
-  
+  eva_preguntasForm: FormGroup;
+  FormBuilder: any;
   constructor(private spinner: NgxSpinnerService, private service: ServiceService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -25,6 +27,7 @@ export class EvaPreguntaComponent implements OnInit {
     this.preguntas = new Array<EvaPregunta>();
     this.pregunta = new EvaPregunta();
     this.preguntaSeleccionada = new EvaPregunta();
+    this.formmularioPreguntas();
   }
 //////////// método para traer una lista de preguntas de evaluación docentes ///////////////
   getEvaPregunta() {
@@ -110,4 +113,20 @@ modalEvaPregunta(content, evapregunta) {
                   this.getEvaPregunta();
               }));
 }
+formmularioPreguntas() {
+    return this.eva_preguntasForm = new FormGroup({
+        evaluacion: new FormControl ('', [Validators.required]),
+        codigo: new FormControl('', [Validators.required, Validators.pattern('^([0-9])*$')]),
+        orden: new FormControl('', [Validators.required, Validators.pattern('^([0-9])*$')]),
+        preguntanombre: new FormControl('', [Validators.required]),
+        tipopregunta: new FormControl('', [Validators.required]),
+        estado: new FormControl('', [Validators.required]),
+    });
+}
+get evaluacion() {return this.eva_preguntasForm.get('evaluacion'); }
+get codigo() {return this.eva_preguntasForm.get('codigo'); }
+get orden() {return this.eva_preguntasForm.get('orden'); }
+get preguntanombre() {return this.eva_preguntasForm.get('preguntanombre'); }
+get tipopregunta() {return this.eva_preguntasForm.get('tipopregunta'); }
+get estado() {return this.eva_preguntasForm.get('estado'); }
 }
