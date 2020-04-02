@@ -93,13 +93,10 @@
                     <label for="identificacion">
                       <b class="text-danger">*</b> Identificación:
                   </label>
-                    <input formControlName="identificacion" id="identificacion" name="identificacion" type="number" [(ngModel)]="docenteSeleccionado.identificacion" class="text-uppercase form-control" required>
+                    <input formControlName="identificacion" id="identificacion" name="identificacion" type="text" [(ngModel)]="docenteSeleccionado.identificacion" class="text-uppercase form-control" required>
                     <div class="alert-danger" *ngIf="identificacion.invalid &&(identificacion.dirty || identificacion.touched)">
-                        <div class="container-error-mensage " *ngIf="identificacion.errors.required">
-                            identificacion es requerida
-                        </div>
-                        <div class="container-error-mensage " *ngIf="identificacion.invalid && (identificacion.dirty || identificacion.touched)">
-                            identificacion no valida
+                        <div class="container-error-mensage " *ngIf="identificacion.invalid &&(identificacion.dirty  || identificacion.touched)">
+                            identificacion debe tener minimo 10 caracteres y maximo 11
                         </div>
                     </div>
                 </div>
@@ -111,10 +108,8 @@
               </label>
                     <input formControlName="apellido1" id="apellido1" name="apellido1" type="text" [(ngModel)]="docenteSeleccionado.apellido1" class="text-uppercase form-control" required>
                     <div class="alert-danger" *ngIf="apellido1.invalid &&(apellido1.dirty || apellido1.touched)">
-                        <div class="container-error-mensage " *ngIf="apellido1.errors.required"> Apellido es requerida
-                        </div>
                         <div class="container-error-mensage " *ngIf="apellido1.invalid">
-                            Apellido necesita almenos 4 letras
+                            Apellido necesita almenos 4 letras tambien letras mayusculas y solo letras
                         </div>
                     </div>
                 </div>
@@ -124,10 +119,8 @@
             </label>
                     <input formControlName="nombre1" id="nombre1" name="nombre1" type="text" [(ngModel)]="docenteSeleccionado.nombre1" class="text-uppercase form-control" required>
                     <div class="alert-danger" *ngIf="nombre1.invalid &&(nombre1.dirty || nombre1.touched)">
-                        <div class="container-error-mensage " *ngIf="nombre1.errors.required"> Nombre es requerida
-                        </div>
                         <div class="container-error-mensage " *ngIf="nombre1.invalid">
-                            Nombre necesita almenos 4 letras
+                            Nombre necesita almenos 4 letras tambien letras mayusculas y solo letras
                         </div>
                     </div>
                 </div>
@@ -140,8 +133,6 @@
                     </label>
                     <input formControlName="correo_institucional" id="correo" name="correo" type="email" [(ngModel)]="docenteSeleccionado.correo_institucional" class="text-lowercase form-control" required>
                     <div class="alert-danger" *ngIf="correo_institucional.invalid &&(correo_institucional.dirty || correo_institucional.touched)">
-                        <div class="container-error-mensage " *ngIf="correo_institucional.errors.required"> Email es requerida
-                        </div>
                         <div class="container-error-mensage " *ngIf="correo_institucional.invalid">
                             El email no tiene la caracteristicas correctas
                         </div>
@@ -161,10 +152,6 @@
                             <option value="ACTIVO">ACTIVO</option>
                         <option value="INACTIVO">INACTIVO</option>
           </select>
-                    <div class="alert-danger" *ngIf="estado.invalid &&(estado.dirty || estado.touched)">
-                        <div class="container-error-mensage " *ngIf="estado.errors.required"> El estado es requerido
-                        </div>
-                    </div>
                 </div>
             </div>
             <br>

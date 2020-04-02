@@ -282,9 +282,9 @@ getUsuario() {
      return this.profesoresForm = new FormGroup({
         tipo_identificacion: new FormControl('', [Validators.required]),
          // tslint:disable-next-line:max-line-length
-         identificacion: new FormControl ('', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^([0-9])*$')]),
-         apellido1: new FormControl('', [Validators.required, Validators.minLength(4)]),
-         nombre1: new FormControl('', [Validators.required, Validators.minLength(4)]),
+         identificacion: new FormControl ('', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]),
+         apellido1: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Z])*$')]),
+         nombre1: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Z])*$')]),
          // tslint:disable-next-line:max-line-length
          correo_institucional: new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern('^[a-z]+\.[a-z]+@' + 'yavirac.edu.ec')]),
          estado: new FormControl('', [Validators.required])

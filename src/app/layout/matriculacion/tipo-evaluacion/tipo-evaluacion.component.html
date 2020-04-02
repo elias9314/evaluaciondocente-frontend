@@ -41,10 +41,8 @@
           </label>
                     <input formControlName="nombre" id="nombre" name="nombre" type="text" [(ngModel)]="tipoevaluacionSeleccionado.nombre" class="text-uppercase form-control" required>
                     <div class="alert-danger" *ngIf="nombre.invalid &&(nombre.dirty || nombre.touched)">
-                        <div class="container-error-mensage " *ngIf="nombre.errors.required"> Tipo de Evaluacion es requerida
-                        </div>
                         <div class="container-error-mensage " *ngIf="nombre.invalid">
-                            Tipo de evaluacion necesita almenos 4 letras
+                            Tipo de evaluacion necesita almenos 4 letras, Solo acepta en mayuscula
                         </div>
                     </div>
                 </div>
@@ -56,8 +54,6 @@
           </label>
                     <input formControlName="evaluacion" id="evaluacion" name="evaluacion" type="number" [(ngModel)]="tipoevaluacionSeleccionado.evaluacion" class="text-uppercase form-control" required>
                     <div class="alert-danger" *ngIf="evaluacion.invalid &&(evaluacion.dirty || evaluacion.touched)">
-                        <div class="container-error-mensage " *ngIf="evaluacion.errors.required"> Evaluacion es requerida
-                        </div>
                         <div class="container-error-mensage " *ngIf="evaluacion.invalid">
                             campo invalido
                         </div>
@@ -81,6 +77,9 @@
                 </div>
                 <br>
                 <div class="modal-footer">
+                    <h6 class="text-muted">
+                        <b class="text-danger">Todos los campos son requeridos </b>
+                    </h6>
                     <button type="button" class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid"><i class="fa fa-check" aria-hidden="true">&nbsp; Ok</i></button>
                     <button type="button" class="btn btn-danger" (click)="c('close')"><i class="fa fa-times-circle" aria-hidden="true">&nbsp; Cerrar</i></button>
                 </div>
