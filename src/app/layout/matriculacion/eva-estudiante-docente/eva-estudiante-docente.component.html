@@ -26,19 +26,20 @@
 </div>
 
 <div *ngIf="!flagInformacionEstudiante">
-    <div *ngFor="let pregunta of evaPreguntas">
+    <div *ngFor="let mostrar of mostrarPregunta">
         <div class="row">
             <div class="col-lg-12 form-control ml-5">
-                <label for="{{pregunta.id}}">{{pregunta.orden + '. ' + pregunta.pregunta}}</label>
+                <label for="{{mostrar.orden}}">{{mostrar.orden + '. '+ mostrar.nombre+ '. ' + mostrar.eva_respuesta}}</label>
+            </div>
+            <div >
             </div>
         </div>
-        <div class="row ml-5 mb-5 mt-1">
-            <div class="col-lg-3" *ngFor="let respuesta of cantidadRespuestas,let indice = index">
-                <input id="{{indice+1}}" type="radio" name="{{pregunta.id}}" [checked]="pregunta.valor==indice+1"
-                       (click)="updateRespuesta($event,pregunta)">
+        <!-- <div class="row ml-5 mb-5 mt-1">
+            <div class="col-lg-3" *ngFor="let respuesta of mostrarPregunta">
+                <input id="{{indice+1}}" type="radio" name="{{respuesta.valor}" 
+                      >
                 {{indice + 1}}
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
-

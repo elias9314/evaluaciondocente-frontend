@@ -35,6 +35,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     matricula: Matricula;
     user: User;
     tab: any;
+    mostrarPregunta:any;
     cantidadRespuestas: Array<number>;
 
     constructor(private spinner: NgxSpinnerService, private service: ServiceService) {
@@ -47,6 +48,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
         this.flagInformacionEstudiante = false;
         this.messages = catalogos.messages;
         this.getEstudiante();
+        this.mostrarPreguntas();
     }
 
     getEstudiante() {
@@ -96,6 +98,8 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                         this.spinner.hide();
                         if (error.error.errorInfo[0] === '001') {
                             swal.fire(this.messages['error001']);
+                
+                
                         } else {
                             swal.fire(this.messages['error500']);
                         }
@@ -128,5 +132,24 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                     swal.fire(this.messages['error500']);
                 }
             });
+    }
+    mostrarPreguntas(){
+        this.spinner.show();
+        let parameters = '?tipo_evaluacion=1';
+        this.service.get('eva_preguntas_eva_respuestas'+ parameters).subscribe(
+            response => {
+                this.mostrarPregunta = response['eva_pregunta_eva_respuesta'];
+                console.log('Preguntas',response);
+                this.spinner.hide();
+
+               
+                    },
+                    error => {
+                        this.spinner.hide();
+                        console.log('error');
+                
+                    });
+
+           
     }
 }
