@@ -4,6 +4,7 @@ import { ServiceService } from '../service.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators, FormControl, FormControlName, FormGroupName } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tipo-evaluacion',
@@ -16,6 +17,7 @@ export class TipoEvaluacionComponent implements OnInit {
   tipoevaluacion: TipoEvaluacion;
   tipoevaluacionForm: FormGroup;
   FormBuilder: any;
+  respuesta: any = [];
   constructor(private spinner: NgxSpinnerService, private service: ServiceService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -34,6 +36,9 @@ export class TipoEvaluacionComponent implements OnInit {
         this.tipoevaluaciones = response['tipo'];
         console.log(response);
         this.spinner.hide();
+        this.tipoevaluaciones.forEach(result => {
+            this.respuesta.push(result.evaluacion);
+        });
                  },
     error => {
         this.spinner.hide();
@@ -42,21 +47,31 @@ export class TipoEvaluacionComponent implements OnInit {
         }
 ////////////////// método para ingresar un nuevo tipo de evaluación////////////////////////////
         postEvaluacion() {
-            if (this.tipoevaluacionForm.valid) {
-          this.spinner.show();
-          this.service.post('tipo_evaluacion', {'tipo_evaluacion': this.tipoevaluacionSeleccionado}).subscribe(
-            response => {
-              this.getTipoEvaluacion();
-              console.log(response);
-            },
-            error => {
-              this.spinner.hide();
-              console.log('error');
+            if (this.respuesta !== this.respuesta) {
+                if (this.tipoevaluacionForm.valid) {
+                    this.spinner.show();
+                    this.service.post('tipo_evaluacion', {'tipo_evaluacion': this.tipoevaluacionSeleccionado}).subscribe(
+                      response => {
+                        this.getTipoEvaluacion();
+                        console.log(response);
+                      },
+                      error => {
+                        this.spinner.hide();
+                        console.log('error');
+                      }
+                    );
+                  } else {
+                      alert('Registros no validos');
+                  }
+            } else {
+                // alert ('El registro evaluacion esta duplicado porfavor intente con otro numero');
+                Swal.fire(
+                     'error',
+                     'El registro evaluacion esta duplicado por favor intente con otro numero',
+                     'error'
+                    //  'Something went wrong!'
+                );
             }
-          );
-        } else {
-            alert('Registros no validos');
-        }
     }
 
 //////////// método para editar un registro tipo de evaluación//////////////////////////////////
