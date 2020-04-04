@@ -36,6 +36,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     user: User;
     tab: any;
     mostrarPregunta:any;
+    
     cantidadRespuestas: Array<number>;
 
     constructor(private spinner: NgxSpinnerService, private service: ServiceService) {
@@ -49,6 +50,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
         this.messages = catalogos.messages;
         this.getEstudiante();
         this.mostrarPreguntas();
+        //this.getNombreDocente();
     }
 
     getEstudiante() {
@@ -69,6 +71,9 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                     swal.fire(this.messages['error500']);
                 }
             });
+    }
+    getOneDocente(){
+        
     }
 
     evaluate() {
@@ -152,4 +157,22 @@ export class EvaEstudianteDocenteComponent implements OnInit {
 
            
     }
+    // getNombreDocente(){
+    //     this.spinner.show();
+        
+    //     let parameters = '?paralelo=1&jornada=1&periodo_lectivo_id=4&asignatura_id=552';
+    //     this.service.get('nombre_docente'+ parameters).subscribe(
+    //         response => {
+    //             this.nombreDocente = response['docente_asignatura_nombre'];
+    //             console.log('Asignatura-Docente',response);
+    //             this.spinner.hide();
+
+               
+    //                 },
+    //                 error => {
+    //                     this.spinner.hide();
+    //                     console.log('error');
+                
+    //                 });
+    // }
 }

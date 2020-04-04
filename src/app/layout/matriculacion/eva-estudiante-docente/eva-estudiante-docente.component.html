@@ -13,6 +13,9 @@
                 </div>
             </div>
             <div class="card-body text-center">
+                <p>
+                    {{asignaturaMatricula.apellido1 + ' ' + asignaturaMatricula.nombre1}}
+                </p>
                 <button class="btn btn-primary" *ngIf="asignaturaMatricula.estado_evaluacion!='EVALUADO'"
                         (click)="evaluate()">
                     EVALUAR
@@ -26,6 +29,7 @@
 </div>
 
 <div *ngIf="!flagInformacionEstudiante">
+    <br>
     <div *ngFor="let mostrar of mostrarPregunta">
         <div class="row">
             <div class="col-lg-12 form-control ml-5">
@@ -41,5 +45,9 @@
                 {{indice + 1}}
             </div>
         </div> -->
+    </div>
+    <div *ngFor="let respuestas of mostrarPregunta">
+        <input type="checkbox" [(ngModel)]="respuestas.valor"/>
+        <label>{{respuestas.valor}}</label>
     </div>
 </div>
