@@ -15,7 +15,9 @@ import {AsignaturaMatricula} from '../modelos/asignatura-matricula.model';
 import { mergeMap, groupBy, reduce, map, toArray } from 'rxjs/operators';
 import { of } from 'rxjs';
 ﻿import { from } from 'rxjs';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { ThemeService } from 'ng2-charts';
 @Component({
     selector: 'app-eva-estudiante-docente',
     templateUrl: './eva-estudiante-docente.component.html',
@@ -43,8 +45,11 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     datademo: any = [];
     listarespuesta: any = [];
     enviarrespuesta: any = [];
-
-    constructor(private spinner: NgxSpinnerService, private service: ServiceService) {
+    usersID: any = [];
+    respuesta: any [];
+    idAsigantura: any = [];
+    resultado: any[];
+    constructor(private spinner: NgxSpinnerService, private service: ServiceService, private http: HttpClient) {
     }
 
     ngOnInit() {
@@ -60,12 +65,25 @@ export class EvaEstudianteDocenteComponent implements OnInit {
         this.spinner.show();
         this.service.get('estudiantes/asignaturas_actual?user_id=' + this.user.id + '&periodo_lectivo_id=4').subscribe(
             response => {
-                console.log(response);
                 this.asignaturasMatricula = response['asignaturas_matricula'];
                 this.spinner.hide();
+                this.asignaturasMatricula.forEach(result => {
+                    this.http.get<any>(environment.API_URL + 'docentes/' + result.user_id ).subscribe(res => {
+                       result.docente = res['docente'][0];
+                    });
+                });
+                console.log(this.asignaturasMatricula);
+
+                // this.asignaturasMatricula.forEach(result => {
+                //     console.log(result);
+                //     console.log(this.asignaturasMatricula);
+                //     this.usersID.push(result.user_id);
+                //     console.log(result.codigo);
+                // });
                 this.flagInformacionEstudiante = true;
             },
             error => {
+                console.log(error);
                 this.flagInformacionEstudiante = false;
                 this.spinner.hide();
                 if (error.error.errorInfo[0] === '001') {
@@ -76,10 +94,10 @@ export class EvaEstudianteDocenteComponent implements OnInit {
             });
     }
 
-    evaluate() {
+    evaluate(idAsignatura?, idUsuario?) {
         this.spinner.show();
         let parameters = '?periodo_lectivo_id=4&asignatura_id=512&paralelo=1&jornada=1';
-        this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
+         this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
             response => {
                 this.docenteAsignatura = response['docente_asignatura'][0];
                 this.spinner.hide();
@@ -87,6 +105,8 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                 parameters = '?docente_asignatura_id=512' + '&user_id=551' ;
                 this.service.get('estudiantes/eva_preguntas' + parameters).subscribe(
                     response2 => {
+                        this.getOne(idAsignatura);
+                        this.getid(idUsuario);
                         this.evaPreguntas = new Array<any>();
                         this.evaPreguntas = response2['eva_preguntas'];
                         this.spinner.hide();
@@ -169,7 +189,7 @@ console.log(this.enviarrespuesta);
             response => {
                 this.mostrarPregunta = response['eva_pregunta_eva_respuesta'];
                 console.log('Preguntas', response);
-                this.flagInformacionEstudiante = false;
+                // this.flagInformacionEstudiante = false;
 
                 const source = from(this.mostrarPregunta);
                 // group by age
@@ -197,10 +217,37 @@ console.log(this.enviarrespuesta);
                         console.log('error');
 
                     });
+    }
+    getid(codigo: number) {
+        console.log(codigo);
+        localStorage.removeItem('codigo');
+        localStorage.setItem('codigo', codigo.toString());
+        console.log(this.usersID);
+        console.log(codigo);
+        // if (codigo === this.usersID) {
+            // this.service.get('docentes/' + codigo ).subscribe(
+            //     response => {
+            //         console.log(response);
+            //         this.respuesta = response['docentes'];
+            //     });
 
-
-
-
-
+            this.http.get<any>(environment.API_URL + 'docentes/' + codigo ).subscribe(response => {
+                console.log(response);
+                this.respuesta = response['docente'];
+                console.log(this.respuesta);
+            });
+        // }
+    }
+    getOne(id: number) {
+        console.log(id);
+        localStorage.removeItem('id');
+        localStorage.setItem('id', id.toString());
+        console.log(this.idAsigantura);
+        console.log(id);
+        this.http.get<any>(environment.API_URL + 'asignaturaEstudiante/' + id ).subscribe(response => {
+            console.log(response);
+            this.resultado = response['asignatura'];
+            console.log(this.resultado);
+        });
     }
 }
