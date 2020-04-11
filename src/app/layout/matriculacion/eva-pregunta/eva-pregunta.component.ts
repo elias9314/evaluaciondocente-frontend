@@ -6,6 +6,7 @@ import { TipoEvaluacion } from '../../matriculacion/modelos/tipo-evaluacion.mode
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { error } from 'util';
 import { FormBuilder, FormGroup, Validators, FormControl, FormControlName } from '@angular/forms';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-eva-pregunta',
   templateUrl: './eva-pregunta.component.html',
@@ -19,6 +20,7 @@ export class EvaPreguntaComponent implements OnInit {
   tipos: Array<TipoEvaluacion>;
   eva_preguntasForm: FormGroup;
   FormBuilder: any;
+  respuesta: any = [];
   constructor(private spinner: NgxSpinnerService, private service: ServiceService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -37,6 +39,9 @@ export class EvaPreguntaComponent implements OnInit {
         this.preguntas = response['preguntas'];
          console.log(response);
         this.spinner.hide();
+        this.preguntas.forEach(result => {
+            this.respuesta.push(result.orden);
+        });
                  },
     Error => {
         this.spinner.hide();
@@ -59,18 +64,27 @@ export class EvaPreguntaComponent implements OnInit {
   }
 /////////////// método para crear una pregunta de evaluación docente ////////////////
 createEvaPregunta() {
-  this.spinner.show();
+    if (this.respuesta !== this.respuesta) {
+        this.spinner.show();
 
-  this.service.post('evaluacion_pregunta', {'eva_preguntas': this.preguntaSeleccionada}).subscribe(
-    response => {
-      this.getEvaPregunta();
-      console.log(response);
-    },
-    Error => {
-      this.spinner.hide();
-      console.log('error');
+        this.service.post('evaluacion_pregunta', {'eva_preguntas': this.preguntaSeleccionada}).subscribe(
+          response => {
+            this.getEvaPregunta();
+            console.log(response);
+          },
+          Error => {
+            this.spinner.hide();
+            console.log('error');
+          }
+        );
+    } else {
+        Swal.fire(
+            'error',
+            'El registro orden esta duplicado por favor intente con otro numero',
+            'error'
+           //  'Something went wrong!'
+       );
     }
-  );
 }
 ////////////// método para actualizar una pregunta de evaluación docente //////////////////
 
