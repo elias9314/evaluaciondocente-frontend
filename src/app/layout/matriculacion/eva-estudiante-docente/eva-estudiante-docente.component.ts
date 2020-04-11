@@ -169,8 +169,6 @@ console.log(this.enviarrespuesta);
             response => {
                 this.mostrarPregunta = response['eva_pregunta_eva_respuesta'];
                 console.log('Preguntas', response);
-                this.flagInformacionEstudiante = false;
-
                 const source = from(this.mostrarPregunta);
                 // group by age
                 const example = source.pipe(
@@ -189,8 +187,6 @@ console.log(this.enviarrespuesta);
              const subscribe = resp.subscribe(val =>
                 this.listarespuesta.push(val));
                 console.log(this.listarespuesta[0]);
-
-
                     },
                     error => {
                         this.spinner.hide();

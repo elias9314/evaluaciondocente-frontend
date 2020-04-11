@@ -26,10 +26,13 @@
 </div>
 
 <div *ngIf="!flagInformacionEstudiante">
+    <div *ngFor="let docente of docenteAsignatura">
+       <td>{{docente.docente.nombre1}}</td>
+    </div>
     <div *ngFor="let mostrar of listarespuesta[0]; let i = index ">
         <div class="row">
             <div class="col-lg-12 form-control ml-5">
-                <label for="{{mostrar.orden}}">{{ mostrar.pregunta}}</label>
+                <label for="{{mostrar.orden}}">{{ i+1 + '. ' + mostrar.pregunta}}</label>
             </div>
             <div >
             </div>
