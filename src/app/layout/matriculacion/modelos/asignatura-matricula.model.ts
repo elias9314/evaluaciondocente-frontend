@@ -4,6 +4,14 @@ import {TipoMatricula} from './tipo-matricula.model';
 
 
 export class AsignaturaMatricula {
+    idAsignatura(idAsignatura: any) {
+        throw new Error("Method not implemented.");
+    }
+    user_id(user_id: any) {
+        throw new Error("Method not implemented.");
+    }
+
+    docente?:any;
     id?: number;
     codigo: string;
     nombre: string;
