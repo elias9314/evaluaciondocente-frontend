@@ -15,6 +15,7 @@ import {AsignaturaMatricula} from '../modelos/asignatura-matricula.model';
 import { mergeMap, groupBy, reduce, map, toArray } from 'rxjs/operators';
 import { of } from 'rxjs';
 ﻿import { from } from 'rxjs';
+import {DocenteAsignatura} from '../modelos/docente-asignatura.model';
 
 @Component({
     selector: 'app-eva-estudiante-docente',
@@ -43,17 +44,29 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     datademo: any = [];
     listarespuesta: any = [];
     enviarrespuesta: any = [];
+    usersID: any = [];
+    idAsigantura: any = [];
+    idDocenteAsignatura: any = [];
+    respuesta: any = [];
+    resultado: any = [];
+    resultadoDocenteAsignatura: any [];
+    docenteAsig: DocenteAsignatura;
+    docenteAsignaturas: Array<DocenteAsignatura>;
 
     constructor(private spinner: NgxSpinnerService, private service: ServiceService) {
     }
 
     ngOnInit() {
         this.user = JSON.parse(localStorage.getItem('user')) as User;
+        this.docenteAsig = JSON.parse(localStorage.getItem('docenteAsignatura')) as DocenteAsignatura;
+        this.docenteAsignaturas = new Array<DocenteAsignatura>();
         this.asignaturasMatricula = new Array<AsignaturaMatricula>();
         this.flagInformacionEstudiante = false;
         this.messages = catalogos.messages;
         this.getEstudiante();
         this.mostrarPreguntas();
+        // this.getid(1801);
+        // this.getOne(552);
     }
 
     getEstudiante() {
@@ -76,17 +89,19 @@ export class EvaEstudianteDocenteComponent implements OnInit {
             });
     }
 
-    evaluate() {
+    evaluate(idAsignatura?, idUsuario?) {
         this.spinner.show();
         let parameters = '?periodo_lectivo_id=4&asignatura_id=512&paralelo=1&jornada=1';
         this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
             response => {
-                this.docenteAsignatura = response['docente_asignatura'][0];
+                // this.docenteAsignatura = response['docente_asignatura'][0];
                 this.spinner.hide();
                 this.flagInformacionEstudiante = false;
                 parameters = '?docente_asignatura_id=512' + '&user_id=551' ;
                 this.service.get('estudiantes/eva_preguntas' + parameters).subscribe(
                     response2 => {
+                        this.getOne(idAsignatura);
+                        this.getid(idUsuario);
                         this.evaPreguntas = new Array<any>();
                         this.evaPreguntas = response2['eva_preguntas'];
                         this.spinner.hide();
@@ -194,9 +209,26 @@ console.log(this.enviarrespuesta);
 
                     });
 
+    }
 
+    getid(id: number) {
+        localStorage.removeItem('id');
+        localStorage.setItem('id', id.toString());
+        this.service.get('docentes/' + id).subscribe(
+            response => {
+                console.log(response);
+                this.respuesta = response['docente'];
+                console.log(this.respuesta);
+            });
 
-
-
+    }
+    getOne(id: number) {
+        localStorage.removeItem('id');
+        localStorage.setItem('id', id.toString());
+        this.service.get('asignaturaEstudiante/' + id ).subscribe(response => {
+            console.log(response);
+            this.resultado = response['asignatura'];
+            console.log(this.resultado);
+        });
     }
 }
