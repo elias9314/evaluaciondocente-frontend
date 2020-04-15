@@ -15,12 +15,9 @@ import {AsignaturaMatricula} from '../modelos/asignatura-matricula.model';
 import { mergeMap, groupBy, reduce, map, toArray } from 'rxjs/operators';
 import { of } from 'rxjs';
 ﻿import { from } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { ThemeService } from 'ng2-charts';
 import {DocenteAsignatura} from '../modelos/docente-asignatura.model';
-import { Docente } from '../modelos/docente.model';
 import {Resultado} from '../modelos/resultado.model';
+
 @Component({
     selector: 'app-eva-estudiante-docente',
     templateUrl: './eva-estudiante-docente.component.html',
@@ -32,7 +29,6 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     docenteAsignatura: any;
     flagInformacionEstudiante: boolean;
     asignaturasMatricula: Array<AsignaturaMatricula>;
-    docenteAsignaturas: Array<DocenteAsignatura>;
     flagSeccion1: boolean;
     flagSeccion2: boolean;
     flagSeccion3: boolean;
@@ -44,75 +40,64 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     matricula: Matricula;
     user: User;
     tab: any;
-    docenteAsig:DocenteAsignatura;
-    docente:Docente;
     mostrarPregunta: Array<any>;
     cantidadRespuestas: Array<number>;
     datademo: any = [];
     listarespuesta: any = [];
     enviarrespuesta: any = [];
     usersID: any = [];
-    respuesta: any [];
-    resultadoSeleccionado: Resultado;
     idAsigantura: any = [];
     idDocenteAsignatura: any = [];
-    resultado: any[];
-    resultadoDocenteAsignatura:any[];
+    respuesta: any = [];
+    resultado: any = [];
+    resultadoDocenteAsignatura: any [];
+    docenteAsig: DocenteAsignatura;
+    docenteAsignaturas: Array<DocenteAsignatura>;
+    resultadoSeleccionado: Resultado;
 
-    ejemplo:any[];
-    constructor(private spinner: NgxSpinnerService, private service: ServiceService, private http: HttpClient) {
+
+    constructor(private spinner: NgxSpinnerService, private service: ServiceService) {
     }
 
     ngOnInit() {
         this.user = JSON.parse(localStorage.getItem('user')) as User;
-        this.docenteAsig= JSON.parse(localStorage.getItem('docenteAsignatura')) as DocenteAsignatura;
+        this.docenteAsig = JSON.parse(localStorage.getItem('docenteAsignatura')) as DocenteAsignatura;
+        this.docenteAsignaturas = new Array<DocenteAsignatura>();
         this.asignaturasMatricula = new Array<AsignaturaMatricula>();
-        //this.docenteAsignaturas= new Array<DocenteAsignatura>();
         this.flagInformacionEstudiante = false;
         this.messages = catalogos.messages;
         this.getEstudiante();
         this.mostrarPreguntas();
-        //this.traerDocenteAsignatura();
-
+        // this.getid(1801);
+        // this.getOne(552);
     }
 
     getEstudiante() {
         this.spinner.show();
         this.service.get('estudiantes/asignaturas_actual?user_id=' + this.user.id + '&periodo_lectivo_id=4').subscribe(
             response => {
+                console.log(response);
                 this.asignaturasMatricula = response['asignaturas_matricula'];
                 this.spinner.hide();
-                console.log(this.asignaturasMatricula);
-                this.asignaturasMatricula.forEach(result => {
-                    this.http.get<any>(environment.API_URL + 'docentes/' + result.user_id ).subscribe(res => {
-                       result.docente = res['docente'][0];
-                    });
-                });
-                console.log(this.asignaturasMatricula);
-
-                // this.asignaturasMatricula.forEach(result => {
-                //     console.log(result);
-                //     console.log(this.asignaturasMatricula);
-                //     this.usersID.push(result.user_id);
-                //     console.log(result.codigo);
-                // });
                 this.flagInformacionEstudiante = true;
             },
             error => {
-                console.log(error);
                 this.flagInformacionEstudiante = false;
                 this.spinner.hide();
-                swal.fire(this.messages['error500']);
-
+                if (error.error.errorInfo[0] === '001') {
+                    swal.fire(this.messages['error001']);
+                } else {
+                    swal.fire(this.messages['error500']);
+                }
             });
     }
 
     evaluate(idAsignatura?, idUsuario?) {
         this.spinner.show();
         let parameters = '?periodo_lectivo_id=4&asignatura_id=512&paralelo=1&jornada=1';
-         this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
+        this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
             response => {
-                this.docenteAsignatura = response['docente_asignatura'][0];
+                // this.docenteAsignatura = response['docente_asignatura'][0];
                 this.spinner.hide();
                 this.flagInformacionEstudiante = false;
                 parameters = '?docente_asignatura_id=512' + '&user_id=551' ;
@@ -189,8 +174,8 @@ console.log(this.enviarrespuesta);
             valor:respuesta.valor,
             tipo:'CUANTITATIVA',
             estado:'ACTIVO',
-            eva_pregunta_eva_respuesta:null,
-            estudiante:this.user.id,
+            eva_pregunta_eva_respuesta: null,
+            estudiante:this.estudiante.id,
             docente_asignatura: null
           });
         //   this.ejemplo.splice(dt, 1);
@@ -215,7 +200,7 @@ console.log(this.enviarrespuesta);
             tipo:'CUANTITATIVA',
             estado:'ACTIVO',
             eva_pregunta_eva_respuesta:null,
-            estudiante:this.user.id,
+            estudiante:this.estudiante.id,
             docente_asignatura: null
             // this.service.post('resultado', {'valor': this.resultadoSeleccionado}).subscribe(
             //     response => {
@@ -238,11 +223,8 @@ console.log(this.enviarrespuesta);
         // })
 
     }
-console.log('es esto',this.enviarrespuesta);
-console.log('La magia',this.ejemplo);
-
+    console.log('es esto',this.enviarrespuesta);
     }
-
 
     mostrarPreguntas() {
         this.spinner.show();
@@ -251,8 +233,6 @@ console.log('La magia',this.ejemplo);
             response => {
                 this.mostrarPregunta = response['eva_pregunta_eva_respuesta'];
                 console.log('Preguntas', response);
-                // this.flagInformacionEstudiante = false;
-
                 const source = from(this.mostrarPregunta);
                 // group by age
                 const example = source.pipe(
@@ -263,7 +243,7 @@ console.log('La magia',this.ejemplo);
                   const subscribes = example.subscribe(val =>
                     this.datademo.push(val)
                     );
-                console.log('datademo',this.datademo);
+                console.log(this.datademo);
              const resp = source.pipe(
                  groupBy(respuesta => respuesta.id),
                  mergeMap(group => group.pipe(toArray()))
@@ -271,60 +251,36 @@ console.log('La magia',this.ejemplo);
              const subscribe = resp.subscribe(val =>
                 this.listarespuesta.push(val));
                 console.log(this.listarespuesta[0]);
-
-
                     },
                     error => {
                         this.spinner.hide();
                         console.log('error');
 
                     });
-    }
-    getid(codigo: number) {
-        console.log(codigo);
-        localStorage.removeItem('codigo');
-        localStorage.setItem('codigo', codigo.toString());
-        console.log(this.usersID);
-        console.log(codigo);
-        // if (codigo === this.usersID) {
-            // this.service.get('docentes/' + codigo ).subscribe(
-            //     response => {
-            //         console.log(response);
-            //         this.respuesta = response['docentes'];
-            //     });
 
-            this.http.get<any>(environment.API_URL + 'docentes/' + codigo ).subscribe(response => {
+    }
+
+    getid(id: number) {
+        localStorage.removeItem('id');
+        localStorage.setItem('id', id.toString());
+        this.service.get('docentes/' + id).subscribe(
+            response => {
                 console.log(response);
                 this.respuesta = response['docente'];
                 console.log(this.respuesta);
             });
-        // }
+
     }
     getOne(id: number) {
-        console.log(id);
         localStorage.removeItem('id');
         localStorage.setItem('id', id.toString());
-        console.log(this.idAsigantura);
-        console.log(id);
-        this.http.get<any>(environment.API_URL + 'asignaturaEstudiante/' + id ).subscribe(response => {
+        this.service.get('asignaturaEstudiante/' + id ).subscribe(response => {
             console.log(response);
             this.resultado = response['asignatura'];
             console.log(this.resultado);
         });
     }
-    // getIdDocenteAsignatura(id:number){
-    //     console.log(id);
-    //     localStorage.removeItem('id');
-    //     localStorage.setItem('id', id.toString());
-    //     console.log(this.idDocenteAsignatura);
-    //     console.log(id);
-    //     this.http.get<any>(environment.API_URL+'asignatura_docente/' +id).subscribe(response => {
-    //         console.log(response);
-    //         this.resultadoDocenteAsignatura = response['docente_asignatura'];
-    //         console.log(this.resultadoDocenteAsignatura);
-    //     });
 
-    // }
     guardarResultados(){
         if(this.respuesta !== this.respuesta){
             this.spinner.show();

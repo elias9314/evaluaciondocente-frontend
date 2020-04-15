@@ -8,7 +8,7 @@ export class Resultado {
 
     constructor() {
         this.valor = '';
-        this.tipo = '';
+        this.tipo = 'CUANTITATIVA';
         this.estado = 'ACTIVO';
     }
 }
