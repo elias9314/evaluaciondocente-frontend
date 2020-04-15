@@ -15,9 +15,12 @@ import {AsignaturaMatricula} from '../modelos/asignatura-matricula.model';
 import { mergeMap, groupBy, reduce, map, toArray } from 'rxjs/operators';
 import { of } from 'rxjs';
 ﻿import { from } from 'rxjs';
-import { AdminResultadosComponent } from '../admin-resultados/admin-resultados.component';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { ThemeService } from 'ng2-charts';
+import {DocenteAsignatura} from '../modelos/docente-asignatura.model';
+import { Docente } from '../modelos/docente.model';
 import {Resultado} from '../modelos/resultado.model';
-
 @Component({
     selector: 'app-eva-estudiante-docente',
     templateUrl: './eva-estudiante-docente.component.html',
@@ -29,6 +32,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     docenteAsignatura: any;
     flagInformacionEstudiante: boolean;
     asignaturasMatricula: Array<AsignaturaMatricula>;
+    docenteAsignaturas: Array<DocenteAsignatura>;
     flagSeccion1: boolean;
     flagSeccion2: boolean;
     flagSeccion3: boolean;
@@ -40,54 +44,73 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     matricula: Matricula;
     user: User;
     tab: any;
+    docenteAsig:DocenteAsignatura;
+    docente:Docente;
     mostrarPregunta: Array<any>;
     cantidadRespuestas: Array<number>;
     datademo: any = [];
     listarespuesta: any = [];
     enviarrespuesta: any = [];
-    respuesta: any= [];
-    resultadoSeleccionado:  Resultado;
+    usersID: any = [];
+    respuesta: any [];
+    resultadoSeleccionado: Resultado;
+    idAsigantura: any = [];
+    idDocenteAsignatura: any = [];
+    resultado: any[];
+    resultadoDocenteAsignatura:any[];
 
-    constructor(private spinner: NgxSpinnerService, private service: ServiceService) {
+    ejemplo:any[];
+    constructor(private spinner: NgxSpinnerService, private service: ServiceService, private http: HttpClient) {
     }
 
     ngOnInit() {
         this.user = JSON.parse(localStorage.getItem('user')) as User;
+        this.docenteAsig= JSON.parse(localStorage.getItem('docenteAsignatura')) as DocenteAsignatura;
         this.asignaturasMatricula = new Array<AsignaturaMatricula>();
+        //this.docenteAsignaturas= new Array<DocenteAsignatura>();
         this.flagInformacionEstudiante = false;
         this.messages = catalogos.messages;
         this.getEstudiante();
         this.mostrarPreguntas();
-        //this.getNombreDocente();
+        //this.traerDocenteAsignatura();
+
     }
 
     getEstudiante() {
         this.spinner.show();
         this.service.get('estudiantes/asignaturas_actual?user_id=' + this.user.id + '&periodo_lectivo_id=4').subscribe(
             response => {
-                console.log(response);
                 this.asignaturasMatricula = response['asignaturas_matricula'];
                 this.spinner.hide();
+                console.log(this.asignaturasMatricula);
+                this.asignaturasMatricula.forEach(result => {
+                    this.http.get<any>(environment.API_URL + 'docentes/' + result.user_id ).subscribe(res => {
+                       result.docente = res['docente'][0];
+                    });
+                });
+                console.log(this.asignaturasMatricula);
+
+                // this.asignaturasMatricula.forEach(result => {
+                //     console.log(result);
+                //     console.log(this.asignaturasMatricula);
+                //     this.usersID.push(result.user_id);
+                //     console.log(result.codigo);
+                // });
                 this.flagInformacionEstudiante = true;
             },
             error => {
+                console.log(error);
                 this.flagInformacionEstudiante = false;
                 this.spinner.hide();
-                if (error.error.errorInfo[0] === '001') {
-                    swal.fire(this.messages['error001']);
-                } else {
-                    swal.fire(this.messages['error500']);
-                }
+                swal.fire(this.messages['error500']);
+
             });
     }
-    getOneDocente(){
-        
-    }
 
-    evaluate() {
+    evaluate(idAsignatura?, idUsuario?) {
         this.spinner.show();
         let parameters = '?periodo_lectivo_id=4&asignatura_id=512&paralelo=1&jornada=1';
-        this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
+         this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
             response => {
                 this.docenteAsignatura = response['docente_asignatura'][0];
                 this.spinner.hide();
@@ -95,6 +118,8 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                 parameters = '?docente_asignatura_id=512' + '&user_id=551' ;
                 this.service.get('estudiantes/eva_preguntas' + parameters).subscribe(
                     response2 => {
+                        this.getOne(idAsignatura);
+                        this.getid(idUsuario);
                         this.evaPreguntas = new Array<any>();
                         this.evaPreguntas = response2['eva_preguntas'];
                         this.spinner.hide();
@@ -156,19 +181,68 @@ console.log(this.enviarrespuesta);
           this.enviarrespuesta.splice(dt, 1);
           this.enviarrespuesta.push({
             pregId: preguntaId,
-            respId: respuesta.id,
-            FechaIni: Date.now()
+            //preNombre: pregunta.nombre,
+            // respId: respuesta.id,
+            // respNombre: respuesta.nombre,
+            //respValor: respuesta.valor,
+            // FechaIni: Date.now()
+            valor:respuesta.valor,
+            tipo:'CUANTITATIVA',
+            estado:'ACTIVO',
+            eva_pregunta_eva_respuesta:null,
+            estudiante:this.user.id,
+            docente_asignatura: null
           });
+        //   this.ejemplo.splice(dt, 1);
+        //   this.ejemplo.push({
+        //       valor:respuesta.valor,
+        //       tipo:'CUANTITATIVA',
+        //       estado:'ACTIVO',
+        //       eva_pregunta_eva_respuesta:null,
+        //       estudiante:this.user.id,
+        //       docente_asignatura: null
+        //   })
         } else {
           // Caso contrario lo agrega al array
           this.enviarrespuesta.push({
-            pregId: preguntaId,
-            respId: respuesta.id,
-            FechaIni: Date.now()
-          });
-        }
-console.log(this.enviarrespuesta);
-      }
+            // pregId: preguntaId,
+            // //preNombre: pregunta.nombre,
+            // respId: respuesta.id,
+            // respNombre: respuesta.nombre,
+            // respValor: respuesta.valor,
+            // FechaIni: Date.now()
+            valor:respuesta.valor,
+            tipo:'CUANTITATIVA',
+            estado:'ACTIVO',
+            eva_pregunta_eva_respuesta:null,
+            estudiante:this.user.id,
+            docente_asignatura: null
+            // this.service.post('resultado', {'valor': this.resultadoSeleccionado}).subscribe(
+            //     response => {
+            //         this.resultadoSeleccionado === respuesta.id;
+            //         console.log(response);
+            //     },
+            //     error=> {
+            //         this.spinner.hide();
+            //         console.log('error');
+            //     }
+            // )
+        });
+        // this.ejemplo.push({
+        //     valor:respuesta.valor,
+        //     tipo:'CUANTITATIVA',
+        //     estado:'ACTIVO',
+        //     eva_pregunta_eva_respuesta:null,
+        //     estudiante:this.user.id,
+        //     docente_asignatura: null
+        // })
+
+    }
+console.log('es esto',this.enviarrespuesta);
+console.log('La magia',this.ejemplo);
+
+    }
+
 
     mostrarPreguntas() {
         this.spinner.show();
@@ -177,7 +251,7 @@ console.log(this.enviarrespuesta);
             response => {
                 this.mostrarPregunta = response['eva_pregunta_eva_respuesta'];
                 console.log('Preguntas', response);
-                //this.flagInformacionEstudiante = true ;
+                // this.flagInformacionEstudiante = false;
 
                 const source = from(this.mostrarPregunta);
                 // group by age
@@ -189,7 +263,7 @@ console.log(this.enviarrespuesta);
                   const subscribes = example.subscribe(val =>
                     this.datademo.push(val)
                     );
-                console.log(this.datademo);
+                console.log('datademo',this.datademo);
              const resp = source.pipe(
                  groupBy(respuesta => respuesta.id),
                  mergeMap(group => group.pipe(toArray()))
@@ -205,12 +279,52 @@ console.log(this.enviarrespuesta);
                         console.log('error');
 
                     });
-
-
-
-
-
     }
+    getid(codigo: number) {
+        console.log(codigo);
+        localStorage.removeItem('codigo');
+        localStorage.setItem('codigo', codigo.toString());
+        console.log(this.usersID);
+        console.log(codigo);
+        // if (codigo === this.usersID) {
+            // this.service.get('docentes/' + codigo ).subscribe(
+            //     response => {
+            //         console.log(response);
+            //         this.respuesta = response['docentes'];
+            //     });
+
+            this.http.get<any>(environment.API_URL + 'docentes/' + codigo ).subscribe(response => {
+                console.log(response);
+                this.respuesta = response['docente'];
+                console.log(this.respuesta);
+            });
+        // }
+    }
+    getOne(id: number) {
+        console.log(id);
+        localStorage.removeItem('id');
+        localStorage.setItem('id', id.toString());
+        console.log(this.idAsigantura);
+        console.log(id);
+        this.http.get<any>(environment.API_URL + 'asignaturaEstudiante/' + id ).subscribe(response => {
+            console.log(response);
+            this.resultado = response['asignatura'];
+            console.log(this.resultado);
+        });
+    }
+    // getIdDocenteAsignatura(id:number){
+    //     console.log(id);
+    //     localStorage.removeItem('id');
+    //     localStorage.setItem('id', id.toString());
+    //     console.log(this.idDocenteAsignatura);
+    //     console.log(id);
+    //     this.http.get<any>(environment.API_URL+'asignatura_docente/' +id).subscribe(response => {
+    //         console.log(response);
+    //         this.resultadoDocenteAsignatura = response['docente_asignatura'];
+    //         console.log(this.resultadoDocenteAsignatura);
+    //     });
+
+    // }
     guardarResultados(){
         if(this.respuesta !== this.respuesta){
             this.spinner.show();
@@ -231,26 +345,4 @@ console.log(this.enviarrespuesta);
             );
         }
     }
-
-    // getNombreDocente(){
-    //     this.spinner.show();
-        
-    //     let parameters = '?paralelo=1&jornada=1&periodo_lectivo_id=4&asignatura_id=552';
-    //     this.service.get('nombre_docente'+ parameters).subscribe(
-    //         response => {
-    //             this.nombreDocente = response['docente_asignatura_nombre'];
-    //             console.log('Asignatura-Docente',response);
-    //             this.spinner.hide();
-
-               
-    //                 },
-    //                 error => {
-    //                     this.spinner.hide();
-    //                     console.log('error');
-                
-    //                 });
-    // }
 }
-
-
-
