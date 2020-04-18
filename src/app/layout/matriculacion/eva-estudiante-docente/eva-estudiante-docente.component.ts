@@ -16,6 +16,7 @@ import { mergeMap, groupBy, reduce, map, toArray } from 'rxjs/operators';
 import { of } from 'rxjs';
 ﻿import { from } from 'rxjs';
 import {DocenteAsignatura} from '../modelos/docente-asignatura.model';
+import {Resultado} from '../modelos/resultado.model';
 
 @Component({
     selector: 'app-eva-estudiante-docente',
@@ -52,6 +53,8 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     resultadoDocenteAsignatura: any [];
     docenteAsig: DocenteAsignatura;
     docenteAsignaturas: Array<DocenteAsignatura>;
+    resultadoSeleccionado: Resultado;
+
 
     constructor(private spinner: NgxSpinnerService, private service: ServiceService) {
     }
@@ -166,10 +169,32 @@ console.log(this.enviarrespuesta);
             respId: respuesta.id,
             eva_pregunta_eva_respuesta: respuesta.numero,
             FechaIni: Date.now()
+
+            //preNombre: pregunta.nombre,
+            // respId: respuesta.id,
+            // respNombre: respuesta.nombre,
+            //respValor: respuesta.valor,
+            // FechaIni: Date.now()
+            valor:respuesta.valor,
+            tipo:'CUANTITATIVA',
+            estado:'ACTIVO',
+            eva_pregunta_eva_respuesta: null,
+            estudiante:this.estudiante.id,
+            docente_asignatura: null
           });
+        //   this.ejemplo.splice(dt, 1);
+        //   this.ejemplo.push({
+        //       valor:respuesta.valor,
+        //       tipo:'CUANTITATIVA',
+        //       estado:'ACTIVO',
+        //       eva_pregunta_eva_respuesta:null,
+        //       estudiante:this.user.id,
+        //       docente_asignatura: null
+        //   })
         } else {
           // Caso contrario lo agrega al array
           this.enviarrespuesta.push({
+
             pregId: preguntaId,
             respId: respuesta.id,
             eva_pregunta_eva_respuesta: respuesta.numero,
@@ -178,6 +203,43 @@ console.log(this.enviarrespuesta);
         }
 console.log(this.enviarrespuesta);
       }
+
+            // pregId: preguntaId,
+            // //preNombre: pregunta.nombre,
+            // respId: respuesta.id,
+            // respNombre: respuesta.nombre,
+            // respValor: respuesta.valor,
+            // FechaIni: Date.now()
+           // valor:respuesta.valor,
+           // tipo:'CUANTITATIVA',
+            estado:'ACTIVO',
+            eva_pregunta_eva_respuesta:null,
+            estudiante:this.estudiante.id,
+            docente_asignatura: null
+            // this.service.post('resultado', {'valor': this.resultadoSeleccionado}).subscribe(
+            //     response => {
+            //         this.resultadoSeleccionado === respuesta.id;
+            //         console.log(response);
+            //     },
+            //     error=> {
+            //         this.spinner.hide();
+            //         console.log('error');
+            //     }
+            // )
+        });
+        // this.ejemplo.push({
+        //     valor:respuesta.valor,
+        //     tipo:'CUANTITATIVA',
+        //     estado:'ACTIVO',
+        //     eva_pregunta_eva_respuesta:null,
+        //     estudiante:this.user.id,
+        //     docente_asignatura: null
+        // })
+
+    }
+    console.log('es esto',this.enviarrespuesta);
+    }
+
 
     mostrarPreguntas() {
         this.spinner.show();
@@ -232,5 +294,26 @@ console.log(this.enviarrespuesta);
             this.resultado = response['asignatura'];
             console.log(this.resultado);
         });
+    }
+
+    guardarResultados(){
+        if(this.respuesta !== this.respuesta){
+            this.spinner.show();
+
+            this.service.post('resultado', {'eva_resultados': this.resultadoSeleccionado}).subscribe(
+                response => {
+                    this.mostrarPreguntas();
+                    console.log(response);
+                },
+                error=> {
+                    this.spinner.hide();
+                    console.log('error');
+                }
+            );
+        } else{
+            swal.fire(
+                'error'
+            );
+        }
     }
 }
