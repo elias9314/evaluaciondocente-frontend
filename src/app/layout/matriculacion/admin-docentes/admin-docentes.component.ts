@@ -260,7 +260,7 @@ getUsuario() {
 
 generarPDF() {
   const doc = new jsPDF();
-  doc.addImage(imagenConstant.fondo, 'JPG', 0, 0, 113, 100);
+  doc.addImage(imagenConstant.fondo, 'JPG', 50, 100, 113, 100);
   doc.save('reporte.pdf');
  }
 // crear docente

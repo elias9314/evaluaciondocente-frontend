@@ -152,92 +152,33 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     }
 
     onSelectionChange(entry: any) {
-this.enviarrespuesta.push(entry);
-console.log(this.enviarrespuesta);
-
+        this.enviarrespuesta.push(entry);
+        console.log(this.enviarrespuesta);
     }
 
     addListPreOpc(preguntaId: number, respuesta: any) {
         const datas = this.enviarrespuesta.find(x => x.pregId === preguntaId);
         // Comprueba si el valor existe en el array
         if (datas !== undefined) {
-          // De ser asi tomo su posicion y lo elimina
-          const dt = this.enviarrespuesta.indexOf(datas);
-          this.enviarrespuesta.splice(dt, 1);
-          this.enviarrespuesta.push({
-            pregId: preguntaId,
-            respId: respuesta.id,
-            eva_pregunta_eva_respuesta: respuesta.numero,
-            FechaIni: Date.now()
-
-            //preNombre: pregunta.nombre,
-            // respId: respuesta.id,
-            // respNombre: respuesta.nombre,
-            //respValor: respuesta.valor,
-            // FechaIni: Date.now()
-            valor:respuesta.valor,
-            tipo:'CUANTITATIVA',
-            estado:'ACTIVO',
-            eva_pregunta_eva_respuesta: null,
-            estudiante:this.estudiante.id,
-            docente_asignatura: null
-          });
-        //   this.ejemplo.splice(dt, 1);
-        //   this.ejemplo.push({
-        //       valor:respuesta.valor,
-        //       tipo:'CUANTITATIVA',
-        //       estado:'ACTIVO',
-        //       eva_pregunta_eva_respuesta:null,
-        //       estudiante:this.user.id,
-        //       docente_asignatura: null
-        //   })
+            // De ser asi tomo su posicion y lo elimina
+            const dt = this.enviarrespuesta.indexOf(datas);
+            this.enviarrespuesta.splice(dt, 1);
+            this.enviarrespuesta.push({
+                pregId: preguntaId,
+                respId: respuesta.id,
+                eva_pregunta_eva_respuesta: respuesta.eva_pregunta_eva_respuesta_id,
+                FechaIni: Date.now(),
+            });
         } else {
-          // Caso contrario lo agrega al array
-          this.enviarrespuesta.push({
-
-            pregId: preguntaId,
-            respId: respuesta.id,
-            eva_pregunta_eva_respuesta: respuesta.numero,
-            FechaIni: Date.now()
-          });
+            // Caso contrario lo agrega al array
+            this.enviarrespuesta.push({
+                pregId: preguntaId,
+                respId: respuesta.id,
+                eva_pregunta_eva_respuesta: respuesta.eva_pregunta_eva_respuesta_id,
+                FechaIni: Date.now()
+            });
         }
-console.log(this.enviarrespuesta);
-      }
-
-            // pregId: preguntaId,
-            // //preNombre: pregunta.nombre,
-            // respId: respuesta.id,
-            // respNombre: respuesta.nombre,
-            // respValor: respuesta.valor,
-            // FechaIni: Date.now()
-           // valor:respuesta.valor,
-           // tipo:'CUANTITATIVA',
-            estado:'ACTIVO',
-            eva_pregunta_eva_respuesta:null,
-            estudiante:this.estudiante.id,
-            docente_asignatura: null
-            // this.service.post('resultado', {'valor': this.resultadoSeleccionado}).subscribe(
-            //     response => {
-            //         this.resultadoSeleccionado === respuesta.id;
-            //         console.log(response);
-            //     },
-            //     error=> {
-            //         this.spinner.hide();
-            //         console.log('error');
-            //     }
-            // )
-        });
-        // this.ejemplo.push({
-        //     valor:respuesta.valor,
-        //     tipo:'CUANTITATIVA',
-        //     estado:'ACTIVO',
-        //     eva_pregunta_eva_respuesta:null,
-        //     estudiante:this.user.id,
-        //     docente_asignatura: null
-        // })
-
-    }
-    console.log('es esto',this.enviarrespuesta);
+        console.log(this.enviarrespuesta);
     }
 
 
@@ -254,24 +195,24 @@ console.log(this.enviarrespuesta);
                     groupBy(person => person.pregunta),
                     // return each item in group as array
                     mergeMap(group => group.pipe(toArray()))
-                  );
-                  const subscribes = example.subscribe(val =>
+                );
+                const subscribes = example.subscribe(val =>
                     this.datademo.push(val)
-                    );
+                );
                 console.log(this.datademo);
-             const resp = source.pipe(
-                 groupBy(respuesta => respuesta.id),
-                 mergeMap(group => group.pipe(toArray()))
-             );
-             const subscribe = resp.subscribe(val =>
-                this.listarespuesta.push(val));
+                const resp = source.pipe(
+                    groupBy(respuesta => respuesta.id),
+                    mergeMap(group => group.pipe(toArray()))
+                );
+                const subscribe = resp.subscribe(val =>
+                    this.listarespuesta.push(val));
                 console.log(this.listarespuesta[0]);
-                    },
-                    error => {
-                        this.spinner.hide();
-                        console.log('error');
+            },
+            error => {
+                this.spinner.hide();
+                console.log('error');
 
-                    });
+            });
 
     }
 
@@ -289,28 +230,28 @@ console.log(this.enviarrespuesta);
     getOne(id: number) {
         localStorage.removeItem('id');
         localStorage.setItem('id', id.toString());
-        this.service.get('asignaturaEstudiante/' + id ).subscribe(response => {
+        this.service.get('asignaturaEstudiante/' + id).subscribe(response => {
             console.log(response);
             this.resultado = response['asignatura'];
             console.log(this.resultado);
         });
     }
 
-    guardarResultados(){
-        if(this.respuesta !== this.respuesta){
+    guardarResultados() {
+        if (this.respuesta !== this.respuesta) {
             this.spinner.show();
 
-            this.service.post('resultado', {'eva_resultados': this.resultadoSeleccionado}).subscribe(
+            this.service.post('resultado', { 'eva_resultados': this.resultadoSeleccionado }).subscribe(
                 response => {
                     this.mostrarPreguntas();
                     console.log(response);
                 },
-                error=> {
+                error => {
                     this.spinner.hide();
                     console.log('error');
                 }
             );
-        } else{
+        } else {
             swal.fire(
                 'error'
             );
