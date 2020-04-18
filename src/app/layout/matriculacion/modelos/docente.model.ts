@@ -14,7 +14,7 @@ export class Docente {
     estado: string;
     telefono: number;
     user: User;
-  //  imagen: string;
+    imagen: String;
 
   constructor() {
     this.tipo_identificacion = '1';

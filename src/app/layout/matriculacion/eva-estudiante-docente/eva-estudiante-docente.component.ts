@@ -164,6 +164,7 @@ console.log(this.enviarrespuesta);
           this.enviarrespuesta.push({
             pregId: preguntaId,
             respId: respuesta.id,
+            eva_pregunta_eva_respuesta: respuesta.numero,
             FechaIni: Date.now()
           });
         } else {
@@ -171,6 +172,7 @@ console.log(this.enviarrespuesta);
           this.enviarrespuesta.push({
             pregId: preguntaId,
             respId: respuesta.id,
+            eva_pregunta_eva_respuesta: respuesta.numero,
             FechaIni: Date.now()
           });
         }
