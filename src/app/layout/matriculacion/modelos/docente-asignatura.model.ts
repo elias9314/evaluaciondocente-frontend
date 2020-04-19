@@ -13,7 +13,7 @@ export class DocenteAsignatura {
     tipo: string;
     estado: string;
     autoevaluacion:boolean;
-
+    asignatura_id: string;
     constructor() {
         this.estado = 'ACTIVO';
         this.tipo = '';

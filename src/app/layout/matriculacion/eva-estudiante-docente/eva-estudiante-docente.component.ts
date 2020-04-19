@@ -286,15 +286,16 @@ export class EvaEstudianteDocenteComponent implements OnInit {
             }
     calificar() {
         this.spinner.show();
-        let parameters = '?periodo_lectivo_id=4&asignatura_id='+this.resultado.id+'&paralelo=1&jornada=4';
-        this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
-            response => {
-                this.idDocenteAsignatura = response['docente_asignatura'][0].id;
-                console.log("docente",this.idDocenteAsignatura);
-                this.spinner.hide();
-                this.flagInformacionEstudiante = false;
-                this.spinner.show();
-                parameters = '?idDocenteAsignatura='+ this.idDocenteAsignatura;                        
+        var docente= this.docenteAsignaturas[0].id;
+        // let parameters = '?periodo_lectivo_id=4&asignatura_id='+this.resultado.id+'&paralelo=1&jornada=4';
+        // this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
+        //     response => {
+        //         this.idDocenteAsignatura = response['docente_asignatura'][0].id;
+        //         console.log("docente",this.idDocenteAsignatura);
+        //         this.spinner.hide();
+        //         this.flagInformacionEstudiante = false;
+        //         this.spinner.show();
+            let parameters = '?idDocenteAsignatura='+ docente;                        
                         this.service.post('resultado' + parameters, {'eva_resultados': this.enviarrespuesta}).subscribe(
                             response2 => {
                                     this.spinner.hide();
@@ -302,12 +303,12 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                                     this.getEstudiante();
 
                                     },
-                                    error => {
-                                        this.spinner.hide();
-                                        console.log('error');
-                                    }
-                                );
-                },
+                                    // error => {
+                                    //     this.spinner.hide();
+                                    //     console.log('error');
+                                    // }
+                                
+                
                     error => {
                         this.flagInformacionEstudiante = true;
                         this.spinner.hide();
