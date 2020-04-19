@@ -40,6 +40,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     matricula: Matricula;
     user: User;
     tab: any;
+    resultados: any;
     mostrarPregunta: Array<any>;
     cantidadRespuestas: Array<number>;
     datademo: any = [];
@@ -103,6 +104,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                 parameters = '?docente_asignatura_id=512' + '&user_id=551' ;
                 this.service.get('estudiantes/eva_preguntas' + parameters).subscribe(
                     response2 => {
+                        this.spinner.show();
                         this.getOne(idAsignatura);
                         this.getid(idUsuario);
                         this.evaPreguntas = new Array<any>();
@@ -131,7 +133,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                 }
             });
     }
-
+   
     updateRespuesta(event, pregunta) {
         this.spinner.show();
         this.service.post('estudiantes/eva_respuestas?eva_respuesta_id=' + event.target.id
@@ -152,12 +154,16 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     }
 
     onSelectionChange(entry: any) {
-this.enviarrespuesta.push(entry);
-console.log(this.enviarrespuesta);
+        this.enviarrespuesta.push(entry);
+        console.log(this.enviarrespuesta);
 
     }
 
-    addListPreOpc(preguntaId: number, respuesta: any) {
+    addListPreOpc1(preguntaId: number, respuesta: any) {
+        this.spinner.show();
+        var estudiante= this.asignaturasMatricula[0].estudiante_id;
+        var docente= this.docenteAsignaturas[0].id;
+        this.spinner.hide();
         const datas = this.enviarrespuesta.find(x => x.pregId === preguntaId);
         // Comprueba si el valor existe en el array
         if (datas !== undefined) {
@@ -166,65 +172,32 @@ console.log(this.enviarrespuesta);
           this.enviarrespuesta.splice(dt, 1);
           this.enviarrespuesta.push({
             pregId: preguntaId,
-            //preNombre: pregunta.nombre,
-            // respId: respuesta.id,
-            // respNombre: respuesta.nombre,
-            //respValor: respuesta.valor,
-            // FechaIni: Date.now()
-            valor:respuesta.valor,
+            respId: respuesta.id,
             tipo:'CUANTITATIVA',
             estado:'ACTIVO',
-            eva_pregunta_eva_respuesta: null,
-            estudiante:this.estudiante.id,
-            docente_asignatura: null
+            valor: respuesta.valor,
+            estudiante_id: estudiante,
+            eva_pregunta_eva_respuesta_id: respuesta.eva_pregunta_eva_respuesta_id,
+            idDocenteAsignatura: docente
+            //FechaIni: Date.now()
+
           });
-        //   this.ejemplo.splice(dt, 1);
-        //   this.ejemplo.push({
-        //       valor:respuesta.valor,
-        //       tipo:'CUANTITATIVA',
-        //       estado:'ACTIVO',
-        //       eva_pregunta_eva_respuesta:null,
-        //       estudiante:this.user.id,
-        //       docente_asignatura: null
-        //   })
         } else {
           // Caso contrario lo agrega al array
           this.enviarrespuesta.push({
-            // pregId: preguntaId,
-            // //preNombre: pregunta.nombre,
-            // respId: respuesta.id,
-            // respNombre: respuesta.nombre,
-            // respValor: respuesta.valor,
-            // FechaIni: Date.now()
-            valor:respuesta.valor,
+            pregId: preguntaId,
+            respId: respuesta.id,
             tipo:'CUANTITATIVA',
             estado:'ACTIVO',
-            eva_pregunta_eva_respuesta:null,
-            estudiante:this.estudiante.id,
-            docente_asignatura: null
-            // this.service.post('resultado', {'valor': this.resultadoSeleccionado}).subscribe(
-            //     response => {
-            //         this.resultadoSeleccionado === respuesta.id;
-            //         console.log(response);
-            //     },
-            //     error=> {
-            //         this.spinner.hide();
-            //         console.log('error');
-            //     }
-            // )
-        });
-        // this.ejemplo.push({
-        //     valor:respuesta.valor,
-        //     tipo:'CUANTITATIVA',
-        //     estado:'ACTIVO',
-        //     eva_pregunta_eva_respuesta:null,
-        //     estudiante:this.user.id,
-        //     docente_asignatura: null
-        // })
-
-    }
+            valor: respuesta.valor,
+            estudiante_id: estudiante,
+            eva_pregunta_eva_respuesta_id: respuesta.eva_pregunta_eva_respuesta_id,
+            idDocenteAsignatura: docente
+            //FechaIni: Date.now()
+          });
+        }
     console.log('es esto',this.enviarrespuesta);
-    }
+      }
 
     mostrarPreguntas() {
         this.spinner.show();
@@ -265,9 +238,10 @@ console.log(this.enviarrespuesta);
         localStorage.setItem('id', id.toString());
         this.service.get('docentes/' + id).subscribe(
             response => {
-                console.log(response);
                 this.respuesta = response['docente'];
-                console.log(this.respuesta);
+                console.log('docente',this.respuesta[0].id);
+            //this.getIdDocenteAsignatura();
+
             });
 
     }
@@ -277,28 +251,76 @@ console.log(this.enviarrespuesta);
         this.service.get('asignaturaEstudiante/' + id ).subscribe(response => {
             console.log(response);
             this.resultado = response['asignatura'];
-            console.log(this.resultado);
+            console.log(this.resultado.id);
+            this.getIdDocenteAsignatura();
         });
     }
-
-    guardarResultados(){
-        if(this.respuesta !== this.respuesta){
-            this.spinner.show();
-
-            this.service.post('resultado', {'eva_resultados': this.resultadoSeleccionado}).subscribe(
-                response => {
-                    this.mostrarPreguntas();
-                    console.log(response);
-                },
-                error=> {
+    
+    getIdDocenteAsignatura(){ 
+        this.spinner.show();
+        var asignatura= this.resultado.id;
+        let parameters= '?asignatura_id='+ asignatura;
+        this.service.get('asignatura_docente' + parameters).subscribe(
+            response => {
+                this.docenteAsignaturas= response['docenteAsignatura'];
+                this.spinner.hide();
+            },
+                error => {
                     this.spinner.hide();
                     console.log('error');
                 }
-            );
-        } else{
-            swal.fire(
-                'error'
-            );
-        }
+    );
     }
+    addListPreOpc(preguntaId: number, respuesta: any) {
+                            const datas = this.enviarrespuesta.find(x => x.idpregunta == preguntaId + 1);
+                            // Comprueba si el valor existe en el array
+                            if (datas != undefined) {
+                                // De ser asi tomo su posicion y lo elimina
+                                this.enviarrespuesta.splice(this.enviarrespuesta.indexOf(datas), 1);
+                                this.enviarrespuesta.push(respuesta);
+                            } else {
+                                // Caso contrario lo agrega al array
+                                this.enviarrespuesta.push(respuesta);
+                            }
+                            console.log(this.enviarrespuesta);
+            }
+    calificar() {
+        this.spinner.show();
+        let parameters = '?periodo_lectivo_id=4&asignatura_id='+this.resultado.id+'&paralelo=1&jornada=4';
+        this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
+            response => {
+                this.idDocenteAsignatura = response['docente_asignatura'][0].id;
+                console.log("docente",this.idDocenteAsignatura);
+                this.spinner.hide();
+                this.flagInformacionEstudiante = false;
+                this.spinner.show();
+                parameters = '?idDocenteAsignatura='+ this.idDocenteAsignatura;                        
+                        this.service.post('resultado' + parameters, {'eva_resultados': this.enviarrespuesta}).subscribe(
+                            response2 => {
+                                    this.spinner.hide();
+                                    console.log('RESULTADO',response2);
+                                    this.getEstudiante();
+
+                                    },
+                                    error => {
+                                        this.spinner.hide();
+                                        console.log('error');
+                                    }
+                                );
+                },
+                    error => {
+                        this.flagInformacionEstudiante = true;
+                        this.spinner.hide();
+                        if (error.error.errorInfo[0] === '001') {
+                            swal.fire(this.messages['error001']);
+
+                        } else {
+                            swal.fire(this.messages['error500']);
+                        }
+        
+        })
+    }
+
+    
+    
 }

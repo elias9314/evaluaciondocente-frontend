@@ -7,8 +7,7 @@ export class DocenteAsignatura {
     //     throw new Error("Method not implemented.");
     // }
     // docente?: any;
-    docente?: any;
-    id?: number;
+    id: string;
     paralelo: string;
     jornada: string;
     tipo: string;
