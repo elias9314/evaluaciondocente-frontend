@@ -260,33 +260,31 @@ getUsuario() {
 
 generarPDF() {
   const doc = new jsPDF();
+  doc.addImage(imagenConstant.imagen, 'JPG', 20, 15, 30, 30);
   doc.addImage(imagenConstant.fondo, 'JPG', 50, 100, 113, 100);
+  ////////////////////////////
+  doc.setFontStyle('bold');
+  doc.setFontSize(15);
+  doc.text ('INSTITUTO SUPERIOR TECNOLÓGICO', 61, 25);
+  ///////////////////////////
+  doc.setFontSize(15);
+  doc.setFontStyle('bold');
+  doc.text ('DE TURISMO Y PATRIMONIO "YAVIRAC"', 59, 30);
+  ///////////////////////////
+  doc.setFontSize(9);
+  doc.setFontStyle('normal');
+  doc.text ('Dirección: García Moreno S435 y Ambato', 79, 35);
+  //////////////////////////
+  doc.setFontSize(9);
+  doc.setFontStyle('normal');
+  doc.text ('Quito - Ecuador', 95, 40);
+  ///////////////////////////
+  doc.setFontStyle('bold');
+  doc.setFontSize(15);
+  doc.text ('EVALUACIÓN DOCENTE', 79, 60);
   doc.save('reporte.pdf');
  }
-// crear docente
-  // crearDocente(){
-  //   this.spinner.show();
-  //   this.service.post('docentes',{'docente': this.docente}).subscribe(
-  //       response =>{
-  //         this.spinner.hide();
-  //         // this.getDocente();
-  //         console.log(response);
-  //         swal.fire(this.messages['createSuccess']);
-  //       },
-  //       error => {
-  //         this.spinner.hide();
-  //         console.log('error');
 
-  //         if (error.error.errorInfo[0] === '23505') {
-  //             swal.fire(this.messages['error23505']);
-
-  //        } else {
-  //         console.log('error');
-
-  //           swal.fire(this.messages['error500']);
-  //         }
-  //       });
-  //     }
  formularioProfesores() {
      return this.profesoresForm = new FormGroup({
         tipo_identificacion: new FormControl('', [Validators.required]),
