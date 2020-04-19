@@ -23,9 +23,10 @@ export class DatosDocenteComponent implements OnInit {
   docentesData: any = [];
   estadoDatos: string;
   errors: Array<string>;
-data: any;
-    docentes: Array<Docente>;
-    title: 'sweetalert';
+  data: any;
+  docentes: Array<Docente>;
+  title: 'sweetalert';
+  base64textString: String = '';
 
   ngOnInit() {
 
@@ -36,13 +37,32 @@ data: any;
     this.getDocenteLoad();
   }
 
+  getFiles(event) {
+    const files = event.target.files;
+    const file = files[0];
+ if (files && file) {
+  const reader = new FileReader();
+  reader.onload = this._handleReaderLoaded.bind(this);
+  reader.readAsBinaryString(file);
+  console.log(file);
+  console.log(reader);
+ }
+}
+
+_handleReaderLoaded(readerEvt) {
+  const binaryString = readerEvt.target.result;
+  this.base64textString = btoa(binaryString);
+  this.docente.imagen = this.base64textString;
+  console.log(this.docente.imagen);  // Converting binary string data.
+}
+
   updateDocente(): void {
     if (this.docente[0].telefono ) {
          this.docente[0].telefono;
     }
+    console.log(this.docente[0]);
     this.service.update('docentes',
-        {'docente': this.docente[0]})
-        .subscribe(
+        {'docente': this.docente[0]}).subscribe(
             response => {
                 this.getDocente();
             },
@@ -51,6 +71,7 @@ data: any;
             });
 
 }
+
 getDocenteLoad() {
   this.spinner.show();
 

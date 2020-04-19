@@ -6,7 +6,10 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import swal from 'sweetalert2';
 import {catalogos} from '../../../../environments/catalogos';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup, Validators, FormControl, FormControlName } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+///////////////////////////////
+import * as jsPDF from 'jspdf';
+import { imagenConstant} from '../../../constantes/imagenconstant';
 @Component({
   selector: 'app-admin-docentes',
   templateUrl: './admin-docentes.component.html',
@@ -117,7 +120,7 @@ getUsuario() {
     this.docenteSeleccionado.user.email = this.docenteSeleccionado.correo_institucional ;
     this.docenteSeleccionado.user.name = this.docenteSeleccionado.apellido1 + ' ' + this.docenteSeleccionado.nombre1;
     this.docenteSeleccionado.user.estado = this.docenteSeleccionado.estado ;
-
+    this.docenteSeleccionado.imagen = this.docenteSeleccionado.imagen;
     console.log(this.docenteSeleccionado);
 
     this.spinner.show();
@@ -254,6 +257,12 @@ getUsuario() {
         }
     }
 }
+
+generarPDF() {
+  const doc = new jsPDF();
+  doc.addImage(imagenConstant.fondo, 'JPG', 50, 100, 113, 100);
+  doc.save('reporte.pdf');
+ }
 // crear docente
   // crearDocente(){
   //   this.spinner.show();
@@ -286,8 +295,9 @@ getUsuario() {
          apellido1: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Z])*$')]),
          nombre1: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Z])*$')]),
          // tslint:disable-next-line:max-line-length
-         correo_institucional: new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern('^[a-z]+\.[a-z]+@' + 'yavirac.edu.ec')]),
-         estado: new FormControl('', [Validators.required])
+         correo_institucional: new FormControl('', [Validators.required]),
+         estado: new FormControl('', [Validators.required]),
+       //  imagen: new FormControl('', [Validators.required])
      });
  }
  get tipo_identificacion() {return this.profesoresForm.get('tipo_identificacion'); }
@@ -296,4 +306,5 @@ getUsuario() {
  get nombre1() {return this.profesoresForm.get('nombre1'); }
  get correo_institucional() {return this.profesoresForm.get('correo_institucional'); }
  get estado() {return this.profesoresForm.get('estado'); }
+
 }

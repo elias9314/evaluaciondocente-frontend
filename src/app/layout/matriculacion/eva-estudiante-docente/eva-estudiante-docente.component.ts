@@ -156,7 +156,6 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     onSelectionChange(entry: any) {
         this.enviarrespuesta.push(entry);
         console.log(this.enviarrespuesta);
-
     }
 
     addListPreOpc1(preguntaId: number, respuesta: any) {
@@ -198,6 +197,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
         }
     console.log('es esto',this.enviarrespuesta);
       }
+         
 
     mostrarPreguntas() {
         this.spinner.show();
@@ -212,24 +212,24 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                     groupBy(person => person.pregunta),
                     // return each item in group as array
                     mergeMap(group => group.pipe(toArray()))
-                  );
-                  const subscribes = example.subscribe(val =>
+                );
+                const subscribes = example.subscribe(val =>
                     this.datademo.push(val)
-                    );
+                );
                 console.log(this.datademo);
-             const resp = source.pipe(
-                 groupBy(respuesta => respuesta.id),
-                 mergeMap(group => group.pipe(toArray()))
-             );
-             const subscribe = resp.subscribe(val =>
-                this.listarespuesta.push(val));
+                const resp = source.pipe(
+                    groupBy(respuesta => respuesta.id),
+                    mergeMap(group => group.pipe(toArray()))
+                );
+                const subscribe = resp.subscribe(val =>
+                    this.listarespuesta.push(val));
                 console.log(this.listarespuesta[0]);
-                    },
-                    error => {
-                        this.spinner.hide();
-                        console.log('error');
+            },
+            error => {
+                this.spinner.hide();
+                console.log('error');
 
-                    });
+            });
 
     }
 
@@ -248,7 +248,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     getOne(id: number) {
         localStorage.removeItem('id');
         localStorage.setItem('id', id.toString());
-        this.service.get('asignaturaEstudiante/' + id ).subscribe(response => {
+        this.service.get('asignaturaEstudiante/' + id).subscribe(response => {
             console.log(response);
             this.resultado = response['asignatura'];
             console.log(this.resultado.id);
@@ -321,6 +321,4 @@ export class EvaEstudianteDocenteComponent implements OnInit {
         })
     }
 
-    
-    
 }
