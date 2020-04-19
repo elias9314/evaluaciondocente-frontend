@@ -133,7 +133,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                 }
             });
     }
-   
+
     updateRespuesta(event, pregunta) {
         this.spinner.show();
         this.service.post('estudiantes/eva_respuestas?eva_respuesta_id=' + event.target.id
@@ -160,8 +160,8 @@ export class EvaEstudianteDocenteComponent implements OnInit {
 
     addListPreOpc1(preguntaId: number, respuesta: any) {
         this.spinner.show();
-        var estudiante= this.asignaturasMatricula[0].estudiante_id;
-        var docente= this.docenteAsignaturas[0].id;
+        const estudiante = this.asignaturasMatricula[0].estudiante_id;
+        const docente = this.docenteAsignaturas[0].id;
         this.spinner.hide();
         const datas = this.enviarrespuesta.find(x => x.pregId === preguntaId);
         // Comprueba si el valor existe en el array
@@ -172,13 +172,13 @@ export class EvaEstudianteDocenteComponent implements OnInit {
           this.enviarrespuesta.push({
             pregId: preguntaId,
             respId: respuesta.id,
-            tipo:'CUANTITATIVA',
-            estado:'ACTIVO',
+            tipo: 'CUANTITATIVA',
+            estado: 'ACTIVO',
             valor: respuesta.valor,
             estudiante_id: estudiante,
             eva_pregunta_eva_respuesta_id: respuesta.eva_pregunta_eva_respuesta_id,
             idDocenteAsignatura: docente
-            //FechaIni: Date.now()
+            // FechaIni: Date.now()
 
           });
         } else {
@@ -186,18 +186,18 @@ export class EvaEstudianteDocenteComponent implements OnInit {
           this.enviarrespuesta.push({
             pregId: preguntaId,
             respId: respuesta.id,
-            tipo:'CUANTITATIVA',
-            estado:'ACTIVO',
+            tipo: 'CUANTITATIVA',
+            estado: 'ACTIVO',
             valor: respuesta.valor,
             estudiante_id: estudiante,
             eva_pregunta_eva_respuesta_id: respuesta.eva_pregunta_eva_respuesta_id,
             idDocenteAsignatura: docente
-            //FechaIni: Date.now()
+            // FechaIni: Date.now()
           });
         }
-    console.log('es esto',this.enviarrespuesta);
+    console.log('es esto', this.enviarrespuesta);
       }
-         
+
 
     mostrarPreguntas() {
         this.spinner.show();
@@ -239,8 +239,8 @@ export class EvaEstudianteDocenteComponent implements OnInit {
         this.service.get('docentes/' + id).subscribe(
             response => {
                 this.respuesta = response['docente'];
-                console.log('docente',this.respuesta[0].id);
-            //this.getIdDocenteAsignatura();
+                console.log('docente', this.respuesta[0].id);
+            // this.getIdDocenteAsignatura();
 
             });
 
@@ -255,14 +255,14 @@ export class EvaEstudianteDocenteComponent implements OnInit {
             this.getIdDocenteAsignatura();
         });
     }
-    
-    getIdDocenteAsignatura(){ 
+
+    getIdDocenteAsignatura() {
         this.spinner.show();
-        var asignatura= this.resultado.id;
-        let parameters= '?asignatura_id='+ asignatura;
+        const asignatura = this.resultado.id;
+        const parameters = '?asignatura_id=' + asignatura;
         this.service.get('asignatura_docente' + parameters).subscribe(
             response => {
-                this.docenteAsignaturas= response['docenteAsignatura'];
+                this.docenteAsignaturas = response['docenteAsignatura'];
                 this.spinner.hide();
             },
                 error => {
@@ -272,9 +272,9 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     );
     }
     addListPreOpc(preguntaId: number, respuesta: any) {
-                            const datas = this.enviarrespuesta.find(x => x.idpregunta == preguntaId + 1);
+                            const datas = this.enviarrespuesta.find(x => x.idpregunta === preguntaId + 1);
                             // Comprueba si el valor existe en el array
-                            if (datas != undefined) {
+                            if (datas !== undefined) {
                                 // De ser asi tomo su posicion y lo elimina
                                 this.enviarrespuesta.splice(this.enviarrespuesta.indexOf(datas), 1);
                                 this.enviarrespuesta.push(respuesta);
@@ -286,19 +286,19 @@ export class EvaEstudianteDocenteComponent implements OnInit {
             }
     calificar() {
         this.spinner.show();
-        let parameters = '?periodo_lectivo_id=4&asignatura_id='+this.resultado.id+'&paralelo=1&jornada=4';
+        let parameters = '?periodo_lectivo_id=4&asignatura_id=' + this.resultado.id + '&paralelo=1&jornada=4';
         this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
             response => {
                 this.idDocenteAsignatura = response['docente_asignatura'][0].id;
-                console.log("docente",this.idDocenteAsignatura);
+                console.log('docente', this.idDocenteAsignatura);
                 this.spinner.hide();
                 this.flagInformacionEstudiante = false;
                 this.spinner.show();
-                parameters = '?idDocenteAsignatura='+ this.idDocenteAsignatura;                        
+                parameters = '?idDocenteAsignatura=' + this.idDocenteAsignatura;
                         this.service.post('resultado' + parameters, {'eva_resultados': this.enviarrespuesta}).subscribe(
                             response2 => {
                                     this.spinner.hide();
-                                    console.log('RESULTADO',response2);
+                                    console.log('RESULTADO', response2);
                                     this.getEstudiante();
 
                                     },
@@ -317,8 +317,8 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                         } else {
                             swal.fire(this.messages['error500']);
                         }
-        
-        })
+
+        });
     }
 
 }

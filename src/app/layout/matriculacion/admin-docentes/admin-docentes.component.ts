@@ -259,9 +259,16 @@ getUsuario() {
 }
 
 generarPDF() {
-  const doc = new jsPDF();
+    const lMargin = 20; // left margin in mm
+
+    const rMargin = 20; // right margin in mm
+
+    const pdfInMM = 210;
+    const pageCenter = pdfInMM / 2;
+  const doc = new jsPDF('p', 'mm', 'a4');
+  ////////////////////////////
   doc.addImage(imagenConstant.imagen, 'JPG', 20, 15, 30, 30);
-  doc.addImage(imagenConstant.fondo, 'JPG', 50, 100, 113, 100);
+  doc.addImage(imagenConstant.fondo2, 'JPG', 50, 100, 113, 100);
   ////////////////////////////
   doc.setFontStyle('bold');
   doc.setFontSize(15);
@@ -282,9 +289,51 @@ generarPDF() {
   doc.setFontStyle('bold');
   doc.setFontSize(15);
   doc.text ('EVALUACIÓN DOCENTE', 79, 60);
-  doc.save('reporte.pdf');
+  ///////////////////////////
+  doc.setFontStyle('bold');
+  doc.setFontSize(13);
+  doc.text ('NOMBRE:', 20, 70);
+  ////////////////////////////
+  doc.setFontStyle('bold');
+  doc.setFontSize(13);
+  doc.text ('PERIODO ACADÉMICO:', 20, 75);
+  ///////////////////////////
+  doc.setFontStyle('bold');
+  doc.setFontSize(13);
+  doc.text ('FECHA:', 20, 80);
+  /////////////////////////////
+// Margins:
+doc.setFontStyle('normal');
+doc.setFontSize(11);
+const p = 'Con el objetivo de mejorar la calidad de los procesos de enseñanza aprendizaje, el perfeccionamiento docente y el fortalecimiento del proyecto de carrera, se ha motivado a estudiantes, docentes y autoridades a participar en el proceso de evaluación de docentes de forma activa y responsable, estandarizando procedimientos que permita desarrollar manera organizada el proceso de evaluación el mismo que contempla Auto – Evaluación, Coevaluación y Heteroevaluación.\nUna vez culminado dicho proceso se presentan las siguientes calificaciones:';
+const lines = doc.splitTextToSize(p, (pdfInMM - lMargin - rMargin));
+doc.text(lMargin, 90, lines, {maxWidth: 160, align: 'justify'});
+/////////////////////////////////
+doc.setFontStyle('bold');
+doc.setFontSize(15);
+doc.text ('RESUMEN DE CALIFICACIONES', 70, 130);
+////////////////////////////////
+doc.setFontStyle('bold');
+doc.setFontSize(15);
+doc.text ('DOCENCIA', 95, 145);
+///////////////////////////////
+doc.setFontStyle('bold');
+doc.setFontSize(12);
+doc.text ('CRITERIO', 57, 155);
+////////////////////////////////
+doc.setFontStyle('bold');
+doc.setFontSize(12);
+doc.text ('NOTA', 103, 155);
+////////////////////////////////
+doc.setFontStyle('bold');
+doc.setFontSize(12);
+doc.text ('EQUIVALENCIA', 128, 155);
+
+doc.save('reporte.pdf');
  }
 
+ generarpdf2() {
+ }
  formularioProfesores() {
      return this.profesoresForm = new FormGroup({
         tipo_identificacion: new FormControl('', [Validators.required]),
