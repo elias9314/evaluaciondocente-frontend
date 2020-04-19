@@ -305,7 +305,7 @@ generarPDF() {
 // Margins:
 doc.setFontStyle('normal');
 doc.setFontSize(11);
-const p = 'Con el objetivo de mejorar la calidad de los procesos de enseñanza aprendizaje, el perfeccionamiento docente y el fortalecimiento del proyecto de carrera, se ha motivado a estudiantes, docentes y autoridades a participar en el proceso de evaluación de docentes de forma activa y responsable, estandarizando procedimientos que permita desarrollar manera organizada el proceso de evaluación el mismo que contempla Auto – Evaluación, Coevaluación y Heteroevaluación.\nUna vez culminado dicho proceso se presentan las siguientes calificaciones:';
+const p = 'Con el objetivo de mejorar la calidad de los procesos de enseñanza aprendizaje, el perfeccionamiento docente y el fortalecimiento del proyecto de carrera, se ha motivado a estudiantes, docentes y autoridades a participar en el proceso de evaluación de docentes de forma activa y responsable, estandarizando procedimientos que permita desarrollar de manera organizada el proceso de evaluación el mismo que contempla Auto – Evaluación, Coevaluación y Heteroevaluación.\nUna vez culminado dicho proceso se presentan las siguientes calificaciones:';
 const lines = doc.splitTextToSize(p, (pdfInMM - lMargin - rMargin));
 doc.text(lMargin, 90, lines, {maxWidth: 160, align: 'justify'});
 /////////////////////////////////
