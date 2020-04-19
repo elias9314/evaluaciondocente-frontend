@@ -1,7 +1,7 @@
 import {Ubicacion} from './ubicacion.model';
 
 export class Estudiante {
-  id?: number;
+  id: string;
   tipo_identificacion: string;
   identificacion: string;
   apellido1: string;

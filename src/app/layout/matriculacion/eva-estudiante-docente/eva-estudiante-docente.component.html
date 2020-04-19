@@ -1,4 +1,3 @@
-
 <div class="row" *ngIf="flagInformacionEstudiante">
     <div class="col-xl-4 mt-5" *ngFor="let asignaturaMatricula of asignaturasMatricula">
         <div class="card">
@@ -31,44 +30,43 @@
     </div>
 </div>
 
-<div *ngIf="!flagInformacionEstudiante">
-    <div class="card" style="width: 60rem;">
-        <div class="card text-center">
-            <h3>INFORMACIÓN DOCENTE</h3>
-        </div><br>
-        <div class="container">
-            <div *ngFor="let item of respuesta">
-                <div>
-                    
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <i class="fa fa-user-circle-o">&nbsp;</i><b>Nombre:</b>&nbsp;{{item.nombre1}}
-                    </div>
-                    <div class="col-md-4">
-                        <i class="fa fa-user-circle-o">&nbsp;</i><b>Apellido:</b>&nbsp;{{item.apellido1}}
-                    </div>
-                    <div class="col-md-4">
-                        <i class="fa fa-envelope-o">&nbsp;<b>Correo:</b></i>&nbsp;{{item.correo_institucional}}
-                    </div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-7" *ngIf="!flagInformacionEstudiante">
+            <div class="card" style="width: 60rem;">
+                <div class="card text-center"><br>
+                    <h3>INFORMACIÓN DOCENTE</h3>
                 </div><br>
-                <div class="row">
-                    <div class="col-md-12" *ngIf="resultado">
-                        <i class="fa fa-book">&nbsp;<b>Materia:</b></i>&nbsp;
-                        {{resultado.nombre}}
-                    </div>
+                <div class="container">
+                    <div *ngFor="let item of respuesta">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <i class="fa fa-user-circle-o">&nbsp;</i><b>Nombre:</b>&nbsp;{{item.nombre1}}
+                            </div>
+                            <div class="col-md-4">
+                                <i class="fa fa-user-circle-o">&nbsp;</i><b>Apellido:</b>&nbsp;{{item.apellido1}}
+                            </div>
+                            <div class="col-md-4">
+                                <i class="fa fa-envelope-o">&nbsp;<b>Correo:</b></i>&nbsp;{{item.correo_institucional}}
+                            </div>
+                            <div class="col-md-12" *ngIf="resultado">
+                                <i class="fa fa-book">&nbsp;<b>Materia:</b></i>&nbsp;
+                                {{resultado.nombre}}
+                            </div>
+                        </div>
                 </div>
-        </div>
-        </div>
-    </div>
-    <br>
-
-    <div class="card" style="width: 60rem;">
+            </div>
+                <br>
+            </div>
+        <div class="card" style="width: 60rem;">
         <div class="card text-center">
             <h4>FORMULARIO EVALUACIÓN DOCENTE</h4>
         </div><br>
+  
         <div class="container">
-            <div *ngFor="let mostrar of listarespuesta[0]; let i = index ">
+            <div *ngFor="let mostrar of listarespuesta[0]; let i = index " >
                     <div class="row">
                         <div class="col-lg-10 form-control ml-5">
                             <label for="{{mostrar.orden}}">{{ i + 1 + '. ' + mostrar.pregunta}}</label>
@@ -80,16 +78,23 @@
                     <div class="row ml-4 mb-4 mt-1">
                         <div class="col-lg-3" *ngFor="let respuesta of datademo[i];">
                             <div class="form-check">
-                                <input class="form-check-input" (change)="addListPreOpc(i,respuesta)" name="exampleRadios{{i}}"
-                                    id="exampleRadios{{i}}" type="radio" value="{{respuesta.valor}}">{{respuesta.nombre}}
+                                <input class="form-check-input" (change)="addListPreOpc1(i,respuesta)" name="exampleRadios{{i}}"
+                                    id="exampleRadios{{i}}" type="radio" value="{{respuesta.valor}}" required>{{respuesta.nombre}} 
                             </div>
                         </div>
                     </div>
-                </div>
-               </div>
+                            </div>
+
+                               <button class="btn btn-success" (click)= "calificar()"><i class="fa fa-pencil-square-o" arian-hidden="true">CALIFICAR</i></button>
+
+                            </div>
+        </div>
+    		
+            <div class="col-md-1">
+            </div>
+
+            
+        </div>
     </div>
-
-
-
-<button>CALIFICAR</button>
+</div>
 
