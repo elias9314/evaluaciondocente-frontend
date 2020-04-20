@@ -36,6 +36,7 @@ export class AdminDocentesComponent implements OnInit {
   flagPagination: boolean;
   profesoresForm: FormGroup;
   FormBuilder: any;
+  id: any;
 
   p = 1;
 
@@ -257,6 +258,28 @@ getUsuario() {
         }
     }
 }
+getDocenteby(id) {
+  this.spinner.show();
+  this.service.get('docentes' + id).subscribe(
+    response => {
+      this.docentes = response['profesor'];
+      console.log(response);
+      this.spinner.hide();
+    },
+    error => {
+      this.spinner.hide();
+      console.log('error');
+
+    });
+}
+
+PdfFinal(id) {
+
+  this.getDocenteby(id);
+  setTimeout(() => {
+    this.generarPDF();
+   }, 200);
+}
 
 generarPDF() {
     const lMargin = 20; // left margin in mm
@@ -293,6 +316,7 @@ generarPDF() {
   doc.setFontStyle('bold');
   doc.setFontSize(13);
   doc.text ('NOMBRE:', 20, 70);
+  doc.text (this.docentes[0].nombre1, 60, 70);
   ////////////////////////////
   doc.setFontStyle('bold');
   doc.setFontSize(13);
