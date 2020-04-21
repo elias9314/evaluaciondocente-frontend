@@ -36,9 +36,8 @@ export class AdminDocentesComponent implements OnInit {
   flagPagination: boolean;
   profesoresForm: FormGroup;
   FormBuilder: any;
-  id: any;
-
   p = 1;
+  id: any;
 
   constructor(config: NgbModalConfig, private modalService: NgbModal, private spinner: NgxSpinnerService, private service: ServiceService) {
 
@@ -68,7 +67,7 @@ export class AdminDocentesComponent implements OnInit {
     this.service.get('docentes').subscribe(
       response => {
         this.docentes = response['profesor'];
-        console.log(response);
+        console.log(this.docentes[0]);
         this.spinner.hide();
       },
       error => {
@@ -86,7 +85,7 @@ export class AdminDocentesComponent implements OnInit {
     this.service.get('usuarios' + parameters).subscribe(
         response => {
             this.docentes = response['usuarios']['data'];
-            console.log(response);
+            console.log(this.docentes[0]);
             this.total_pages = response['pagination']['last_page'];
             this.total_register = response['pagination']['total'];
             this.crearNumerosPaginacion();
@@ -260,11 +259,14 @@ getUsuario() {
 }
 getDocenteby(id) {
   this.spinner.show();
-  this.service.get('docentes' + id).subscribe(
+  this.service.get('docentes/' + id).subscribe(
     response => {
-      this.docentes = response['profesor'];
-      console.log(response);
+      this.docente = response['docente'][0];
+      console.log(this.docente.nombre1);
       this.spinner.hide();
+      setTimeout(() => {
+        this.generarPDF(this.docente);
+       }, 200);
     },
     error => {
       this.spinner.hide();
@@ -273,15 +275,12 @@ getDocenteby(id) {
     });
 }
 
-PdfFinal(id) {
+PdfFinal(id: any) {
 
   this.getDocenteby(id);
-  setTimeout(() => {
-    this.generarPDF();
-   }, 200);
 }
 
-generarPDF() {
+generarPDF(data: any) {
     const lMargin = 20; // left margin in mm
 
     const rMargin = 20; // right margin in mm
@@ -316,7 +315,7 @@ generarPDF() {
   doc.setFontStyle('bold');
   doc.setFontSize(13);
   doc.text ('NOMBRE:', 20, 70);
-  doc.text (this.docentes[0].nombre1, 60, 70);
+ doc.text(data.apellido1 + ' ' + data.nombre1 , 45, 70);
   ////////////////////////////
   doc.setFontStyle('bold');
   doc.setFontSize(13);
@@ -353,7 +352,7 @@ doc.setFontStyle('bold');
 doc.setFontSize(12);
 doc.text ('EQUIVALENCIA', 128, 155);
 
-doc.save('reporte.pdf');
+doc.save(data.nombre1 + '.pdf');
  }
 
  generarpdf2() {

@@ -40,7 +40,7 @@
                 <td><button class="btn btn-warning ml-1 btn-md text-white" title="Actualizar" (click)="abrirModalDocente(content,true,docente)">
           <span class="{{messages['buttonUpdate']['icon']}}"></span>
   </button></td>
-    <td><button type="button" class="btn btn-danger" (click)="PdfFinal(id)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button></td>
+    <td><button type="button" class="btn btn-danger" (click)="PdfFinal(docente.user.id)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button></td>
             </tr>
         </tbody>
     </table>
