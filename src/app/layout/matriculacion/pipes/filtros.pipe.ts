@@ -4,7 +4,6 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'filtros'
 })
 export class FiltrosPipe implements PipeTransform {
-
   transform(value: any, arg: any): any {
     const resultPost = [];
     for (const item of value) {

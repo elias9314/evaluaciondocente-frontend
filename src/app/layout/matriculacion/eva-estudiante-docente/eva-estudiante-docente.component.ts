@@ -17,6 +17,8 @@ import { of } from 'rxjs';
 ﻿import { from } from 'rxjs';
 import {DocenteAsignatura} from '../modelos/docente-asignatura.model';
 import {Resultado} from '../modelos/resultado.model';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+
 
 @Component({
     selector: 'app-eva-estudiante-docente',
@@ -55,9 +57,11 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     docenteAsig: DocenteAsignatura;
     docenteAsignaturas: Array<DocenteAsignatura>;
     resultadoSeleccionado: Resultado;
+    evaluar: boolean;
+    evaluado: boolean;
+    formulario: FormGroup;
 
-
-    constructor(private spinner: NgxSpinnerService, private service: ServiceService) {
+    constructor(private spinner: NgxSpinnerService, private service: ServiceService, private form: FormBuilder) {
     }
 
     ngOnInit() {
@@ -68,9 +72,6 @@ export class EvaEstudianteDocenteComponent implements OnInit {
         this.flagInformacionEstudiante = false;
         this.messages = catalogos.messages;
         this.getEstudiante();
-        this.mostrarPreguntas();
-        // this.getid(1801);
-        // this.getOne(552);
     }
 
     getEstudiante() {
@@ -93,65 +94,48 @@ export class EvaEstudianteDocenteComponent implements OnInit {
             });
     }
 
-    evaluate(idAsignatura?, idUsuario?) {
-        this.spinner.show();
-        let parameters = '?periodo_lectivo_id=4&asignatura_id=512&paralelo=1&jornada=1';
-        this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
-            response => {
-                // this.docenteAsignatura = response['docente_asignatura'][0];
-                this.spinner.hide();
-                this.flagInformacionEstudiante = false;
-                parameters = '?docente_asignatura_id=512' + '&user_id=551' ;
-                this.service.get('estudiantes/eva_preguntas' + parameters).subscribe(
-                    response2 => {
-                        this.spinner.show();
-                        this.getOne(idAsignatura);
-                        this.getid(idUsuario);
-                        this.evaPreguntas = new Array<any>();
-                        this.evaPreguntas = response2['eva_preguntas'];
-                        this.spinner.hide();
-                        this.flagInformacionEstudiante = false;
-                    },
-                    error => {
-                        this.flagInformacionEstudiante = true;
-                        this.spinner.hide();
-                        if (error.error.errorInfo[0] === '001') {
-                            swal.fire(this.messages['error001']);
 
-                        } else {
-                            swal.fire(this.messages['error500']);
-                        }
-                    });
-            },
-            error => {
-                this.flagInformacionEstudiante = true;
-                this.spinner.hide();
-                if (error.error.errorInfo[0] === '001') {
-                    swal.fire(this.messages['error001']);
-                } else {
-                    swal.fire(this.messages['error500']);
-                }
-            });
-    }
 
-    updateRespuesta(event, pregunta) {
-        this.spinner.show();
-        this.service.post('estudiantes/eva_respuestas?eva_respuesta_id=' + event.target.id
-            + '&valor=' + pregunta.valor, null).subscribe(
-            response => {
-                this.spinner.hide();
-                this.mostrarPregunta = new Array<any>();
-            },
-            error => {
+    // evaluate(idAsignatura?, idUsuario?) {
+    //     this.spinner.show();
+    //     let parameters = '?periodo_lectivo_id=4&asignatura_id=512&paralelo=1&jornada=1';
+    //     this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
+    //         response => {
+    //             this.spinner.hide();
+    //             this.flagInformacionEstudiante = false;
+    //             parameters = '?docente_asignatura_id=512' + '&user_id=551' ;
+    //             this.service.get('estudiantes/eva_preguntas' + parameters).subscribe(
+    //                 response2 => {
+    //                     this.spinner.show();
+    //                     this.getOne(idAsignatura);
+    //                     this.getid(idUsuario);
+    //                     this.evaluado = true;
+    //                     this.evaPreguntas = new Array<any>();
+    //                     this.evaPreguntas = response2['eva_preguntas'];
+    //                     this.spinner.hide();
+    //                     this.flagInformacionEstudiante = false;
+    //                 },
+    //                 error => {
+    //                     this.flagInformacionEstudiante = true;
+    //                     this.spinner.hide();
+    //                     if (error.error.errorInfo[0] === '001') {
+    //                         swal.fire(this.messages['error001']);
 
-                this.spinner.hide();
-                if (error.error.errorInfo[0] === '001') {
-                    swal.fire(this.messages['error001']);
-                } else {
-                    swal.fire(this.messages['error500']);
-                }
-            });
-    }
+    //                     } else {
+    //                         swal.fire(this.messages['error500']);
+    //                     }
+    //                 });
+    //         },
+    //         error => {
+    //             this.flagInformacionEstudiante = true;
+    //             this.spinner.hide();
+    //             if (error.error.errorInfo[0] === '001') {
+    //                 swal.fire(this.messages['error001']);
+    //             } else {
+    //                 swal.fire(this.messages['error500']);
+    //             }
+    //         });
+    // }
 
     onSelectionChange(entry: any) {
         this.enviarrespuesta.push(entry);
@@ -198,13 +182,16 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     console.log('es esto', this.enviarrespuesta);
       }
 
-
-    mostrarPreguntas() {
+    mostrarPreguntas(idAsignatura?, idUsuario?) {
         this.spinner.show();
         const parameters = '?tipo_evaluacion=1';
         this.service.get('eva_preguntas_eva_respuestas' + parameters).subscribe(
             response => {
+                this.flagInformacionEstudiante = false;
+                this.getOne(idAsignatura);
+                this.getid(idUsuario);
                 this.mostrarPregunta = response['eva_pregunta_eva_respuesta'];
+                this.flagInformacionEstudiante = false;
                 console.log('Preguntas', response);
                 const source = from(this.mostrarPregunta);
                 // group by age
@@ -226,6 +213,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                 console.log(this.listarespuesta[0]);
             },
             error => {
+                this.flagInformacionEstudiante = true;
                 this.spinner.hide();
                 console.log('error');
 
@@ -284,31 +272,19 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                             }
                             console.log(this.enviarrespuesta);
             }
+
     calificar() {
         this.spinner.show();
-        var docente= this.docenteAsignaturas[0].id;
-        // let parameters = '?periodo_lectivo_id=4&asignatura_id='+this.resultado.id+'&paralelo=1&jornada=4';
-        // this.service.get('estudiantes/docente_asignatura' + parameters).subscribe(
-        //     response => {
-        //         this.idDocenteAsignatura = response['docente_asignatura'][0].id;
-        //         console.log("docente",this.idDocenteAsignatura);
-        //         this.spinner.hide();
-        //         this.flagInformacionEstudiante = false;
-        //         this.spinner.show();
-            let parameters = '?idDocenteAsignatura='+ docente;
+        const docente = this.docenteAsignaturas[0].id;
+            const parameters = '?idDocenteAsignatura=' + docente;
                         this.service.post('resultado' + parameters, {'eva_resultados': this.enviarrespuesta}).subscribe(
                             response2 => {
+                                this.evaluado = true ;
                                     this.spinner.hide();
                                     console.log('RESULTADO', response2);
                                     this.getEstudiante();
 
                                     },
-                                    // error => {
-                                    //     this.spinner.hide();
-                                    //     console.log('error');
-                                    // }
-                                
-                
                     error => {
                         this.flagInformacionEstudiante = true;
                         this.spinner.hide();
@@ -320,6 +296,6 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                         }
 
         });
-    }
 
+    }
 }

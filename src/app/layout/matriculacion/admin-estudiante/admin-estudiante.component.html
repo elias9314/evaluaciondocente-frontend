@@ -3,7 +3,11 @@
     <div class="row">
         <div class="col">
             <div class="form-group">
-                <input type="text" class="form-control" name="busquedaPost" placeholder="Buscar por carrera...." [(ngModel)]="filterPost">
+                <select class="form-control" name="busquedaPost" placeholder="Buscar por carrera...." [(ngModel)]="filterPost">
+                <!-- <option value="0">Busqueda por Carrera</option> -->
+                <option value="{{item.nombre}}" *ngFor="let item of respuestaCarrera" >{{item.nombre}}</option>
+                </select>
+                <!-- <input type="text" class="form-control" name="busquedaPost" placeholder="Buscar por carrera...." [(ngModel)]="filterPost"> -->
             </div>
         </div>
     </div>
@@ -13,25 +17,27 @@
     </div>
     <table>
         <thead *ngFor="let item of parametrosEstudiante">
-            <th>{{item.id}}</th>
+            <!-- <th>{{item.id}}</th> -->
             <th>{{item.cedula}}</th>
             <th>{{item.nombre}}</th>
             <th>{{item.apellido}}</th>
             <th>{{item.correo}}</th>
             <th>{{item.carrera}}</th>
-            <th>{{item.estado}}</th>
+            <th>Asignatura</th>
             <th>{{item.estadoEvaluacion}}</th>
+            <th>{{item.estado}}</th>
         </thead>
         <tbody>
             <tr *ngFor="let item of respuesta | filtros:filterPost | paginate: { itemsPerPage: 8, currentPage: pageActual }">
-                <td>{{item.id}}</td>
+                <!-- <td>{{item.id}}</td> -->
                 <td>{{item.identificacion}}</td>
                 <td>{{item.nombre1}}</td>
                 <td>{{item.apellido1}}</td>
                 <td>{{item.correo_institucional}}</td>
                 <td>{{item.nombre}}</td>
+                <td>{{item.asignatura}}</td>
+                <td>{{item.estado_evaluacion}}</td>
                 <td>{{item.estado}}</td>
-                <td>{{item.descripcion}}</td>
                 <!-- <div class="container">
                     <button type="button" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                 </div> -->

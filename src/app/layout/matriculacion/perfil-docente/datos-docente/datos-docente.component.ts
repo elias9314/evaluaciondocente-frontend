@@ -52,7 +52,7 @@ export class DatosDocenteComponent implements OnInit {
 _handleReaderLoaded(readerEvt) {
   const binaryString = readerEvt.target.result;
   this.base64textString = btoa(binaryString);
-  this.docente.imagen = this.base64textString;
+  // this.docente.imagen = this.base64textString;
   console.log(this.docente.imagen);  // Converting binary string data.
 }
 

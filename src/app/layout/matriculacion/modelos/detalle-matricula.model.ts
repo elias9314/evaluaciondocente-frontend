@@ -13,6 +13,7 @@ export class DetalleMatricula {
     jornada_asignatura: string;
     numero_matricula: string;
     estado: string;
+    // estado_evaluacion: any;
 
     constructor() {
         this.matricula = new Matricula();
@@ -23,5 +24,6 @@ export class DetalleMatricula {
         this.numero_matricula = '';
         this.jornada = '';
         this.paralelo = '';
+        // this.estado_evaluacion = false;
     }
 }

@@ -1,3 +1,4 @@
+import { autoTable } from 'jspdf-autotable';
 import { Component, OnInit } from '@angular/core';
 import {Docente} from '../modelos/docente.model';
 import { User} from '../modelos/user.model';
@@ -10,6 +11,8 @@ import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 ///////////////////////////////
 import * as jsPDF from 'jspdf';
 import { imagenConstant} from '../../../constantes/imagenconstant';
+import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-admin-docentes',
   templateUrl: './admin-docentes.component.html',
@@ -36,10 +39,13 @@ export class AdminDocentesComponent implements OnInit {
   flagPagination: boolean;
   profesoresForm: FormGroup;
   FormBuilder: any;
+  resultado: any = [];
+  respuesta: any = [];
   p = 1;
   id: any;
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal, private spinner: NgxSpinnerService, private service: ServiceService) {
+  constructor(config: NgbModalConfig, private modalService: NgbModal, private spinner: NgxSpinnerService, private service: ServiceService,
+    private http: HttpClient) {
 
   }
 
@@ -58,7 +64,7 @@ export class AdminDocentesComponent implements OnInit {
     this.total_pages = 1;
     this.getUsuarioDocentes(1);
     this.formularioProfesores();
-
+    this.getResultados();
   }
 
 
@@ -120,7 +126,7 @@ getUsuario() {
     this.docenteSeleccionado.user.email = this.docenteSeleccionado.correo_institucional ;
     this.docenteSeleccionado.user.name = this.docenteSeleccionado.apellido1 + ' ' + this.docenteSeleccionado.nombre1;
     this.docenteSeleccionado.user.estado = this.docenteSeleccionado.estado ;
-    this.docenteSeleccionado.imagen = this.docenteSeleccionado.imagen;
+    // this.docenteSeleccionado.imagen = this.docenteSeleccionado.imagen;
     console.log(this.docenteSeleccionado);
 
     this.spinner.show();
@@ -258,6 +264,7 @@ getUsuario() {
     }
 }
 getDocenteby(id) {
+    console.log(id);
   this.spinner.show();
   this.service.get('docentes/' + id).subscribe(
     response => {
@@ -328,6 +335,7 @@ generarPDF(data: any) {
 // Margins:
 doc.setFontStyle('normal');
 doc.setFontSize(11);
+// tslint:disable-next-line:max-line-length
 const p = 'Con el objetivo de mejorar la calidad de los procesos de enseñanza aprendizaje, el perfeccionamiento docente y el fortalecimiento del proyecto de carrera, se ha motivado a estudiantes, docentes y autoridades a participar en el proceso de evaluación de docentes de forma activa y responsable, estandarizando procedimientos que permita desarrollar de manera organizada el proceso de evaluación el mismo que contempla Auto – Evaluación, Coevaluación y Heteroevaluación.\nUna vez culminado dicho proceso se presentan las siguientes calificaciones:';
 const lines = doc.splitTextToSize(p, (pdfInMM - lMargin - rMargin));
 doc.text(lMargin, 90, lines, {maxWidth: 160, align: 'justify'});
@@ -356,7 +364,31 @@ doc.save(data.nombre1 + '.pdf');
  }
 
  generarpdf2() {
+     const id = document.getElementById('pdf');
+    const doc = new jsPDF({
+        orientacion: 'l',
+        unit: 'pt',
+        format: 'carta',
+        possition: 2
+    });
+    doc.setFontSize(22);
+    doc.setFontStyle('cursiva');
+    doc.text('Reportes', 180, 20);
+    doc.fromHTML(id, 200, 500);
+doc.save('todo los reportes.pdf');
  }
+ pdf2Final() {
+   this.getResultados();
+ }
+ getResultados() {
+    this.http.get<any>(environment.API_URL + 'respuestas').subscribe(data => {
+        this.respuesta = data;
+        console.log(data);
+    //     setTimeout(() => {
+    //         this.generarpdf2(this.respuesta);
+    //        }, 200);
+    });
+}
  formularioProfesores() {
      return this.profesoresForm = new FormGroup({
         tipo_identificacion: new FormControl('', [Validators.required]),

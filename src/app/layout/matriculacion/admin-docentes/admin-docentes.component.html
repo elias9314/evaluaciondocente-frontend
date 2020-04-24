@@ -27,7 +27,7 @@
                     <a type="button" class="btn btn-success ml-1 btn-sm" (click)="abrirModalDocente(content,false,null)">Añadir
             <span class="{{messages['buttonAdd']['icon']}}"></span>
           </a>
-                </th>    
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -40,7 +40,7 @@
                 <td><button class="btn btn-warning ml-1 btn-md text-white" title="Actualizar" (click)="abrirModalDocente(content,true,docente)">
           <span class="{{messages['buttonUpdate']['icon']}}"></span>
   </button></td>
-    <td><button type="button" class="btn btn-danger" (click)="PdfFinal(docente.user.id)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button></td>
+                <td><button type="button" class="btn btn-danger" (click)="PdfFinal(docente.user.id)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button></td>
             </tr>
         </tbody>
     </table>
@@ -69,7 +69,31 @@
             </nav>
         </div>
     </div>
-
+    <div>
+        <table class="table" id="pdf" style="display: none;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">id</th>
+                    <!-- <th scope="col">DocenteID</th> -->
+                    <th scope="col">Nombre del Estudiante </th>
+                    <th scope="col">Apellido del Estudiante </th>
+                    <th scope="col">Pregunta </th>
+                    <th scope="col">Respuesta </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of respuesta">
+                    <td>{{item.docente_asignatura_id}}</td>
+                    <td>{{item.estudiante.nombre1}}</td>
+                    <td>{{item.estudiante.apellido1}}</td>
+                    <td>{{item.eva_pregunta_eva_respuesta.eva_pregunta_id}}</td>
+                    <td>{{item.eva_pregunta_eva_respuesta.eva_respuesta_id}}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-success" (click)="generarpdf2()">GENERAR REPORTE</button>
+    </div>
 </div>
 
 
@@ -79,15 +103,6 @@
     </div>
     <div class="modal-body">
         <form [formGroup]="profesoresForm" name="usuario" method="post" #formCtrl="ngForm" enctype="multipart/form-data">
-
-            <div class="form-group row">
-                <div class="col-lg-12">
-                    <label for="imagen">
-                  <b class="text-danger">*</b> Tipo Identificación:
-              </label>
-                    <input formControlName="imagen" id="imagen" name="imagen" type="file" [(ngModel)]="docenteSeleccionado.imagen" required>
-                </div>
-            </div>
 
             <div class="form-group row">
                 <div class="col-lg-12">

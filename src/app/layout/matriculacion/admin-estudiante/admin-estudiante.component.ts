@@ -18,8 +18,10 @@ export class AdminEstudianteComponent implements OnInit {
     respuesta: any[];
     filterPost = '';
     pageActual = 1;
+    respuestaCarrera: any[];
+    buscador: string;
     // carreraUses: Carrera_users;
-  constructor(private http: HttpClient, private service: ServiceService, ) { }
+  constructor(private http: HttpClient, private service: ServiceService ) { }
 
   ngOnInit() {
       this.parametrosEstudiante = [
@@ -35,56 +37,7 @@ export class AdminEstudianteComponent implements OnInit {
           }
       ];
       this.traerEstudiantes();
-    //   this.respuesta = [{
-    //       id: 1,
-    //       cedula: '1750283721',
-    //       nombre: 'Joel',
-    //       apellido: 'Castro',
-    //       correo: 'jme.castro@yavirac.edu.ec',
-    //       carrera: 'Desarrollo de Software',
-    //       estado: 'ACTIVO',
-    //       estadoEvaluacion: 'EVALUADO'
-    //   },
-    //   {
-    //     id: 2,
-    //     cedula: '1234567899',
-    //     nombre: 'Angie',
-    //     apellido: 'Ortega',
-    //     correo: 'ajo.ortega@yavirac.edu.ec',
-    //     carrera: 'Desarrollo de Software',
-    //     estado: 'ACTIVO',
-    //     estadoEvaluacion: 'No EVALUADO'
-    // },
-    // {
-    //     id: 3,
-    //     cedula: '234567890',
-    //     nombre: 'Roger',
-    //     apellido: 'Lovezno',
-    //     correo: 'rfs.lovesno@yavirac.edu.ec',
-    //     carrera: 'Desarrollo de Software',
-    //     estado: 'ACTIVO',
-    //     estadoEvaluacion: 'EVALUADO'
-    // },
-    // {
-    //     id: 4,
-    //     cedula: '3456789012',
-    //     nombre: 'Maria',
-    //     apellido: 'Reyes',
-    //     correo: 'mmt.reyes@yavirac.edu.ec',
-    //     carrera: 'Diseño de Modas',
-    //     estado: 'ACTIVO',
-    //     estadoEvaluacion: 'NO EVALUADO'
-    // },
-    // {
-    //     id: 5,
-    //     cedula: '5678901234',
-    //     nombre: 'Johan',
-    //     apellido: 'Espinosa',
-    //     correo: 'jvc.espinosa@yavirac.edu.ec',
-    //     carrera: 'Marqueting',
-    //     estado: 'ACTIVO',
-    //     estadoEvaluacion: 'EVALUADO'
-    // }];
+      this.BusquedaCarrera();
   }
 
   traerEstudiantes() {
@@ -93,13 +46,21 @@ export class AdminEstudianteComponent implements OnInit {
           console.log(data);
       });
   }
-    // traerEstudiantes() {
-    //     this.spinner.show();
-    //     this.service.get('admin-estudiantes').subscribe(
-    //         response => {
-    //             this.data = response;
-    //             console.log(response);
-    //         }
-    //     );
-    // }
+  BusquedaCarrera() {
+      this.http.get<any>(environment.API_URL + 'carreras').subscribe(data => {
+        this.respuestaCarrera = data['carreras'];
+        console.log(data);
+      });
+  }
+//   filter(event) {
+//     console.log(event.which);
+//     if (event.which === 1 || event.which === 13 || this.buscador.length === 0) {
+//         if (this.buscador.length === 0) {
+//             this.BusquedaCarrera();
+//         } else {
+//             this.traerEstudiantes();
+//             console.log('error');
+//         }
+//     }
+// }
 }

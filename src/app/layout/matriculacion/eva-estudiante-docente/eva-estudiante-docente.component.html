@@ -3,10 +3,10 @@
         <div class="card">
             <div style="height: 100px;">
                 <div class="card-header bg-white h-100 text-center">
-                    <p (click)="evaluate()">
+                    <p (click)="mostrarPreguntas()">
                         ({{asignaturaMatricula.codigo}})
                     </p>
-                    <p (click)="evaluate()">
+                    <p (click)="mostrarPreguntas()">
                         {{asignaturaMatricula.nombre}}
                     </p>
                 </div>
@@ -16,9 +16,8 @@
                 <p>
                     {{asignaturaMatricula.apellido1 + ' ' + asignaturaMatricula.nombre1}}
                 </p>
-                <!-- <button class="btn btn-primary" *ngIf="asignaturaMatricula.estado_evaluacion!='EVALUADO'" (click)="evaluate(asignaturaMatricula.idAsignatura,asignaturaMatricula.user_id)"> -->
                 <button class="btn btn-primary" *ngIf="asignaturaMatricula.estado_evaluacion!='EVALUADO'"
-                    (click)="evaluate(asignaturaMatricula.idAsignatura,asignaturaMatricula.user_id)">
+                    (click)="mostrarPreguntas(asignaturaMatricula.idAsignatura,asignaturaMatricula.user_id)">
 
                     EVALUAR
                 </button>
@@ -35,7 +34,7 @@
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-7" *ngIf="!flagInformacionEstudiante">
-            <div class="card" style="width: 60rem;">
+            <div class="card" style="width: 55rem;">
                 <div class="card text-center"><br>
                     <h3>INFORMACIÓN DOCENTE</h3>
                 </div><br>
@@ -52,7 +51,7 @@
                                 <i class="fa fa-envelope-o">&nbsp;<b>Correo:</b></i>&nbsp;{{item.correo_institucional}}
                             </div>
                             <div class="col-md-12" *ngIf="resultado">
-                                <i class="fa fa-book">&nbsp;<b>Materia:</b></i>&nbsp;
+                                <i class="fa fa-book">&nbsp;<b>Asignatura:</b></i>&nbsp;
                                 {{resultado.nombre}}
                             </div>
                         </div>
@@ -60,40 +59,36 @@
             </div>
                 <br>
             </div>
-        <div class="card" style="width: 60rem;">
+
+
+    <div class="card" style="width: 55rem;">
         <div class="card text-center">
             <h4>FORMULARIO EVALUACIÓN DOCENTE</h4>
         </div><br>
-  
-        <div class="container">
-            <div *ngFor="let mostrar of listarespuesta[0]; let i = index " >
+        <div class="card-body">
+            <div class="container">
+                <div *ngFor="let mostrar of listarespuesta[0]; let i = index ">
                     <div class="row">
                         <div class="col-lg-10 form-control ml-5">
-                            <label for="{{mostrar.orden}}">{{ i + 1 + '. ' + mostrar.pregunta}}</label>
-                        </div>
-                        <div>
+                            <label for="{{mostrar.orden}}"><b>{{ i + 1 + '. '}}</b> {{ mostrar.pregunta}}</label>
                         </div>
                     </div>
-            
+        
                     <div class="row ml-4 mb-4 mt-1">
                         <div class="col-lg-3" *ngFor="let respuesta of datademo[i];">
                             <div class="form-check">
                                 <input class="form-check-input" (change)="addListPreOpc1(i,respuesta)" name="exampleRadios{{i}}"
-                                    id="exampleRadios{{i}}" type="radio" value="{{respuesta.valor}}" required>{{respuesta.nombre}} 
+                                    id="exampleRadios{{i}}" type="radio" value="{{respuesta.valor}}"
+                                    >{{respuesta.nombre}}
                             </div>
                         </div>
                     </div>
-                            </div>
-
-                               <button class="btn btn-success" (click)= "calificar()"><i class="fa fa-pencil-square-o" arian-hidden="true">CALIFICAR</i></button>
-
-                            </div>
-        </div>
-    		
-            <div class="col-md-1">
+                </div>
+                <div class="card-body text-center">
+                    <button class="btn btn-primary btn-lg" (click)="calificar()"><i class="fa fa-pencil-square-o"
+                        arian-hidden="true">CALIFICAR</i></button>   
+                </div>
             </div>
-
-            
         </div>
     </div>
 </div>
