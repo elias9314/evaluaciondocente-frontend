@@ -126,7 +126,7 @@ getUsuario() {
     this.docenteSeleccionado.user.email = this.docenteSeleccionado.correo_institucional ;
     this.docenteSeleccionado.user.name = this.docenteSeleccionado.apellido1 + ' ' + this.docenteSeleccionado.nombre1;
     this.docenteSeleccionado.user.estado = this.docenteSeleccionado.estado ;
-    this.docenteSeleccionado.imagen = this.docenteSeleccionado.imagen;
+    // this.docenteSeleccionado.imagen = this.docenteSeleccionado.imagen;
     console.log(this.docenteSeleccionado);
 
     this.spinner.show();
@@ -375,38 +375,6 @@ doc.save(data.nombre1 + '.pdf');
     doc.setFontStyle('cursiva');
     doc.text('Reportes', 180, 20);
     doc.fromHTML(id, 200, 500);
-  //   const lMargin = 20; // left margin in mm
-//
-  //   const rMargin = 20; // right margin in mm
-
-  //   const pdfInMM = 210;
-  //   const pageCenter = pdfInMM / 2;
-  // const doc = new jsPDF('p', 'mm', 'a4');
-  // ////////////////////////////
-  // doc.addImage(imagenConstant.imagen, 'JPG', 20, 15, 30, 30);
-  // doc.addImage(imagenConstant.fondo2, 'JPG', 50, 100, 113, 100);
-  // ////////////////////////////
-  // doc.setFontStyle('bold');
-  // doc.setFontSize(15);
-  // doc.text ('INSTITUTO SUPERIOR TECNOLÓGICO', 61, 25);
-  // ///////////////////////////
-  // doc.setFontSize(15);
-  // doc.setFontStyle('bold');
-  // doc.text ('DE TURISMO Y PATRIMONIO "YAVIRAC"', 59, 30);
-  // ///////////////////////////
-  // doc.setFontSize(9);
-  // doc.setFontStyle('normal');
-  // doc.text ('Dirección: García Moreno S435 y Ambato', 79, 35);
-  // //////////////////////////
-  // doc.setFontSize(9);
-  // doc.setFontStyle('normal');
-  // doc.text ('Quito - Ecuador', 95, 40);
-  // ///////////////////////////
-  // doc.setFontStyle('bold');
-  // doc.setFontSize(15);
-  // doc.text ('EVALUACIÓN DOCENTE', 79, 60);
-  ///////////////////////////
-//   doc.text(this.getResultados());
 doc.save('todo los reportes.pdf');
  }
  pdf2Final() {
