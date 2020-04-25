@@ -40,11 +40,11 @@
               <b class="text-danger">*</b> Tipo de Evaluación
           </label>
                     <input formControlName="nombre" id="nombre" name="nombre" type="text" [(ngModel)]="tipoevaluacionSeleccionado.nombre" class="text-uppercase form-control" required>
-                    <div class="alert-danger" *ngIf="nombre.invalid &&(nombre.dirty || nombre.touched)">
+                    <!-- <div class="alert-danger" *ngIf="nombre.invalid &&(nombre.dirty || nombre.touched)">
                         <div class="container-error-mensage " *ngIf="nombre.invalid">
                             Tipo de evaluacion necesita almenos 4 letras, Solo acepta en mayuscula
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="form-group row">
@@ -53,11 +53,11 @@
               <b class="text-danger">*</b>Evaluación
           </label>
                     <input formControlName="evaluacion" id="evaluacion" name="evaluacion" type="number" [(ngModel)]="tipoevaluacionSeleccionado.evaluacion" class="text-uppercase form-control" required>
-                    <div class="alert-danger" *ngIf="evaluacion.invalid &&(evaluacion.dirty || evaluacion.touched)">
+                    <!-- <div class="alert-danger" *ngIf="evaluacion.invalid &&(evaluacion.dirty || evaluacion.touched)">
                         <div class="container-error-mensage " *ngIf="evaluacion.invalid">
                             campo invalido
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -70,10 +70,10 @@
           <option value="ACTIVO">ACTIVO</option>
           <option value="INACTIVO">INACTIVO</option>
       </select>
-                    <div class="alert-danger" *ngIf="estado.invalid &&(estado.dirty || estado.touched)">
+                    <!-- <div class="alert-danger" *ngIf="estado.invalid &&(estado.dirty || estado.touched)">
                         <div class="container-error-mensage " *ngIf="estado.errors.required"> estado es requerida
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <br>
                 <div class="modal-footer">
