@@ -25,7 +25,7 @@ export class TipoEvaluacionComponent implements OnInit {
     this.tipoevaluacion = new TipoEvaluacion();
     this.tipoevaluacionSeleccionado = new TipoEvaluacion();
     this.tipoevaluaciones = new Array<TipoEvaluacion>();
-    this.formularioTipo();
+    // this.formularioTipo();
   }
 
 //////////// método para traer los tipo de evaluación/////////////
@@ -47,8 +47,6 @@ export class TipoEvaluacionComponent implements OnInit {
         }
 ////////////////// método para ingresar un nuevo tipo de evaluación////////////////////////////
         postEvaluacion() {
-            if (this.respuesta !== this.respuesta) {
-                if (this.tipoevaluacionForm.valid) {
                     this.spinner.show();
                     this.service.post('tipo_evaluacion', {'tipo_evaluacion': this.tipoevaluacionSeleccionado}).subscribe(
                       response => {
@@ -60,18 +58,6 @@ export class TipoEvaluacionComponent implements OnInit {
                         console.log('error');
                       }
                     );
-                  } else {
-                      alert('Registros no validos');
-                  }
-            } else {
-                // alert ('El registro evaluacion esta duplicado porfavor intente con otro numero');
-                Swal.fire(
-                     'error',
-                     'El registro evaluacion esta duplicado por favor intente con otro numero',
-                     'error'
-                    //  'Something went wrong!'
-                );
-            }
     }
 
 //////////// método para editar un registro tipo de evaluación//////////////////////////////////
@@ -111,15 +97,15 @@ agregarTipoEvaluacion(content, eva) {
               }));
 
       }
-      formularioTipo() {
-          return this.tipoevaluacionForm = new FormGroup({
-              nombre: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Z])*$')]),
-              evaluacion: new FormControl('', [Validators.required]),
-              estado: new FormControl('', [Validators.required])
-          });
-      }
-      get nombre() {return this.tipoevaluacionForm.get('nombre'); }
-      get evaluacion() {return this.tipoevaluacionForm.get('evaluacion'); }
-      get estado() {return this.tipoevaluacionForm.get('estado'); }
+      // formularioTipo() {
+      //     return this.tipoevaluacionForm = new FormGroup({
+      //         nombre: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Z])*$')]),
+      //         evaluacion: new FormControl('', [Validators.required]),
+      //         estado: new FormControl('', [Validators.required])
+      //     });
+      // }
+      // get nombre() {return this.tipoevaluacionForm.get('nombre'); }
+      // get evaluacion() {return this.tipoevaluacionForm.get('evaluacion'); }
+      // get estado() {return this.tipoevaluacionForm.get('estado'); }
 }
 //////////////////////////////////////////////////////////
