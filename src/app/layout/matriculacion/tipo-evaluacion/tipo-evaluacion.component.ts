@@ -18,6 +18,7 @@ export class TipoEvaluacionComponent implements OnInit {
   tipoevaluacionForm: FormGroup;
   FormBuilder: any;
   respuesta: any = [];
+  validacion: any;
   constructor(private spinner: NgxSpinnerService, private service: ServiceService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -25,7 +26,7 @@ export class TipoEvaluacionComponent implements OnInit {
     this.tipoevaluacion = new TipoEvaluacion();
     this.tipoevaluacionSeleccionado = new TipoEvaluacion();
     this.tipoevaluaciones = new Array<TipoEvaluacion>();
-    // this.formularioTipo();
+    this.formularioTipo();
   }
 
 //////////// método para traer los tipo de evaluación/////////////
@@ -36,9 +37,7 @@ export class TipoEvaluacionComponent implements OnInit {
         this.tipoevaluaciones = response['tipo'];
         console.log(response);
         this.spinner.hide();
-        this.tipoevaluaciones.forEach(result => {
-            this.respuesta.push(result.evaluacion);
-        });
+        // console.log(this.tipoevaluaciones.length);
                  },
     error => {
         this.spinner.hide();
@@ -47,9 +46,20 @@ export class TipoEvaluacionComponent implements OnInit {
         }
 ////////////////// método para ingresar un nuevo tipo de evaluación////////////////////////////
         postEvaluacion() {
+            for (let i = 0; i < this.tipoevaluaciones.length; i++) {
+                // tslint:disable-next-line:triple-equals
+                if (this.tipoevaluaciones[i].evaluacion == this.tipoevaluacionSeleccionado.evaluacion) {
+                    this.validacion = false;
+                } else {
+                        this.validacion = true;
+                }
+            }
+            if (this.validacion) {
+                // if (this.tipoevaluacionForm.valid) {
                     this.spinner.show();
                     this.service.post('tipo_evaluacion', {'tipo_evaluacion': this.tipoevaluacionSeleccionado}).subscribe(
                       response => {
+                        this.tipoevaluacionSeleccionado = new TipoEvaluacion();
                         this.getTipoEvaluacion();
                         console.log(response);
                       },
@@ -58,12 +68,25 @@ export class TipoEvaluacionComponent implements OnInit {
                         console.log('error');
                       }
                     );
+                //   } else {
+                //       alert('Registros no validos');
+                //   }
+            } else {
+                // alert ('El registro evaluacion esta duplicado porfavor intente con otro numero');
+                Swal.fire(
+                     'error',
+                     'El registro evaluacion esta duplicado por favor intente con otro numero',
+                     'error'
+                    //  'Something went wrong!'
+                );
+                this.tipoevaluacionSeleccionado = new TipoEvaluacion();
+            }
     }
 
 //////////// método para editar un registro tipo de evaluación//////////////////////////////////
 actualizarTipoEvaluacion(eva: TipoEvaluacion) {
    this.spinner.show();
-   this.service.update('tipo_evaluaciones', {'tipo_evaluacion': eva}).subscribe(
+   this.service.update('tipo_evaluacion', {'tipo_evaluacion': eva}).subscribe(
    response => {
       this.getTipoEvaluacion();
       console.log(response);
@@ -97,15 +120,15 @@ agregarTipoEvaluacion(content, eva) {
               }));
 
       }
-      // formularioTipo() {
-      //     return this.tipoevaluacionForm = new FormGroup({
-      //         nombre: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Z])*$')]),
-      //         evaluacion: new FormControl('', [Validators.required]),
-      //         estado: new FormControl('', [Validators.required])
-      //     });
-      // }
-      // get nombre() {return this.tipoevaluacionForm.get('nombre'); }
-      // get evaluacion() {return this.tipoevaluacionForm.get('evaluacion'); }
-      // get estado() {return this.tipoevaluacionForm.get('estado'); }
+      formularioTipo() {
+          return this.tipoevaluacionForm = new FormGroup({
+              nombre: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Z])*$')]),
+              evaluacion: new FormControl('', [Validators.required]),
+              estado: new FormControl('', [Validators.required])
+          });
+      }
+      get nombre() {return this.tipoevaluacionForm.get('nombre'); }
+      get evaluacion() {return this.tipoevaluacionForm.get('evaluacion'); }
+      get estado() {return this.tipoevaluacionForm.get('estado'); }
 }
 //////////////////////////////////////////////////////////
