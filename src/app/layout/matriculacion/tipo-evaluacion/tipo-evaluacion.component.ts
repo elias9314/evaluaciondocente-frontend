@@ -47,8 +47,8 @@ export class TipoEvaluacionComponent implements OnInit {
         }
 ////////////////// método para ingresar un nuevo tipo de evaluación////////////////////////////
         postEvaluacion() {
-            //if (this.respuesta !== this.respuesta) {
-                //if (this.tipoevaluacionForm.valid) {
+            if (this.respuesta !== this.respuesta) {
+                if (this.tipoevaluacionForm.valid) {
                     this.spinner.show();
                     this.service.post('tipo_evaluacion', {'tipo_evaluacion': this.tipoevaluacionSeleccionado}).subscribe(
                       response => {
@@ -60,18 +60,18 @@ export class TipoEvaluacionComponent implements OnInit {
                         console.log('error');
                       }
                     );
-               //   } else {
-                    //  alert('Registros no validos');
-                 // }
-            //} else {
+                  } else {
+                      alert('Registros no validos');
+                  }
+            } else {
                 // alert ('El registro evaluacion esta duplicado porfavor intente con otro numero');
-                // Swal.fire(
-                //      'error',
-                //      'El registro evaluacion esta duplicado por favor intente con otro numero',
-                //      'error'
-                //     //  'Something went wrong!'
-                // );
-            //}
+                Swal.fire(
+                     'error',
+                     'El registro evaluacion esta duplicado por favor intente con otro numero',
+                     'error'
+                    //  'Something went wrong!'
+                );
+            }
     }
 
 //////////// método para editar un registro tipo de evaluación//////////////////////////////////
