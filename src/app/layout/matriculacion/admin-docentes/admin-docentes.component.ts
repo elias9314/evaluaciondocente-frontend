@@ -389,6 +389,7 @@ doc.save('todo los reportes.pdf');
     //        }, 200);
     });
 }
+
  formularioProfesores() {
      return this.profesoresForm = new FormGroup({
         tipo_identificacion: new FormControl('', [Validators.required]),

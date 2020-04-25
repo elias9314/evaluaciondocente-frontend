@@ -11,6 +11,7 @@ import { AuthGuard } from './shared';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule} from 'ngx-pagination';
+import {FormsModule} from '@angular/forms';
 @NgModule({
     imports: [
         CommonModule,
@@ -22,7 +23,8 @@ import { NgxPaginationModule} from 'ngx-pagination';
         AppRoutingModule,
         NgbModule.forRoot(),
         NgbPaginationModule, NgbAlertModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        FormsModule
     ],
     declarations: [AppComponent],
     providers: [AuthGuard],

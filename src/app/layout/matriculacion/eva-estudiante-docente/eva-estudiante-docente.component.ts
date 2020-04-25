@@ -280,9 +280,11 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                         this.service.post('resultado' + parameters, {'eva_resultados': this.enviarrespuesta}).subscribe(
                             response2 => {
                                 this.evaluado = true ;
-                                    this.spinner.hide();
                                     console.log('RESULTADO', response2);
                                     this.getEstudiante();
+                                    this.spinner.hide();
+                                    swal.fire(this.messages['createSuccess']);
+
 
                                     },
                     error => {

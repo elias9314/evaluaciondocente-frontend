@@ -67,7 +67,6 @@
         </div><br>
         <div class="card-body">
             <div class="container">
-                <form method="post" #formCtrl="ngForm">
                 <div *ngFor="let mostrar of listarespuesta[0]; let i = index ">
                     <div class="row">
                         <div class="col-lg-10 form-control ml-5">
@@ -86,25 +85,13 @@
                     </div>
                 </div>
                 <div class="card-body text-center">
-                     <h6 class="text-muted">
-                        <b class="text-danger">{{messages['requiredFields']['icon']}} </b>
-                        {{messages['requiredFields']['text']}}
-                    </h6>
                     <button class="btn btn-primary btn-lg" (click)="calificar()"><i class="fa fa-pencil-square-o"
-                        arian-hidden="true">CALIFICAR</i></button> 
-                        <button type="button" class="btn btn-success" (click)="calificar()" [disabled]="formCtrl.form.invalid">
-                            <span
-                                class="{{messages['saveConfirmationDialog']['iconOk']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['ok']}}
-                        </button>  
+                        arian-hidden="true">CALIFICAR</i></button>   
                 </div>
-              
-                <!-- <button type="button" class="btn btn-danger" (click)="c('close')">
-                    <span
-                        class="{{messages['saveConfirmationDialog']['iconCancel']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['cancel']}}
-                </button> -->
-            </form>
             </div>
         </div>
     </div>
 </div>
+
+
 
