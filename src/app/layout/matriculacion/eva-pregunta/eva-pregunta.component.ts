@@ -4,6 +4,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { EvaPregunta } from '../../notas/modelos/eva-pregunta.model';
 import { TipoEvaluacion } from '../../matriculacion/modelos/tipo-evaluacion.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import swal from 'sweetalert2';
+import {catalogos} from '../../../../environments/catalogos';
 import { error } from 'util';
 import {
     FormBuilder,
@@ -23,6 +25,7 @@ export class EvaPreguntaComponent implements OnInit {
     preguntaSeleccionada: EvaPregunta;
     pregunta: EvaPregunta;
     p = 2;
+    messages: any;
     tipos: Array<TipoEvaluacion>;
     eva_preguntasForm: FormGroup;
     FormBuilder: any;
@@ -41,6 +44,7 @@ export class EvaPreguntaComponent implements OnInit {
         this.preguntas = new Array<EvaPregunta>();
         this.pregunta = new EvaPregunta();
         this.preguntaSeleccionada = new EvaPregunta();
+        this.messages = catalogos.messages;
         this.formmularioPreguntas();
     }
     //////////// método para traer una lista de preguntas de evaluación docentes ///////////////
@@ -85,24 +89,26 @@ export class EvaPreguntaComponent implements OnInit {
     /////////////// método para crear una pregunta de evaluaciónv docente ////////////////
     createEvaPregunta() {
         for (let i = 0; i < this.preguntas.length; i++) {
-            if (this.preguntas[i].orden === this.preguntaSeleccionada.orden) {
+            if (this.preguntas[i].orden == this.preguntaSeleccionada.orden) {
                 this.validacion = false;
             } else {
                     this.validacion = true;
             }
         }
-        console.log(this.validacion);
 
         if (this.validacion) {
-            console.log(this.validacion);
             this.spinner.show();
             this.service
                 .post('evaluacion_pregunta', {
-                    eva_preguntas: this.preguntaSeleccionada,
+                    eva_preguntas: this.preguntaSeleccionada
+                    
+                    
                 })
                 .subscribe(
                     (response) => {
+                        this.spinner.hide();
                         this.preguntaSeleccionada = new EvaPregunta();
+                        swal.fire(this.messages['createSuccess']);
                         this.getEvaPregunta();
                         // this.router.navigate(['eva-pregunta']);
                     },
@@ -132,8 +138,8 @@ export class EvaPreguntaComponent implements OnInit {
             .update('evaluacion_preguntas', { eva_pregunta: evapregunta })
             .subscribe(
                 (response) => {
+                    this.spinner.hide();
                     console.log(response);
-
                     this.getEvaPregunta();
                 },
                 (Error) => {
@@ -165,6 +171,36 @@ export class EvaPreguntaComponent implements OnInit {
             }
         );
     }
+    abrirModalDocente(content, editar: boolean, evapregunta: EvaPregunta) {
+
+        if (editar) {
+          this.preguntaSeleccionada = evapregunta;
+        } else {
+          this.preguntaSeleccionada = new EvaPregunta();
+        }
+      
+        this.modalService.open(content)
+          .result
+          .then((resultModal => {
+            console.log(resultModal);
+            if ( resultModal === 'save') {
+              if (editar) {
+                this.actualizarEvaPregunta(evapregunta);
+      
+               } else {
+              this.createEvaPregunta();
+              console.log('Excelente!!');
+            }
+      
+            } else {
+      
+            }
+          }), error => {
+            console.log('error');
+          });
+        }
+
+
     formmularioPreguntas() {
         return (this.eva_preguntasForm = new FormGroup({
             evaluacion: new FormControl('', [Validators.required]),
