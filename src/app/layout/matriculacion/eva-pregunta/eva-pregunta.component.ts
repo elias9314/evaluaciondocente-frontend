@@ -89,7 +89,7 @@ export class EvaPreguntaComponent implements OnInit {
     /////////////// método para crear una pregunta de evaluaciónv docente ////////////////
     createEvaPregunta() {
         for (let i = 0; i < this.preguntas.length; i++) {
-            if (this.preguntas[i].orden == this.preguntaSeleccionada.orden) {
+            if (this.preguntas[i].orden === this.preguntaSeleccionada.orden) {
                 this.validacion = false;
             } else {
                     this.validacion = true;
