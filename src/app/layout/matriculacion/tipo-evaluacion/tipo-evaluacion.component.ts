@@ -86,7 +86,7 @@ export class TipoEvaluacionComponent implements OnInit {
 //////////// método para editar un registro tipo de evaluación//////////////////////////////////
 actualizarTipoEvaluacion(eva: TipoEvaluacion) {
    this.spinner.show();
-   this.service.update('tipo_evaluacion', {'tipo_evaluacion': eva}).subscribe(
+   this.service.update('tipo_evaluaciones', {'tipo_evaluacion': eva}).subscribe(
    response => {
       this.getTipoEvaluacion();
       console.log(response);
