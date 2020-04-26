@@ -31,7 +31,7 @@ export class AdminResultadosComponent implements OnInit {
             this.valores.push(result.valor);
             // this.codigo.push(result.codigo);
             this.chart = new Chart('canvas', {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels:  this.resultado,
                     datasets: [{
@@ -42,7 +42,6 @@ export class AdminResultadosComponent implements OnInit {
                             'red',
                             'red',
                             'red',
-                            'red'
                         ],
                         fill: false
                     },

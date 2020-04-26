@@ -74,7 +74,6 @@ const routes: Routes = [
             },
             {path: 'admin-estudiante', component: AdminEstudianteComponent},
             {path: 'admin-resultados', component: AdminResultadosComponent},
-
             {
                 path: 'perfil-docentes', component: PerfilDocenteComponent
             },
@@ -86,7 +85,7 @@ const routes: Routes = [
             {path: 'tipo-evaluacion', component: TipoEvaluacionComponent},
             {path: 'eva-pregunta', component: EvaPreguntaComponent},
             {path: 'admin-evaluacion', component: AdminEvaluacionComponent}
-          
+
         ]
     }
 ];
