@@ -37,13 +37,15 @@ export class AdminResultadosComponent implements OnInit {
                     datasets: [{
                         label: 'docentes',
                         data: this.valores,
+                        borderColor: '#3e95cd',
+                        fill: false,
                         backgroundColor: [
                             'red',
                             'red',
                             'red',
-                            'red',
+                            'red'
                         ],
-                        fill: false
+
                     },
                 ]
                 }
