@@ -14,6 +14,9 @@ export class DocenteAsignatura {
     estado: string;
     autoevaluacion:boolean;
     asignatura_id: string;
+    nota_total: DoubleRange;
+    porcentaje: DoubleRange;
+
     constructor() {
         this.estado = 'ACTIVO';
         this.tipo = '';
