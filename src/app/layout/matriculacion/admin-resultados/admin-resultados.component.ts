@@ -31,20 +31,21 @@ export class AdminResultadosComponent implements OnInit {
             this.valores.push(result.valor);
             // this.codigo.push(result.codigo);
             this.chart = new Chart('canvas', {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels:  this.resultado,
                     datasets: [{
                         label: 'docentes',
                         data: this.valores,
+                        borderColor: '#3e95cd',
+                        fill: false,
                         backgroundColor: [
-                            'red',
                             'red',
                             'red',
                             'red',
                             'red'
                         ],
-                        fill: false
+
                     },
                 ]
                 }
