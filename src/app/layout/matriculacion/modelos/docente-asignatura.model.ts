@@ -16,6 +16,7 @@ export class DocenteAsignatura {
     asignatura_id: string;
     nota_total: DoubleRange;
     porcentaje: DoubleRange;
+    periodo_lectivo_id: PeriodoLectivo;
 
     constructor() {
         this.estado = 'ACTIVO';

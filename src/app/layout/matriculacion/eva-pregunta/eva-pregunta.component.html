@@ -16,7 +16,7 @@
                 <a type="button" class="btn btn-success ml-1 btn-sm" (click)="abrirModalDocente(content,false,null)">Añadir
                 <span class="{{messages['buttonAdd']['icon']}}"></span>
                 </a>
-                </th>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -70,94 +70,94 @@
                 </div>
             </div>
 
-                <div class="form-group row">
-                    <div class="col-lg-12">
-                        <label for="codigo">
+            <div class="form-group row">
+                <div class="col-lg-12">
+                    <label for="codigo">
                             <b class="text-danger">*</b>Código
                         </label>
-                        <input formControlName="codigo" id="codigo" name="codigo" type="text" [(ngModel)]="preguntaSeleccionada.codigo" class="text-uppercase form-control" required>
-                        <div class="alert-danger" *ngIf="codigo.invalid &&(codigo.dirty || codigo.touched)">
-                            <!-- <div class="container-error-mensage " *ngIf="codigo.errors.required"> Codigo es requerida
+                    <input formControlName="codigo" id="codigo" name="codigo" type="text" [(ngModel)]="preguntaSeleccionada.codigo" class="text-uppercase form-control" required>
+                    <div class="alert-danger" *ngIf="codigo.invalid &&(codigo.dirty || codigo.touched)">
+                        <!-- <div class="container-error-mensage " *ngIf="codigo.errors.required"> Codigo es requerida
                             </div> -->
-                            <div class="container-error-mensage " *ngIf="codigo.invalid && (codigo.dirty || codigo.touched)">
-                                Código no valido
-                            </div>
+                        <div class="container-error-mensage " *ngIf="codigo.invalid && (codigo.dirty || codigo.touched)">
+                            Código no valido, Este campo solo acepta numeros
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group row">
-                    <div class="col-lg-12">
-                        <label for="orden">
+            <div class="form-group row">
+                <div class="col-lg-12">
+                    <label for="orden">
                     <b class="text-danger">*</b> Orden
                 </label>
-                        <input formControlName="orden" id="orden" name="orden" type="number" [(ngModel)]="preguntaSeleccionada.orden" class="text-uppercase form-control" required>
-                        <div class="alert-danger" *ngIf="orden.invalid &&(orden.dirty || orden.touched)">
-                            <!-- <div class="container-error-mensage " *ngIf="orden.errors.required"> Orden es requerida
+                    <input formControlName="orden" id="orden" name="orden" type="number" [(ngModel)]="preguntaSeleccionada.orden" class="text-uppercase form-control" required>
+                    <div class="alert-danger" *ngIf="orden.invalid &&(orden.dirty || orden.touched)">
+                        <!-- <div class="container-error-mensage " *ngIf="orden.errors.required"> Orden es requerida
                             </div> -->
-                            <div class="container-error-mensage " *ngIf="orden.invalid && (orden.dirty || orden.touched)">
-                                Orden no valida
-                            </div>
+                        <div class="container-error-mensage " *ngIf="orden.invalid && (orden.dirty || orden.touched)">
+                            Orden no valida, Este campo solo acepta numeros
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group row">
-                    <div class="col-lg-12">
-                        <label for="preguntanombre">
+            <div class="form-group row">
+                <div class="col-lg-12">
+                    <label for="preguntanombre">
                     <b class="text-danger">*</b> Pregunta
                 </label>
-                        <textarea formControlName="preguntanombre" name="preguntanombre" id="preguntanombre" cols="30" rows="10" [(ngModel)]="preguntaSeleccionada.nombre" class="text-uppercase form-control" required></textarea>
-                        <!-- <input formControlName="preguntanombre" id="preguntanombre" name="preguntanombre" type="text" [(ngModel)]="preguntaSeleccionada.nombre" class="text-uppercase form-control" required> -->
-                        <!-- <textarea formControlName="preguntanombre" name="preguntanombre" id="text" cols="30" rows="10" [(ngModel)]="preguntaSeleccionada.nombre")] clas="text-uppercase form-control" required></textarea> -->
-                        <!-- <div class="alert-danger" *ngIf="preguntanombre.invalid &&(preguntanombre.dirty || preguntanombre.touched)">
+                    <textarea formControlName="preguntanombre" name="preguntanombre" id="preguntanombre" cols="30" rows="10" [(ngModel)]="preguntaSeleccionada.nombre" class="text-uppercase form-control" required></textarea>
+                    <!-- <input formControlName="preguntanombre" id="preguntanombre" name="preguntanombre" type="text" [(ngModel)]="preguntaSeleccionada.nombre" class="text-uppercase form-control" required> -->
+                    <!-- <textarea formControlName="preguntanombre" name="preguntanombre" id="text" cols="30" rows="10" [(ngModel)]="preguntaSeleccionada.nombre")] clas="text-uppercase form-control" required></textarea> -->
+                    <!-- <div class="alert-danger" *ngIf="preguntanombre.invalid &&(preguntanombre.dirty || preguntanombre.touched)">
                             <div class="container-error-mensage " *ngIf="preguntanombre.errors.required"> Pregunta es requerida
                             </div>
                         </div> -->
-                    </div>
                 </div>
-                   <!--TIPO ANGIE-->
-                <div class="form-group row">
-                    <div class="col-lg-6">
-                        <label for="tipopregunta">
+            </div>
+            <!--TIPO ANGIE-->
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label for="tipopregunta">
                             <b class="text-danger">*</b> Tipo Pregunta
                         </label>
-                        <select formControlName="tipopregunta" name="tipopregunta" id="tipopregunta" [(ngModel)]="preguntaSeleccionada.tipo" class="form-control">
+                    <select formControlName="tipopregunta" name="tipopregunta" id="tipopregunta" [(ngModel)]="preguntaSeleccionada.tipo" class="form-control">
                             <option value="CUANTITATIVA">CUANTITATIVA</option>
                             <option value="CUALITATIVA">CUALITATIVA</option>
                         </select>
-                    </div>
-                    <div class="col-lg-6">
-                        <label for="estado">
+                </div>
+                <div class="col-lg-6">
+                    <label for="estado">
                             <b class="text-danger">*</b> Estado
                         </label>
-                        <select formControlName="estado" name="estado" id="estado" [(ngModel)]="preguntaSeleccionada.estado"  class="form-control" required>
+                    <select formControlName="estado" name="estado" id="estado" [(ngModel)]="preguntaSeleccionada.estado" class="form-control" required>
                             <option value="ACTIVO">ACTIVO</option>
                             <option value="INACTIVO">INACTIVO</option>
                 </select>
-                        <!-- <input formControlName="estado" id="estado" name="estado" type="text" [(ngModel)]="preguntaSeleccionada.estado" class="text-uppercase form-control" required> -->
-                        <!-- <div class="alert-danger" *ngIf="estado.invalid &&(estado.dirty || estado.touched)">
+                    <!-- <input formControlName="estado" id="estado" name="estado" type="text" [(ngModel)]="preguntaSeleccionada.estado" class="text-uppercase form-control" required> -->
+                    <!-- <div class="alert-danger" *ngIf="estado.invalid &&(estado.dirty || estado.touched)">
                             <div class="container-error-mensage " *ngIf="estado.errors.required"> Estado es requerida
                             </div>
                         </div> -->
-                    </div>
                 </div>
-                <br>
-                <div class="modal-footer">
-                    <h6 class="text-muted">
-                        <b class="text-danger">{{messages['requiredFields']['icon']}} </b> {{messages['requiredFields']['text']}}
-                    </h6>
-                    <!-- <button type="button" class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid"><i class="fa fa-check" aria-hidden="true">&nbsp; Ok</i></button>
+            </div>
+            <br>
+            <div class="modal-footer">
+                <h6 class="text-muted">
+                    <b class="text-danger">{{messages['requiredFields']['icon']}} </b> {{messages['requiredFields']['text']}}
+                </h6>
+                <!-- <button type="button" class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid"><i class="fa fa-check" aria-hidden="true">&nbsp; Ok</i></button>
                     <button type="button" class="btn btn-danger" (click)="c('close')"><i class="fa fa-times-circle" aria-hidden="true">&nbsp; Cerrar</i></button> -->
-                    <button type="button" class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
+                <button type="button" class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
                         <span
                             class="{{messages['saveConfirmationDialog']['iconOk']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['ok']}}
                             </button>
-                                  <button type="button" class="btn btn-danger" (click)="c('close')">
+                <button type="button" class="btn btn-danger" (click)="c('close')">
                         <span
                             class="{{messages['saveConfirmationDialog']['iconCancel']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['cancel']}}
                             </button>
-                </div>
+            </div>
         </form>
     </div>
 </ng-template>

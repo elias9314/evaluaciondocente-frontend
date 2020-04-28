@@ -43,6 +43,7 @@ export class AdminDocentesComponent implements OnInit {
   respuesta: any = [];
   p = 1;
   id: any;
+  nota: any = [];
 
   constructor(config: NgbModalConfig, private modalService: NgbModal, private spinner: NgxSpinnerService, private service: ServiceService,
     private http: HttpClient) {
@@ -263,31 +264,46 @@ getUsuario() {
         }
     }
 }
-getDocenteby(id) {
-    console.log(id);
-  this.spinner.show();
-  this.service.get('docentes/' + id).subscribe(
-    response => {
-      this.docente = response['docente'][0];
-      console.log(this.docente.nombre1);
-      this.spinner.hide();
-      setTimeout(() => {
-        this.generarPDF(this.docente);
+// getDocenteby(id) {
+//     console.log(id);
+//   this.spinner.show();
+//   this.service.get('docentes/' + id).subscribe(
+//     response => {
+//       this.docente = response['docente'][0];
+//       console.log(this.docente.nombre1);
+//       this.spinner.hide();
+//     //   setTimeout(() => {
+//     //     this.generarPDF(this.docente);
+//     //    }, 200);
+//     },
+//     error => {
+//       this.spinner.hide();
+//       console.log('error');
+
+//     });
+// }
+notas(idNota) {
+    localStorage.removeItem('idNota');
+    localStorage.setItem('idNota', idNota.toString());
+    console.log(idNota);
+    this.http.get<any>(environment.API_URL + 'docente_resultados?periodo_lectivo_id=4' + '&docente_id=' + idNota).subscribe(data => {
+      console.log(idNota);
+       this.nota = data;
+       console.log(data);
+       setTimeout(() => {
+        this.generarPDF(this.nota);
        }, 200);
-    },
-    error => {
-      this.spinner.hide();
-      console.log('error');
-
     });
+  }
+
+PdfFinal(idNota: any) {
+
+//   this.getDocenteby(id);
+  this.notas(idNota);
 }
 
-PdfFinal(id: any) {
-
-  this.getDocenteby(id);
-}
-
-generarPDF(data: any) {
+generarPDF(data?, idNota?) {
+    console.log(data.docenteAsignatura[0].docente.apellido1);
     const lMargin = 20; // left margin in mm
 
     const rMargin = 20; // right margin in mm
@@ -322,7 +338,7 @@ generarPDF(data: any) {
   doc.setFontStyle('bold');
   doc.setFontSize(13);
   doc.text ('NOMBRE:', 20, 70);
- doc.text(data.apellido1 + ' ' + data.nombre1 , 45, 70);
+ doc.text(data.docenteAsignatura[0].docente.apellido1 + ' ' + data.docenteAsignatura[0].docente.nombre1 , 45, 70);
   ////////////////////////////
   doc.setFontStyle('bold');
   doc.setFontSize(13);
@@ -351,16 +367,18 @@ doc.text ('DOCENCIA', 95, 145);
 doc.setFontStyle('bold');
 doc.setFontSize(12);
 doc.text ('CRITERIO', 57, 155);
+doc.text(data.docenteAsignatura[0].docente_id, 57, 160);
 ////////////////////////////////
 doc.setFontStyle('bold');
 doc.setFontSize(12);
 doc.text ('NOTA', 103, 155);
+doc.text(data.docenteAsignatura[1].nota_total, 103, 160);
 ////////////////////////////////
 doc.setFontStyle('bold');
 doc.setFontSize(12);
 doc.text ('EQUIVALENCIA', 128, 155);
-
-doc.save(data.nombre1 + '.pdf');
+doc.text(data.docenteAsignatura[1].porcentaje, 128, 160);
+doc.save(data.docenteAsignatura[0].docente.nombre1 + '.pdf');
  }
 
  generarpdf2() {
@@ -397,8 +415,8 @@ doc.save('todo los reportes.pdf');
         tipo_identificacion: new FormControl('', [Validators.required]),
          // tslint:disable-next-line:max-line-length
          identificacion: new FormControl ('', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]),
-         apellido1: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Z])*$')]),
-         nombre1: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Z])*$')]),
+         apellido1: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('^([a-z])*$')]),
+         nombre1: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([a-z])*$')]),
          // tslint:disable-next-line:max-line-length
          correo_institucional: new FormControl('', [Validators.required]),
          estado: new FormControl('', [Validators.required]),

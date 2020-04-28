@@ -42,7 +42,7 @@
                     <input formControlName="nombre" id="nombre" name="nombre" type="text" [(ngModel)]="tipoevaluacionSeleccionado.nombre" class="text-uppercase form-control" required>
                     <div class="alert-danger" *ngIf="nombre.invalid &&(nombre.dirty || nombre.touched)">
                         <div class="container-error-mensage " *ngIf="nombre.invalid">
-                            Tipo de evaluacion necesita almenos 4 letras, Solo acepta en mayuscula
+                            Tipo de evaluacion necesita almenos 4 letras
                         </div>
                     </div>
                 </div>

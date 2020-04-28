@@ -101,8 +101,6 @@ export class EvaPreguntaComponent implements OnInit {
             this.service
                 .post('evaluacion_pregunta', {
                     eva_preguntas: this.preguntaSeleccionada
-                    
-                    
                 })
                 .subscribe(
                     (response) => {
@@ -178,7 +176,7 @@ export class EvaPreguntaComponent implements OnInit {
         } else {
           this.preguntaSeleccionada = new EvaPregunta();
         }
-      
+
         this.modalService.open(content)
           .result
           .then((resultModal => {
@@ -186,14 +184,14 @@ export class EvaPreguntaComponent implements OnInit {
             if ( resultModal === 'save') {
               if (editar) {
                 this.actualizarEvaPregunta(evapregunta);
-      
+
                } else {
               this.createEvaPregunta();
               console.log('Excelente!!');
             }
-      
+
             } else {
-      
+
             }
           }), error => {
             console.log('error');

@@ -36,7 +36,7 @@
                 <td><button class="btn btn-warning ml-1 btn-md text-white" title="Actualizar" (click)="abrirModalDocente(content,true,docente)">
           <span class="{{messages['buttonUpdate']['icon']}}"></span>
   </button></td>
-                <td><button type="button" class="btn btn-danger" (click)="PdfFinal(docente.user.id)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button></td>
+                <td><button type="button" class="btn btn-danger" (click)="PdfFinal(docente.id)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button></td>
             </tr>
         </tbody>
     </table>
@@ -130,7 +130,7 @@
                     <input formControlName="apellido1" id="apellido1" name="apellido1" type="text" [(ngModel)]="docenteSeleccionado.apellido1" class="text-uppercase form-control" required>
                     <div class="alert-danger" *ngIf="apellido1.invalid &&(apellido1.dirty || apellido1.touched)">
                         <div class="container-error-mensage " *ngIf="apellido1.invalid">
-                            Apellido necesita almenos 4 letras tambien letras mayusculas y solo letras
+                            Apellido necesita almenos 3 letras y tambien solo letras
                         </div>
                     </div>
                 </div>
@@ -141,7 +141,7 @@
                     <input formControlName="nombre1" id="nombre1" name="nombre1" type="text" [(ngModel)]="docenteSeleccionado.nombre1" class="text-uppercase form-control" required>
                     <div class="alert-danger" *ngIf="nombre1.invalid &&(nombre1.dirty || nombre1.touched)">
                         <div class="container-error-mensage " *ngIf="nombre1.invalid">
-                            Nombre necesita almenos 4 letras tambien letras mayusculas y solo letras
+                            Nombre necesita almenos 4 letras y tambien solo letras
                         </div>
                     </div>
                 </div>
