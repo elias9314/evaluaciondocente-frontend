@@ -64,7 +64,7 @@ export class AdminDocentesComponent implements OnInit {
     this.total_pages = 1;
     this.getUsuarioDocentes(1);
     this.formularioProfesores();
-    this.getResultados();
+    // this.getResultados();
   }
 
 
@@ -389,6 +389,8 @@ doc.save('todo los reportes.pdf');
     //        }, 200);
     });
 }
+
+
 
  formularioProfesores() {
      return this.profesoresForm = new FormGroup({

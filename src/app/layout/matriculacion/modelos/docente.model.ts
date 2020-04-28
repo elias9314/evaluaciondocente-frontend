@@ -1,4 +1,5 @@
 import {User} from './user.model';
+import { DocenteAsignatura } from './docente-asignatura.model';
 export class Docente {
     id?: number;
     tipo_identificacion: string;
@@ -15,10 +16,12 @@ export class Docente {
     telefono: number;
     user: User;
     imagen: File;
+    docenteasignatura: DocenteAsignatura;
 
   constructor() {
     this.tipo_identificacion = '1';
     this.user = new User();
+    this.docenteasignatura = new DocenteAsignatura();
   }
 
   }
