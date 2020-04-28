@@ -421,7 +421,7 @@ export class MatriculaComponent implements OnInit {
 
     getAprobados(page: number) {
         this.flagPagination = true;
-        if (this.carrera.id != 0) {
+        if (this.carrera.id !== 0) {
             this.spinner.show();
             this.urlExportCuposPeriodoAcademico = environment.API_URL + 'exports/cupos_periodo_academico?carrera_id=' + this.carrera.id
                 + '&periodo_academico_id=' + this.periodoAcademico + '&periodo_lectivo_id=' + this.periodoLectivoSeleccionado.id;
@@ -469,7 +469,7 @@ export class MatriculaComponent implements OnInit {
     }
 
     getDetalleMatriculasForMalla() {
-        if (this.carrera.id != 0) {
+        if (this.carrera.id !== 0) {
             const parametros =
                 '?carrera_id=' + this.carrera.id
                 + '&periodo_lectivo_id=' + this.periodoLectivoSeleccionado.id
@@ -880,9 +880,9 @@ export class MatriculaComponent implements OnInit {
     cambiarPeriodoLectivoActual() {
         this.buscadorEstudianteGeneral = '';
         this.periodosLectivos.forEach(value => {
-            if (value.id == this.periodoLectivoActual.id) {
+            if (value.id === this.periodoLectivoActual.id) {
                 this.periodoLectivoSeleccionado = value;
-                if (value.estado != 'ACTUAL') {
+                if (value.estado !== 'ACTUAL') {
                     this.txtPeriodoActualHistorico = 'PERIODO LECTIVO HISTÓRICO';
                 } else {
                     this.txtPeriodoActualHistorico = 'PERIODO LECTIVO ACTUAL';

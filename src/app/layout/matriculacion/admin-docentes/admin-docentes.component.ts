@@ -264,46 +264,48 @@ getUsuario() {
         }
     }
 }
-// getDocenteby(id) {
-//     console.log(id);
-//   this.spinner.show();
-//   this.service.get('docentes/' + id).subscribe(
-//     response => {
-//       this.docente = response['docente'][0];
-//       console.log(this.docente.nombre1);
-//       this.spinner.hide();
-//     //   setTimeout(() => {
-//     //     this.generarPDF(this.docente);
-//     //    }, 200);
-//     },
-//     error => {
-//       this.spinner.hide();
-//       console.log('error');
+ getDocenteby(id) {
+     console.log(id);
+   this.spinner.show();
+   localStorage.removeItem('id');
+    localStorage.setItem('id', id.toString());
+   this.service.get('docentes/' + id).subscribe(
+     response => {
+       this.docente = response['docente'][0];
+       console.log(this.docente.nombre1);
+       this.spinner.hide();
+        setTimeout(() => {
+     this.generarPDF(this.docente);
+    }, 200);
+       },
+     error => {
+       this.spinner.hide();
+       console.log('error');
 
+     });
+ }
+// notas(idNota) {
+//     localStorage.removeItem('idNota');
+//     localStorage.setItem('idNota', idNota.toString());
+//     console.log(idNota);
+//     this.http.get<any>(environment.API_URL + 'docente_resultados?periodo_lectivo_id=4' + '&docente_id=' + idNota).subscribe(data => {
+//       console.log(idNota);
+//        this.nota = data;
+//        console.log(data);
+//        setTimeout(() => {
+//         this.generarPDF(this.nota);
+//        }, 200);
 //     });
-// }
-notas(idNota) {
-    localStorage.removeItem('idNota');
-    localStorage.setItem('idNota', idNota.toString());
-    console.log(idNota);
-    this.http.get<any>(environment.API_URL + 'docente_resultados?periodo_lectivo_id=4' + '&docente_id=' + idNota).subscribe(data => {
-      console.log(idNota);
-       this.nota = data;
-       console.log(data);
-       setTimeout(() => {
-        this.generarPDF(this.nota);
-       }, 200);
-    });
-  }
+//   }
 
-PdfFinal(idNota: any) {
+PdfFinal(id: any) {
 
-//   this.getDocenteby(id);
-  this.notas(idNota);
+   this.getDocenteby(id);
+  // this.notas(idNota);
 }
 
-generarPDF(data?, idNota?) {
-    console.log(data.docenteAsignatura[0].docente.apellido1);
+generarPDF(data?) {
+
     const lMargin = 20; // left margin in mm
 
     const rMargin = 20; // right margin in mm
@@ -338,11 +340,24 @@ generarPDF(data?, idNota?) {
   doc.setFontStyle('bold');
   doc.setFontSize(13);
   doc.text ('NOMBRE:', 20, 70);
- doc.text(data.docenteAsignatura[0].docente.apellido1 + ' ' + data.docenteAsignatura[0].docente.nombre1 , 45, 70);
+  doc.setFontStyle('normal');
+  doc.setFontSize(13);
+ doc.text(data.apellido1 + ' ' + data.nombre1 , 45, 70);
   ////////////////////////////
   doc.setFontStyle('bold');
   doc.setFontSize(13);
   doc.text ('PERIODO ACADÉMICO:', 20, 75);
+  // doc.text(data.docenteasignatura[0]., 55, 75);
+  doc.setFontStyle('normal');
+  doc.setFontSize(13);
+  for (let i = 0; i < data.docenteasignatura.length; i++) {
+    if (data.docenteasignatura[i] === '0' || data.docenteasignatura[i] == null || data.docenteasignatura[i] === '') {
+      doc.text('No existe', 75, 75);
+    } else {
+      doc.text(data.docenteasignatura[i].periodo_lectivo_id.toString(), 75, 75);
+    }
+  }
+
   ///////////////////////////
   doc.setFontStyle('bold');
   doc.setFontSize(13);
@@ -360,25 +375,54 @@ doc.setFontStyle('bold');
 doc.setFontSize(15);
 doc.text ('RESUMEN DE CALIFICACIONES', 70, 130);
 ////////////////////////////////
+doc.setDrawColor(30);
+doc.setFillColor(100, 120, 255);
+doc.rect(50, 138, 125, 10, 'F');
 doc.setFontStyle('bold');
 doc.setFontSize(15);
-doc.text ('DOCENCIA', 95, 145);
+doc.text ('DOCENCIA', 97, 145);
 ///////////////////////////////
+doc.setDrawColor(30);
+doc.setFillColor(2000, 100, 30);
+doc.rect(50, 148, 125, 10, 'F');
 doc.setFontStyle('bold');
 doc.setFontSize(12);
 doc.text ('CRITERIO', 57, 155);
-doc.text(data.docenteAsignatura[0].docente_id, 57, 160);
+// doc.text(data.docenteAsignatura[0].docente_id, 57, 160);
 ////////////////////////////////
 doc.setFontStyle('bold');
 doc.setFontSize(12);
 doc.text ('NOTA', 103, 155);
-doc.text(data.docenteAsignatura[1].nota_total, 103, 160);
+doc.rect(50, 158, 46, 10);
+doc.rect(96, 158, 26, 10);
+doc.rect(50, 158, 125, 10);
+
+for (let i = 0; i < data.docenteasignatura.length; i++) {
+  if (data.docenteasignatura[i].nota_total === '0' || data.docenteasignatura[i].nota_total == null) {
+    doc.text('no calificado', 105, 165);
+  } else {
+    doc.setFontSize(9);
+    doc.text('EVALUACIÓN-ESTUDIANTIL', 52, 165);
+    doc.setFontSize(11);
+    doc.text(data.docenteasignatura[i].nota_total, 105, 165);
+  }
+}
+
 ////////////////////////////////
 doc.setFontStyle('bold');
 doc.setFontSize(12);
-doc.text ('EQUIVALENCIA', 128, 155);
-doc.text(data.docenteAsignatura[1].porcentaje, 128, 160);
-doc.save(data.docenteAsignatura[0].docente.nombre1 + '.pdf');
+doc.text ('EQUIVALENCIA', 130, 155);
+
+for (let i = 0; i < data.docenteasignatura.length; i++) {
+  if (data.docenteasignatura[i].porcentaje === '0') {
+   doc.text ('no calificado', 142, 165);
+  } else {
+    doc.text(data.docenteasignatura[i].porcentaje, 142, 165);
+  }
+}
+
+// doc.text(data.docenteAsignatura[1].porcentaje, 128, 160);
+doc.save(data.nombre1 + '.pdf');
  }
 
  generarpdf2() {
