@@ -60,6 +60,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     evaluar: boolean;
     evaluado: boolean;
     formulario: FormGroup;
+    validacion: any;
 
     constructor(private spinner: NgxSpinnerService, private service: ServiceService, private form: FormBuilder) {
     }
@@ -211,6 +212,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                 const subscribe = resp.subscribe(val =>
                     this.listarespuesta.push(val));
                 console.log(this.listarespuesta[0]);
+                console.log(this.listarespuesta[0].length);
             },
             error => {
                 this.flagInformacionEstudiante = true;
@@ -274,30 +276,41 @@ export class EvaEstudianteDocenteComponent implements OnInit {
             }
 
     calificar() {
-        this.spinner.show();
-        const docente = this.docenteAsignaturas[0].id;
-            const parameters = '?idDocenteAsignatura=' + docente;
-                        this.service.post('resultado' + parameters, {'eva_resultados': this.enviarrespuesta}).subscribe(
-                            response2 => {
-                                this.evaluado = true ;
-                                    console.log('RESULTADO', response2);
-                                    this.getEstudiante();
-                                    this.spinner.hide();
-                                    swal.fire(this.messages['createSuccess']);
+        // console.log(this.enviarrespuesta.length);
+        // console.log(this.listarespuesta[0].length);
+        if (this.enviarrespuesta.length === this.listarespuesta[0].length) {
+            this.spinner.show();
+            const docente = this.docenteAsignaturas[0].id;
+                const parameters = '?idDocenteAsignatura=' + docente;
+                            this.service.post('resultado' + parameters, {'eva_resultados': this.enviarrespuesta}).subscribe(
+                                response2 => {
+                                    this.evaluado = true ;
+                                        console.log('RESULTADO', response2);
+                                        this.getEstudiante();
+                                        this.spinner.hide();
+                                        swal.fire(this.messages['createSuccess']);
 
 
-                                    },
-                    error => {
-                        this.flagInformacionEstudiante = true;
-                        this.spinner.hide();
-                        if (error.error.errorInfo[0] === '001') {
-                            swal.fire(this.messages['error001']);
+                                        },
+                        error => {
+                            this.flagInformacionEstudiante = true;
+                            this.spinner.hide();
+                            if (error.error.errorInfo[0] === '001') {
+                                swal.fire(this.messages['error001']);
 
-                        } else {
-                            swal.fire(this.messages['error500']);
-                        }
-
-        });
-
-    }
+                            } else {
+                                swal.fire(this.messages['error500']);
+                            }
+            });
+            console.log('guardado');
+        } else {
+            // console.log('vales vrga tienes que llenar todos los campos ');
+            swal.fire(
+                'error',
+                'Debe responder todas las preguntas',
+                'error'
+               //  'Something went wrong!'
+           );
+        }
+        }
 }
