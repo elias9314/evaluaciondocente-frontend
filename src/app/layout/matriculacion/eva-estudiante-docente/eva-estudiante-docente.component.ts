@@ -48,6 +48,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
     datademo: any = [];
     listarespuesta: any = [];
     enviarrespuesta: any = [];
+    resultadoPromedio: any = [];
     usersID: any = [];
     idAsigantura: any = [];
     idDocenteAsignatura: any = [];
@@ -254,6 +255,7 @@ export class EvaEstudianteDocenteComponent implements OnInit {
             response => {
                 this.docenteAsignaturas = response['docenteAsignatura'];
                 this.spinner.hide();
+                console.log('PERIODO LECTIVO',this.docenteAsignaturas[0].periodo_lectivo_id );
             },
                 error => {
                     this.spinner.hide();
@@ -276,34 +278,56 @@ export class EvaEstudianteDocenteComponent implements OnInit {
             }
 
     calificar() {
-        // console.log(this.enviarrespuesta.length);
-        // console.log(this.listarespuesta[0].length);
         if (this.enviarrespuesta.length === this.listarespuesta[0].length) {
             this.spinner.show();
-            const docente = this.docenteAsignaturas[0].id;
-                const parameters = '?idDocenteAsignatura=' + docente;
-                            this.service.post('resultado' + parameters, {'eva_resultados': this.enviarrespuesta}).subscribe(
-                                response2 => {
-                                    this.evaluado = true ;
-                                        console.log('RESULTADO', response2);
-                                        this.getEstudiante();
-                                        this.spinner.hide();
-                                        swal.fire(this.messages['createSuccess']);
-
-
-                                        },
-                        error => {
-                            this.flagInformacionEstudiante = true;
+            const docente_asignatura_id = this.docenteAsignaturas[0].id;
+            const periodo_lectivo_id= this.docenteAsignaturas[0].periodo_lectivo_id;
+            const docenteID= this.respuesta[0].id;
+            console.log('esto',docenteID);
+            let parameters = '?idDocenteAsignatura=' + docente_asignatura_id;
+            this.service.post('resultado' + parameters, {'eva_resultados': this.enviarrespuesta}).subscribe(
+                response => {
+                    this.evaluado = true ;
+                    console.log('RESULTADO', response);
+                    this.getEstudiante();
+                    this.spinner.hide();
+                    swal.fire(this.messages['createSuccess']);
+                    parameters= '?docente_asignatura_id='+docente_asignatura_id;
+                    this.service.get('docenteId' +parameters).subscribe(
+                        response2 =>{
+                            console.log('PromedioFinal', response2);
                             this.spinner.hide();
-                            if (error.error.errorInfo[0] === '001') {
-                                swal.fire(this.messages['error001']);
+                            parameters= '?periodo_lectivo_id='+ periodo_lectivo_id+'&docente_id='+ docenteID;
+                            this.service.get('promedio'+parameters).subscribe(
+                                response3 => {
+                                    console.log('PromedioAsignaturas', response3);
+                                    this.spinner.hide();
+                                    
+                                },
+                                error=>{
+                                    this.spinner.hide();
+                                    console.log('error');
+                                }
+                            )
 
-                            } else {
-                                swal.fire(this.messages['error500']);
-                            }
+                        },
+                        error=>{
+                            this.spinner.hide();
+                            console.log('error');
+                        }
+                    )},
+                error => {
+                    this.flagInformacionEstudiante = true;
+                    this.spinner.hide();
+                    if (error.error.errorInfo[0] === '001') {
+                            swal.fire(this.messages['error001']);
+
+                    } else {
+                        swal.fire(this.messages['error500']);
+                    }
             });
             console.log('guardado');
-        } else {
+        }else {
             // console.log('vales vrga tienes que llenar todos los campos ');
             swal.fire(
                 'error',
@@ -312,5 +336,5 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                //  'Something went wrong!'
            );
         }
-        }
+    }
 }
