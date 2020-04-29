@@ -17,7 +17,7 @@ export class DocenteAsignatura {
     nota_total: number;
     porcentaje: number;
     periodo_lectivo_id: PeriodoLectivo;
-
+    promedio: number;
     constructor() {
         this.estado = 'ACTIVO';
         this.tipo = '';
