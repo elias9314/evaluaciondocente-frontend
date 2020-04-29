@@ -13,7 +13,6 @@ import * as jsPDF from 'jspdf';
 import { imagenConstant} from '../../../constantes/imagenconstant';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import {DocenteAsignatura}from '../modelos/docente-asignatura.model';
 @Component({
   selector: 'app-admin-docentes',
   templateUrl: './admin-docentes.component.html',
@@ -42,12 +41,10 @@ export class AdminDocentesComponent implements OnInit {
   FormBuilder: any;
   resultado: any = [];
   respuesta: any = [];
-  docenteAsignaturas: Array<DocenteAsignatura>;
-
   p = 1;
   id: any;
   nota: any = [];
-  currentDate = new Date();
+
   constructor(config: NgbModalConfig, private modalService: NgbModal, private spinner: NgxSpinnerService, private service: ServiceService,
     private http: HttpClient) {
 
@@ -68,7 +65,6 @@ export class AdminDocentesComponent implements OnInit {
     this.total_pages = 1;
     this.getUsuarioDocentes(1);
     this.formularioProfesores();
-    //this.getDocenteAsginatura();
     // this.getResultados();
   }
 
@@ -268,194 +264,190 @@ getUsuario() {
         }
     }
 }
- getDocenteby(id) {
-     console.log(id);
-   this.spinner.show();
-   localStorage.removeItem('id');
-    localStorage.setItem('id', id.toString());
-   this.service.get('docentes/' + id).subscribe(
-     response => {
-       this.docente = response['docente'][0];
-       console.log(this.docente.nombre1);
-       var hola= this.docente.id;
-       console.log(hola)
-       this.spinner.hide();
-        setTimeout(() => {
-     this.generarPDF(this.docente);
-     const parameters = '?periodo_lectivo_id=4&docente_id=' + hola;
-        this.service.get('promedio' + parameters).subscribe(
-            response1 => {
-                this.docenteAsignaturas = response1['promedio'];
-                this.spinner.hide();
-                var promedio= this.docenteAsignaturas;
-                console.log(promedio);
+//  getDocenteby(id) {
+//      console.log(id);
+//    this.spinner.show();
+//    localStorage.removeItem('id');
+//     localStorage.setItem('id', id.toString());
+//    this.service.get('docentes/' + id).subscribe(
+//      response => {
+//        this.docente = response['docente'][0];
+//        console.log(this.docente.nombre1);
+//        this.spinner.hide();
+//         setTimeout(() => {
+//      this.generarPDF(this.docente);
+//     }, 200);
+//        },
+//      error => {
+//        this.spinner.hide();
+//        console.log('error');
 
-            },
-                error => {
-                    this.spinner.hide();
-                    console.log('error');
-                }
-    );
-    }, 200);
-       },
-     error => {
-       this.spinner.hide();
-       console.log('error');
+//      });
+//  }
+notas(idNota) {
+    localStorage.removeItem('idNota');
+    localStorage.setItem('idNota', idNota.toString());
+    console.log(idNota);
+    this.http.get<any>(environment.API_URL + 'promedio?periodo_lectivo_id=4' + '&docente_id=' + idNota).subscribe(data => {
+      console.log(idNota);
+       this.nota = data;
+       console.log(data);
+       setTimeout(() => {
+        this.generarPDF(this.nota);
+       }, 200);
+    });
+  }
 
-     });
- }
+PdfFinal(idNota: any) {
 
-// notas(idNota) {
-//     localStorage.removeItem('idNota');
-//     localStorage.setItem('idNota', idNota.toString());
-//     console.log(idNota);
-//     this.http.get<any>(environment.API_URL + 'docente_resultados?periodo_lectivo_id=4' + '&docente_id=' + idNota).subscribe(data => {
-//       console.log(idNota);
-//        this.nota = data;
-//        console.log(data);
-//        setTimeout(() => {
-//         this.generarPDF(this.nota);
-//        }, 200);
-//     });
-//   }
-
-PdfFinal(id: any) {
-
-   this.getDocenteby(id);
-  // this.notas(idNota);
+//    this.getDocenteby(id);
+  this.notas(idNota);
 }
 
 generarPDF(data?) {
-
-    const lMargin = 20; // left margin in mm
-
-    const rMargin = 20; // right margin in mm
-
-    const pdfInMM = 210;
-    const pageCenter = pdfInMM / 2;
-    var promedio= this.docenteAsignaturas;
-
-  const doc = new jsPDF('p', 'mm', 'a4');
-  const dateOptions = {
-    day: 'numeric',
-    month: 'numeric',
-    year: 'numeric'
-};
-  ////////////////////////////
-  doc.addImage(imagenConstant.imagen, 'JPG', 20, 15, 30, 30);
-  doc.addImage(imagenConstant.fondo2, 'JPG', 50, 100, 113, 100);
-  ////////////////////////////
-  doc.setFontStyle('bold');
-  doc.setFontSize(15);
-  doc.text ('INSTITUTO SUPERIOR TECNOLÓGICO', 61, 25);
-  ///////////////////////////
-  doc.setFontSize(15);
-  doc.setFontStyle('bold');
-  doc.text ('DE TURISMO Y PATRIMONIO "YAVIRAC"', 59, 30);
-  ///////////////////////////
-  doc.setFontSize(9);
-  doc.setFontStyle('normal');
-  doc.text ('Dirección: García Moreno S435 y Ambato', 79, 35);
-  //////////////////////////
-  doc.setFontSize(9);
-  doc.setFontStyle('normal');
-  doc.text ('Quito - Ecuador', 95, 40);
-  ///////////////////////////
-  doc.setFontStyle('bold');
-  doc.setFontSize(15);
-  doc.text ('EVALUACIÓN DOCENTE', 79, 60);
-  ///////////////////////////
-  doc.setFontStyle('bold');
-  doc.setFontSize(13);
-  doc.text ('NOMBRE:', 20, 70);
-  doc.setFontStyle('normal');
-  doc.setFontSize(13);
- doc.text(data.apellido1 + ' ' + data.nombre1 , 45, 70);
-  ////////////////////////////
-  doc.setFontStyle('bold');
-  doc.setFontSize(13);
-  doc.text ('PERIODO ACADÉMICO:', 20, 75);
-  // doc.text(data.docenteasignatura[0]., 55, 75);
-  doc.setFontStyle('normal');
-  doc.setFontSize(13);
-  //doc.text(promedio.toString(), 40,75);
-  doc.number(promedio,40,75);
-  for (let i = 0; i < data.docenteasignatura.length; i++) {
-    if (data.docenteasignatura[i] === '0' || data.docenteasignatura[i] == null || data.docenteasignatura[i] === '') {
-      doc.text('No existe', 75, 75);
+    console.log(data.promedio);
+    if (data.promedio === 0) {
+        alert('Este profesor actualmente no esta calificado');
     } else {
-      doc.text(data.docenteasignatura[i].periodo_lectivo_id.toString(), 75, 75);
-    }
-  }
+        const lMargin = 20; // left margin in mm
 
-  ///////////////////////////
-  doc.setFontStyle('bold');
-  doc.setFontSize(13);
-  doc.text ('FECHA:', 20, 80);
-  doc.setFontStyle('normal');
-  doc.setFontSize(13);
-  doc.text( new Date().toLocaleString('fr-fr', dateOptions), 45, 80);
-  /////////////////////////////
-// Margins:
-doc.setFontStyle('normal');
-doc.setFontSize(11);
-// tslint:disable-next-line:max-line-length
-const p = 'Con el objetivo de mejorar la calidad de los procesos de enseñanza aprendizaje, el perfeccionamiento docente y el fortalecimiento del proyecto de carrera, se ha motivado a estudiantes, docentes y autoridades a participar en el proceso de evaluación de docentes de forma activa y responsable, estandarizando procedimientos que permita desarrollar de manera organizada el proceso de evaluación el mismo que contempla Auto – Evaluación, Coevaluación y Heteroevaluación.\nUna vez culminado dicho proceso se presentan las siguientes calificaciones:';
-const lines = doc.splitTextToSize(p, (pdfInMM - lMargin - rMargin));
-doc.text(lMargin, 90, lines, {maxWidth: 160, align: 'justify'});
-/////////////////////////////////
-doc.setFontStyle('bold');
-doc.setFontSize(15);
-doc.text ('RESUMEN DE CALIFICACIONES', 70, 130);
-////////////////////////////////
-doc.setDrawColor(30);
-doc.setFillColor(100, 120, 255);
-doc.rect(50, 138, 125, 10, 'F');
-doc.setFontStyle('bold');
-doc.setFontSize(15);
-doc.text ('DOCENCIA', 97, 145);
-///////////////////////////////
-doc.setDrawColor(30);
-doc.setFillColor(2000, 100, 30);
-doc.rect(50, 148, 125, 10, 'F');
-doc.setFontStyle('bold');
-doc.setFontSize(12);
-doc.text ('CRITERIO', 57, 155);
-// doc.text(data.docenteAsignatura[0].docente_id, 57, 160);
-////////////////////////////////
-doc.setFontStyle('bold');
-doc.setFontSize(12);
-doc.text ('NOTA', 103, 155);
-doc.rect(50, 158, 46, 10);
-doc.rect(96, 158, 26, 10);
-doc.rect(50, 158, 125, 10);
+        const rMargin = 20; // right margin in mm
 
-for (let i = 0; i < data.docenteasignatura.length; i++) {
-  if (data.docenteasignatura[i].nota_total === '0' || data.docenteasignatura[i].nota_total == null) {
-    doc.text('x', 105, 165);
-  } else {
-    doc.setFontSize(9);
-    doc.text('EVALUACIÓN-ESTUDIANTIL', 52, 165);
+        const pdfInMM = 210;
+        const pageCenter = pdfInMM / 2;
+      const doc = new jsPDF('p', 'mm', 'a4');
+      const dateOptions = {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric'
+    };
+      ////////////////////////////
+      doc.addImage(imagenConstant.imagen, 'JPG', 20, 15, 30, 30);
+      doc.addImage(imagenConstant.fondo2, 'JPG', 50, 100, 113, 100);
+      ////////////////////////////
+      doc.setFontStyle('bold');
+      doc.setFontSize(15);
+      doc.text ('INSTITUTO SUPERIOR TECNOLÓGICO', 61, 25);
+      ///////////////////////////
+      doc.setFontSize(15);
+      doc.setFontStyle('bold');
+      doc.text ('DE TURISMO Y PATRIMONIO "YAVIRAC"', 59, 30);
+      ///////////////////////////
+      doc.setFontSize(9);
+      doc.setFontStyle('normal');
+      doc.text ('Dirección: García Moreno S435 y Ambato', 79, 35);
+      //////////////////////////
+      doc.setFontSize(9);
+      doc.setFontStyle('normal');
+      doc.text ('Quito - Ecuador', 95, 40);
+      ///////////////////////////
+      doc.setFontStyle('bold');
+      doc.setFontSize(15);
+      doc.text ('EVALUACIÓN DOCENTE', 79, 60);
+      ///////////////////////////
+      doc.setFontStyle('bold');
+      doc.setFontSize(13);
+      doc.text ('NOMBRE:', 20, 70);
+      doc.setFontStyle('normal');
+      doc.setFontSize(13);
+     doc.text(data.docenteAsignatura[0].docente.apellido1 + ' ' + data.docenteAsignatura[0].docente.nombre1 , 45, 70);
+      ////////////////////////////
+      doc.setFontStyle('bold');
+      doc.setFontSize(13);
+      doc.text ('PERIODO ACADÉMICO:', 20, 75);
+      doc.text(data.docenteAsignatura[0].periodolectivo.nombre, 75, 75);
+      doc.setFontStyle('normal');
+      doc.setFontSize(13);
+    //   for (let i = 0; i < data.docenteasignatura.length; i++) {
+    //     if (data.docenteasignatura[i] === '0' || data.docenteasignatura[i] == null || data.docenteasignatura[i] === '') {
+    //       doc.text('No existe', 75, 75);
+    //     } else {
+    //       doc.text(data.docenteasignatura[i].periodo_lectivo_id.toString(), 75, 75);
+    //     }
+    //   }
+
+      ///////////////////////////
+      doc.setFontStyle('bold');
+      doc.setFontSize(13);
+      doc.text ('FECHA:', 20, 80);
+      doc.setFontStyle('normal');
+      doc.setFontSize(13);
+    //   doc.text(data.docenteAsignatura[0].updated_at, 40, 80);
+      doc.text( new Date().toLocaleString('fr-fr', dateOptions), 45, 80);
+      /////////////////////////////
+    // Margins:
+    doc.setFontStyle('normal');
     doc.setFontSize(11);
-    doc.text(data.docenteasignatura[i].nota_total, 105, 165);
-  }
-}
+    // tslint:disable-next-line:max-line-length
+    const p = 'Con el objetivo de mejorar la calidad de los procesos de enseñanza aprendizaje, el perfeccionamiento docente y el fortalecimiento del proyecto de carrera, se ha motivado a estudiantes, docentes y autoridades a participar en el proceso de evaluación de docentes de forma activa y responsable, estandarizando procedimientos que permita desarrollar de manera organizada el proceso de evaluación el mismo que contempla Auto – Evaluación, Coevaluación y Heteroevaluación.\nUna vez culminado dicho proceso se presentan las siguientes calificaciones:';
+    const lines = doc.splitTextToSize(p, (pdfInMM - lMargin - rMargin));
+    doc.text(lMargin, 90, lines, {maxWidth: 160, align: 'justify'});
+    /////////////////////////////////
+    doc.setFontStyle('bold');
+    doc.setFontSize(15);
+    doc.text ('RESUMEN DE CALIFICACIONES', 70, 130);
+    ////////////////////////////////
+    doc.setDrawColor(30);
+    doc.setFillColor(100, 120, 255);
+    doc.rect(50, 138, 125, 10, 'F');
+    doc.setFontStyle('bold');
+    doc.setFontSize(15);
+    doc.text ('DOCENCIA', 97, 145);
+    ///////////////////////////////
+    doc.setDrawColor(30);
+    doc.setFillColor(2000, 100, 30);
+    doc.rect(50, 148, 125, 10, 'F');
+    doc.setFontStyle('bold');
+    doc.setFontSize(12);
+    doc.text ('CRITERIO', 57, 155);
+    // doc.text(data.docenteAsignatura[0].docente_id, 57, 160);
+    ////////////////////////////////
+    doc.setFontStyle('bold');
+    doc.setFontSize(12);
+    doc.text ('NOTA', 103, 155);
+    doc.rect(50, 158, 46, 10);
+    doc.rect(96, 158, 26, 10);
+    doc.rect(50, 158, 125, 10);
 
-////////////////////////////////
-doc.setFontStyle('bold');
-doc.setFontSize(12);
-doc.text ('EQUIVALENCIA', 130, 155);
+    // for (let i = 0; i < data.docenteasignatura.length; i++) {
+    //   if (data.docenteasignatura[i].nota_total === '0' || data.docenteasignatura[i].nota_total == null) {
+    //     doc.text('', 105, 165);
+    //   } else {
+        doc.setFontSize(9);
+        doc.text('EVALUACIÓN-ESTUDIANTIL', 52, 165);
+        doc.setFontSize(11);
+        doc.text(data.promedio.toString(), 105, 165);
+        // doc.text(data.docenteasignatura[i].nota_total, 105, 165);
+    //   }
+    // }
 
-for (let i = 0; i < data.docenteasignatura.length; i++) {
-  if (data.docenteasignatura[i].porcentaje === '0' || data.docenteasignatura[i].porcentaje == null) {
-   doc.text ('X', 142, 165);
-  } else {
-    doc.text(data.docenteasignatura[i].porcentaje, 142, 165);
-  }
-}
+    ////////////////////////////////
+    doc.setFontStyle('bold');
+    doc.setFontSize(12);
+    doc.text ('EQUIVALENCIA', 130, 155);
+    doc.text(data.total30.toString(), 142, 165);
 
-// doc.text(data.docenteAsignatura[1].porcentaje, 128, 160);
-doc.save(data.nombre1 + '.pdf');
+    // for (let i = 0; i < data.docenteAsignatura.length; i++) {
+    //     console.log(data.docenteAsignatura[i].porcentaje);
+    //     if (data.docenteAsignatura[i].porcentaje.length > 1) {
+    //         doc.text (data.docenteAsignatura[i].porcentaje, 142, 165);
+    //     } else {
+    //         doc.text(data.docenteAsignatura[i].porcentaje, 145, 165);
+    //     }
+
+    // }
+    // for (let i = 0; i < data.docenteAsignatura.length; i++) {
+    //   if (data.docenteasignatura[i].porcentaje === '0') {
+    //    doc.text ('', 142, 165);
+    //   } else {
+    //     doc.text(data.docenteasignatura[i].porcentaje, 142, 165);
+    //   }
+    // }
+
+    // doc.text(data.docenteAsignatura[1].porcentaje, 128, 160);
+    doc.save(data.docenteAsignatura[0].docente.nombre1 + '.pdf');
+    }
+
  }
 
  generarpdf2() {
