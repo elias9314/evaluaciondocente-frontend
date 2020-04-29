@@ -44,7 +44,7 @@ export class AdminDocentesComponent implements OnInit {
   p = 1;
   id: any;
   nota: any = [];
-
+  currentDate = new Date();
   constructor(config: NgbModalConfig, private modalService: NgbModal, private spinner: NgxSpinnerService, private service: ServiceService,
     private http: HttpClient) {
 
@@ -313,6 +313,11 @@ generarPDF(data?) {
     const pdfInMM = 210;
     const pageCenter = pdfInMM / 2;
   const doc = new jsPDF('p', 'mm', 'a4');
+  const dateOptions = {
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric'
+};
   ////////////////////////////
   doc.addImage(imagenConstant.imagen, 'JPG', 20, 15, 30, 30);
   doc.addImage(imagenConstant.fondo2, 'JPG', 50, 100, 113, 100);
@@ -362,6 +367,9 @@ generarPDF(data?) {
   doc.setFontStyle('bold');
   doc.setFontSize(13);
   doc.text ('FECHA:', 20, 80);
+  doc.setFontStyle('normal');
+  doc.setFontSize(13);
+  doc.text( new Date().toLocaleString('fr-fr', dateOptions), 45, 80);
   /////////////////////////////
 // Margins:
 doc.setFontStyle('normal');
@@ -399,7 +407,7 @@ doc.rect(50, 158, 125, 10);
 
 for (let i = 0; i < data.docenteasignatura.length; i++) {
   if (data.docenteasignatura[i].nota_total === '0' || data.docenteasignatura[i].nota_total == null) {
-    doc.text('', 105, 165);
+    doc.text('x', 105, 165);
   } else {
     doc.setFontSize(9);
     doc.text('EVALUACIÓN-ESTUDIANTIL', 52, 165);
@@ -414,8 +422,8 @@ doc.setFontSize(12);
 doc.text ('EQUIVALENCIA', 130, 155);
 
 for (let i = 0; i < data.docenteasignatura.length; i++) {
-  if (data.docenteasignatura[i].porcentaje === '0') {
-   doc.text ('', 142, 165);
+  if (data.docenteasignatura[i].porcentaje === '0' || data.docenteasignatura[i].porcentaje == null) {
+   doc.text ('X', 142, 165);
   } else {
     doc.text(data.docenteasignatura[i].porcentaje, 142, 165);
   }
