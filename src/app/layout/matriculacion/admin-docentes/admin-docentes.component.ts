@@ -399,7 +399,7 @@ doc.rect(50, 158, 125, 10);
 
 for (let i = 0; i < data.docenteasignatura.length; i++) {
   if (data.docenteasignatura[i].nota_total === '0' || data.docenteasignatura[i].nota_total == null) {
-    doc.text('no calificado', 105, 165);
+    doc.text('', 105, 165);
   } else {
     doc.setFontSize(9);
     doc.text('EVALUACIÓN-ESTUDIANTIL', 52, 165);
@@ -415,7 +415,7 @@ doc.text ('EQUIVALENCIA', 130, 155);
 
 for (let i = 0; i < data.docenteasignatura.length; i++) {
   if (data.docenteasignatura[i].porcentaje === '0') {
-   doc.text ('no calificado', 142, 165);
+   doc.text ('', 142, 165);
   } else {
     doc.text(data.docenteasignatura[i].porcentaje, 142, 165);
   }
