@@ -122,7 +122,7 @@ agregarTipoEvaluacion(content, eva) {
       }
       formularioTipo() {
           return this.tipoevaluacionForm = new FormGroup({
-              nombre: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([a-z])*$')]),
+              nombre: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Za-z])*$')]),
               evaluacion: new FormControl('', [Validators.required]),
               estado: new FormControl('', [Validators.required])
           });
