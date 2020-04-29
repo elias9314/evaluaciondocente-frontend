@@ -13,6 +13,7 @@ import * as jsPDF from 'jspdf';
 import { imagenConstant} from '../../../constantes/imagenconstant';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import {DocenteAsignatura}from '../modelos/docente-asignatura.model';
 @Component({
   selector: 'app-admin-docentes',
   templateUrl: './admin-docentes.component.html',
@@ -41,6 +42,8 @@ export class AdminDocentesComponent implements OnInit {
   FormBuilder: any;
   resultado: any = [];
   respuesta: any = [];
+  docenteAsignaturas: Array<DocenteAsignatura>;
+
   p = 1;
   id: any;
   nota: any = [];
@@ -65,6 +68,7 @@ export class AdminDocentesComponent implements OnInit {
     this.total_pages = 1;
     this.getUsuarioDocentes(1);
     this.formularioProfesores();
+    //this.getDocenteAsginatura();
     // this.getResultados();
   }
 
@@ -273,9 +277,25 @@ getUsuario() {
      response => {
        this.docente = response['docente'][0];
        console.log(this.docente.nombre1);
+       var hola= this.docente.id;
+       console.log(hola)
        this.spinner.hide();
         setTimeout(() => {
      this.generarPDF(this.docente);
+     const parameters = '?periodo_lectivo_id=4&docente_id=' + hola;
+        this.service.get('promedio' + parameters).subscribe(
+            response1 => {
+                this.docenteAsignaturas = response1['promedio'];
+                this.spinner.hide();
+                var promedio= this.docenteAsignaturas;
+                console.log(promedio);
+
+            },
+                error => {
+                    this.spinner.hide();
+                    console.log('error');
+                }
+    );
     }, 200);
        },
      error => {
@@ -284,6 +304,7 @@ getUsuario() {
 
      });
  }
+
 // notas(idNota) {
 //     localStorage.removeItem('idNota');
 //     localStorage.setItem('idNota', idNota.toString());
@@ -312,6 +333,8 @@ generarPDF(data?) {
 
     const pdfInMM = 210;
     const pageCenter = pdfInMM / 2;
+    var promedio= this.docenteAsignaturas;
+
   const doc = new jsPDF('p', 'mm', 'a4');
   ////////////////////////////
   doc.addImage(imagenConstant.imagen, 'JPG', 20, 15, 30, 30);
@@ -350,6 +373,8 @@ generarPDF(data?) {
   // doc.text(data.docenteasignatura[0]., 55, 75);
   doc.setFontStyle('normal');
   doc.setFontSize(13);
+  //doc.text(promedio.toString(), 40,75);
+  doc.number(promedio,40,75);
   for (let i = 0; i < data.docenteasignatura.length; i++) {
     if (data.docenteasignatura[i] === '0' || data.docenteasignatura[i] == null || data.docenteasignatura[i] === '') {
       doc.text('No existe', 75, 75);
