@@ -56,7 +56,7 @@ export class AdminResultadosComponent implements OnInit {
 //   }
   getResultados() {
     this.http.get<any>(environment.API_URL + 'respuestas').subscribe(data => {
-        this.respuesta = data;
+        this.respuesta = data['resultados'];
         console.log(data);
         this.respuesta.forEach(result => {
 
