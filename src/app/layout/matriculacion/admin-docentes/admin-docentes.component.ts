@@ -260,7 +260,7 @@ getUsuario() {
             this.getUsuarioDocentes(1);
         } else {
             this.getUsuario();
-            console.log('error');
+            // console.log('error');
         }
     }
 }
@@ -305,12 +305,14 @@ PdfFinal(idNota: any) {
 generarPDF(data?) {
     console.log(data.promedio);
     if (data.promedio === 0) {
-        // alert('Este profesor actualmente no esta calificado');
+// alert('Este profesor actualmente no esta calificado');
+
         swal.fire(
           'Este docente',
           'actualmente no esta calificado',
           'error'
         );
+
     } else {
         const lMargin = 20; // left margin in mm
 
@@ -419,12 +421,24 @@ generarPDF(data?) {
         doc.text('EVALUACIÓN-ESTUDIANTIL', 52, 165);
         doc.setFontSize(11);
         doc.text(data.promedio.toString() + '/100', 105, 165);
+        // doc.text(data.docenteasignatura[i].nota_total, 105, 165);
+    //   }
+    // }
 
     ////////////////////////////////
     doc.setFontStyle('bold');
     doc.setFontSize(12);
     doc.text ('EQUIVALENCIA', 130, 155);
     doc.text(data.total30.toString() + '/30', 142, 165);
+
+    // for (let i = 0; i < data.docenteAsignatura.length; i++) {
+    //     console.log(data.docenteAsignatura[i].porcentaje);
+    //     if (data.docenteAsignatura[i].porcentaje.length > 1) {
+    //         doc.text (data.docenteAsignatura[i].porcentaje, 142, 165);
+    //     } else {
+    //         doc.text(data.docenteAsignatura[i].porcentaje, 145, 165);
+    //     }
+
 
     doc.setFontStyle('bold');
     doc.setFontSize(11);
@@ -491,8 +505,8 @@ generarPDF(data?) {
         tipo_identificacion: new FormControl('', [Validators.required]),
          // tslint:disable-next-line:max-line-length
          identificacion: new FormControl ('', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]),
-         apellido1: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('^([a-z])*$')]),
-         nombre1: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([a-z])*$')]),
+         apellido1: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('^([A-Za-z])*$')]),
+         nombre1: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Za-z])*$')]),
          // tslint:disable-next-line:max-line-length
          correo_institucional: new FormControl('', [Validators.required]),
          estado: new FormControl('', [Validators.required]),

@@ -25,6 +25,7 @@ export class Estudiante {
   canton_nacimiento: Ubicacion;
   pais_residencia: Ubicacion;
   estado: string;
+  estado_evaluacion:boolean;
 
   constructor() {
     this.tipo_identificacion = '';
@@ -44,6 +45,7 @@ export class Estudiante {
     this.genero = '';
     this.fecha_nacimiento = new Date();
     this.fecha_inicio_carrera = new Date();
+    this.estado_evaluacion= false;
 
   }
 }
