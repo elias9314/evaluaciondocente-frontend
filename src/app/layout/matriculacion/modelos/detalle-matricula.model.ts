@@ -13,7 +13,7 @@ export class DetalleMatricula {
     jornada_asignatura: string;
     numero_matricula: string;
     estado: string;
-    // estado_evaluacion: any;
+    estado_evaluacion: boolean;
 
     constructor() {
         this.matricula = new Matricula();

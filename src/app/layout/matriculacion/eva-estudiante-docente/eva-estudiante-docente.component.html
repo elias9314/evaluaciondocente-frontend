@@ -16,11 +16,11 @@
                 <p>
                     {{asignaturaMatricula.apellido1 + ' ' + asignaturaMatricula.nombre1}}
                 </p>
-                <button class="btn btn-primary" *ngIf="asignaturaMatricula.estado_evaluacion!='EVALUADO'" (click)="mostrarPreguntas(asignaturaMatricula.idAsignatura,asignaturaMatricula.user_id)">
+                <button class="btn btn-primary" *ngIf="asignaturaMatricula.estado_evaluacion!=true" (click)="mostrarPreguntas(asignaturaMatricula.idAsignatura,asignaturaMatricula.user_id)">
 
                     EVALUAR
                 </button>
-                <button disabled class="btn" *ngIf="asignaturaMatricula.estado_evaluacion=='EVALUADO'">
+                <button disabled class="btn" *ngIf="asignaturaMatricula.estado_evaluacion==true">
                     EVALUADO
                 </button>
             </div>

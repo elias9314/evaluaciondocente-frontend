@@ -302,6 +302,19 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                                 response3 => {
                                     console.log('PromedioAsignaturas', response3);
                                     this.spinner.hide();
+                                    parameters= '?periodo_lectivo_id='+ periodo_lectivo_id+'&id='+ docente_asignatura_id;
+                                    this.service.get('evaluado'+parameters).subscribe(
+                                        response4 => {
+                                            this.getEstudiante();
+                                            console.log('Estado_Evaluado', response4[0]['estado_evaluacion']);
+                                            this.spinner.hide();
+                                            
+                                        },
+                                        error=>{
+                                            this.spinner.hide();
+                                            console.log('error');
+                                        }
+                                    )
                                     
                                 },
                                 error=>{
@@ -336,5 +349,23 @@ export class EvaEstudianteDocenteComponent implements OnInit {
                //  'Something went wrong!'
            );
         }
+    }
+    evaluate(){
+        const docente_asignatura_id = this.docenteAsignaturas[0].id;
+        const periodo_lectivo_id= this.docenteAsignaturas[0].periodo_lectivo_id;
+        let parameters= '?periodo_lectivo_id='+ periodo_lectivo_id+'&id='+ docente_asignatura_id;
+                                    this.service.get('evaluado'+parameters).subscribe(
+                                        response4 => {
+                                            console.log('Evaluado', response4);
+                                            console.log('Estado_Evaluado', response4[0]['estado_evaluacion']);
+                                            this.spinner.hide();
+                                            
+                                        },
+                                        error=>{
+                                            this.spinner.hide();
+                                            console.log('error');
+                                        }
+                                    );
+                            
     }
 }
