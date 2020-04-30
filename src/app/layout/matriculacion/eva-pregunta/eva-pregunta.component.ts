@@ -32,6 +32,7 @@ export class EvaPreguntaComponent implements OnInit {
     respuesta: any = [];
     validacion: any;
     validacion2: any;
+    validacionUpdate: any;
     constructor(
         private spinner: NgxSpinnerService,
         private service: ServiceService,
@@ -129,22 +130,39 @@ export class EvaPreguntaComponent implements OnInit {
     ////////////// método para actualizar una pregunta de evaluación docente //////////////////
 
     actualizarEvaPregunta(evapregunta: EvaPregunta) {
-        this.spinner.show();
-        console.log({ eva_pregunta: evapregunta });
-
-        this.service
-            .update('evaluacion_preguntas', { eva_pregunta: evapregunta })
-            .subscribe(
-                (response) => {
-                    this.spinner.hide();
-                    console.log(response);
-                    this.getEvaPregunta();
-                },
-                (Error) => {
-                    this.spinner.hide();
-                    console.log('error');
-                }
+        for (let i = 0; i < this.preguntas.length; i++) {
+            if (this.preguntas[i].orden === this.preguntaSeleccionada.orden) {
+                this.validacionUpdate = false;
+            } else {
+                    this.validacionUpdate = true;
+            }
+        }
+        if (this.validacionUpdate) {
+            console.log('actualizado exelente');
+            this.spinner.show();
+            console.log({ eva_pregunta: evapregunta });
+            this.service
+                .update('evaluacion_preguntas', { eva_pregunta: evapregunta })
+                .subscribe(
+                    (response) => {
+                        this.spinner.hide();
+                        console.log(response);
+                        this.getEvaPregunta();
+                    },
+                    (Error) => {
+                        this.spinner.hide();
+                        console.log('error');
+                    }
+                );
+        } else {
+            Swal.fire(
+                'error al actualizar',
+                'El registro orden esta duplicado por favor intente con otro numero',
+                'error'
+                //  'Something went wrong!'
             );
+            console.log('error al actualizar el orden esta duplicado');
+        }
     }
     ///////////// método que permite actualizar o crear dependiendo de lo que eliga el cliente ////////////
 

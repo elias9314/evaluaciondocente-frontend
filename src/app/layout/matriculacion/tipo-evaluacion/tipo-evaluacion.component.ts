@@ -19,6 +19,7 @@ export class TipoEvaluacionComponent implements OnInit {
   FormBuilder: any;
   respuesta: any = [];
   validacion: any;
+  duplicado: any;
   constructor(private spinner: NgxSpinnerService, private service: ServiceService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -85,17 +86,35 @@ export class TipoEvaluacionComponent implements OnInit {
 
 //////////// método para editar un registro tipo de evaluación//////////////////////////////////
 actualizarTipoEvaluacion(eva: TipoEvaluacion) {
-   this.spinner.show();
-   this.service.update('tipo_evaluaciones', {'tipo_evaluacion': eva}).subscribe(
-   response => {
-      this.getTipoEvaluacion();
-      console.log(response);
-     },
-     error => {
-       this.spinner.hide();
-       console.log('error');
-     }
-   );
+    for (let i = 0; i < this.tipoevaluaciones.length; i++) {
+        // tslint:disable-next-line:triple-equals
+        if (this.tipoevaluaciones[i].evaluacion == this.tipoevaluacionSeleccionado.evaluacion) {
+            this.duplicado = false;
+        } else {
+                this.duplicado = true;
+        }
+    }
+    if (this.duplicado) {
+        console.log('Exito!!');
+        this.spinner.show();
+        this.service.update('tipo_evaluaciones', {'tipo_evaluacion': eva}).subscribe(
+        response => {
+           this.getTipoEvaluacion();
+           console.log(response);
+          },
+          error => {
+            this.spinner.hide();
+            console.log('error');
+          }
+        );
+    } else {
+        Swal.fire(
+            'error al guardar',
+            'el campo evaluacion esta duplicado',
+            'error'
+        );
+        console.log('error al guardar el campo evaluacion esta duplicado');
+    }
 }
 
 ////////////////// método que permite actualizar o crear dependiendo de lo que eliga el cliente ////////////
