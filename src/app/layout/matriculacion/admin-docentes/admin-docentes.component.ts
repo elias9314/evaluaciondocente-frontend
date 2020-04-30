@@ -285,10 +285,8 @@ getUsuario() {
 //      });
 //  }
 notas(idNota) {
-    localStorage.removeItem('idNota');
-    localStorage.setItem('idNota', idNota.toString());
     console.log(idNota);
-    this.http.get<any>(environment.API_URL + 'promedio?periodo_lectivo_id=4' + '&docente_id=' + idNota).subscribe(data => {
+    this.service.get('promedio?periodo_lectivo_id=4' + '&docente_id=' + idNota).subscribe(data => {
       console.log(idNota);
        this.nota = data;
        console.log(data);
@@ -307,7 +305,12 @@ PdfFinal(idNota: any) {
 generarPDF(data?) {
     console.log(data.promedio);
     if (data.promedio === 0) {
-        alert('Este profesor actualmente no esta calificado');
+        // alert('Este profesor actualmente no esta calificado');
+        swal.fire(
+          'Este docente',
+          'actualmente no esta calificado',
+          'error'
+        );
     } else {
         const lMargin = 20; // left margin in mm
 
@@ -350,11 +353,13 @@ generarPDF(data?) {
       doc.text ('NOMBRE:', 20, 70);
       doc.setFontStyle('normal');
       doc.setFontSize(13);
-     doc.text(data.docenteAsignatura[0].docente.apellido1 + ' ' + data.docenteAsignatura[0].docente.nombre1 , 45, 70);
+      doc.text(data.docenteAsignatura[0].docente.apellido1 + ' ' + data.docenteAsignatura[0].docente.nombre1 , 45, 70);
       ////////////////////////////
       doc.setFontStyle('bold');
       doc.setFontSize(13);
       doc.text ('PERIODO ACADÉMICO:', 20, 75);
+      doc.setFontStyle('normal');
+      doc.setFontSize(13);
       doc.text(data.docenteAsignatura[0].periodolectivo.nombre, 75, 75);
       doc.setFontStyle('normal');
       doc.setFontSize(13);
@@ -409,73 +414,75 @@ generarPDF(data?) {
     doc.rect(96, 158, 26, 10);
     doc.rect(50, 158, 125, 10);
 
-    // for (let i = 0; i < data.docenteasignatura.length; i++) {
-    //   if (data.docenteasignatura[i].nota_total === '0' || data.docenteasignatura[i].nota_total == null) {
-    //     doc.text('', 105, 165);
-    //   } else {
+
         doc.setFontSize(9);
         doc.text('EVALUACIÓN-ESTUDIANTIL', 52, 165);
         doc.setFontSize(11);
-        doc.text(data.promedio.toString(), 105, 165);
-        // doc.text(data.docenteasignatura[i].nota_total, 105, 165);
-    //   }
-    // }
+        doc.text(data.promedio.toString() + '/100', 105, 165);
 
     ////////////////////////////////
     doc.setFontStyle('bold');
     doc.setFontSize(12);
     doc.text ('EQUIVALENCIA', 130, 155);
-    doc.text(data.total30.toString(), 142, 165);
+    doc.text(data.total30.toString() + '/30', 142, 165);
 
-    // for (let i = 0; i < data.docenteAsignatura.length; i++) {
-    //     console.log(data.docenteAsignatura[i].porcentaje);
-    //     if (data.docenteAsignatura[i].porcentaje.length > 1) {
-    //         doc.text (data.docenteAsignatura[i].porcentaje, 142, 165);
-    //     } else {
-    //         doc.text(data.docenteAsignatura[i].porcentaje, 145, 165);
-    //     }
+    doc.setFontStyle('bold');
+    doc.setFontSize(11);
+    doc.text ('OBSERVACIONES Y RECOMENDACIONES', lMargin, 175);
 
-    // }
-    // for (let i = 0; i < data.docenteAsignatura.length; i++) {
-    //   if (data.docenteasignatura[i].porcentaje === '0') {
-    //    doc.text ('', 142, 165);
-    //   } else {
-    //     doc.text(data.docenteasignatura[i].porcentaje, 142, 165);
-    //   }
-    // }
-
-    // doc.text(data.docenteAsignatura[1].porcentaje, 128, 160);
+    doc.setFontStyle('bold');
+    doc.setFontSize(11);
+    doc.text ('FIRMA DEL DOCENTE', 85, 205);
+    doc.setFontStyle('normal');
+    doc.setFontSize(11);
+    doc.line(130, 221, 85, 221);
+    doc.text ('Msc. Iván Borja\nRector IST YAVIRAC', 85, 227);
+    doc.setFontStyle('bold');
+    doc.setFontSize(10);
+    doc.text ('Realizado por:', 55, 238);
+    doc.setFontStyle('normal');
+    doc.setFontSize(10);
+    doc.line(130, 243, 87, 243);
+    doc.text ('Mg. Diego Yánez', 55, 243);
+    doc.setFontStyle('normal');
+    doc.setFontSize(10);
+    doc.line(130, 253, 93, 253);
+    doc.text ('Ing. Pablo Maldonado', 55, 253);
+    doc.setFontStyle('normal');
+    doc.setFontSize(10);
+    doc.line(130, 263, 90, 263);
+    doc.text ('Ing. Cristhian Viteri', 55, 263);
     doc.save(data.docenteAsignatura[0].docente.nombre1 + '.pdf');
     }
 
  }
 
- generarpdf2() {
-     const id = document.getElementById('pdf');
-    const doc = new jsPDF({
-        orientacion: 'l',
-        unit: 'pt',
-        format: 'carta',
-        possition: 2
-    });
-    doc.setFontSize(22);
-    doc.setFontStyle('cursiva');
-    doc.text('Reportes', 180, 20);
-    doc.fromHTML(id, 200, 500);
-doc.save('todo los reportes.pdf');
- }
- pdf2Final() {
-   this.getResultados();
- }
- getResultados() {
-    this.http.get<any>(environment.API_URL + 'respuestas').subscribe(data => {
-        this.respuesta = data;
-        console.log(data);
-    //     setTimeout(() => {
-    //         this.generarpdf2(this.respuesta);
-    //        }, 200);
-    });
-}
+//  generarpdf2() {
+//      const id = document.getElementById('pdf');
+//     const doc = new jsPDF({
+//         orientacion: 'l',
+//         unit: 'pt',
+//         format: 'carta',
+//         possition: 2
+//     });
+//     doc.setFontSize(22);
+//     doc.setFontStyle('cursiva');
+//     doc.text('Reportes', 180, 20);
+//     doc.fromHTML(id, 200, 500);
+// doc.save('todo los reportes.pdf');
+//  }
+//  pdf2Final() {
+//    this.getResultados();
+//  }
+//  getResultados() {
+//     this.http.get<any>(environment.API_URL + 'respuestas').subscribe(data => {
+//         this.respuesta = data;
+//         console.log(data);
+//     //     setTimeout(() => {
+//     //         this.generarpdf2(this.respuesta);
+//     //        }, 200);
+//     });
+// }
 
 
 
