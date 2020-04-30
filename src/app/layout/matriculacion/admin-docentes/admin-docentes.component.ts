@@ -307,12 +307,14 @@ PdfFinal(idNota: any) {
 generarPDF(data?) {
     console.log(data.promedio);
     if (data.promedio === 0) {
+
         //alert('Este profesor actualmente no esta calificado');
         swal.fire(
           'Este docente',
           'actualmente no esta calificado',
           'error'
         );
+
     } else {
         const lMargin = 20; // left margin in mm
 
@@ -489,8 +491,8 @@ doc.save('todo los reportes.pdf');
         tipo_identificacion: new FormControl('', [Validators.required]),
          // tslint:disable-next-line:max-line-length
          identificacion: new FormControl ('', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]),
-         apellido1: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('^([a-z])*$')]),
-         nombre1: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([a-z])*$')]),
+         apellido1: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('^([A-Za-z])*$')]),
+         nombre1: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('^([A-Za-z])*$')]),
          // tslint:disable-next-line:max-line-length
          correo_institucional: new FormControl('', [Validators.required]),
          estado: new FormControl('', [Validators.required]),
