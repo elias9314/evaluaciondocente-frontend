@@ -1,3 +1,4 @@
+import { PreguntaRespuestaComponent } from './matriculacion/pregunta-respuesta/pregunta-respuesta.component';
 import { AdminResultadosComponent } from './matriculacion/admin-resultados/admin-resultados.component';
 import { AdminEstudianteComponent } from './matriculacion/admin-estudiante/admin-estudiante.component';
 import { AdminDocentesComponent } from './matriculacion/admin-docentes/admin-docentes.component';
@@ -84,7 +85,8 @@ const routes: Routes = [
             {path: 'admin-docentes', component: AdminDocentesComponent },
             {path: 'tipo-evaluacion', component: TipoEvaluacionComponent},
             {path: 'eva-pregunta', component: EvaPreguntaComponent},
-            {path: 'admin-evaluacion', component: AdminEvaluacionComponent}
+            {path: 'admin-evaluacion', component: AdminEvaluacionComponent},
+            {path: 'pregunta-respuesta', component: PreguntaRespuestaComponent}
 
         ]
     }

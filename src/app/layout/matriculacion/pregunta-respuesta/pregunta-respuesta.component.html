@@ -1,0 +1,36 @@
+<h1>EVALUACIÓN PREGUNTAS</h1><br>
+<form name="evaluacionpregunta" method="post" #formCtrl="ngForm">
+    <div class="form-group row">
+        <div class="col-lg-12">
+            <label for="orden">
+            <b class="text-danger">*</b>Orden
+        </label>
+            <input type="number" [(ngModel)]="preguntaSeleccionada.orden" name="orden" id="orden">
+            <label for="nombre">
+            <b class="text-danger">*</b> Elegir Preguntan
+        </label>
+            <td class="text-center">
+                <select name="pregunta" id="pregunta" [(ngModel)]="preguntaSeleccionada.eva_pregunta" class="form-control" required>
+                <option value="{{item.id}}" *ngFor="let item of resultados">{{item.nombre}}</option>
+            </select>
+            </td>
+            <!-- <div class="alert-danger" *ngIf="evaluacion.invalid &&(evaluacion.dirty || evaluacion.touched)">
+            <div class="container-error-mensage " *ngIf="evaluacion.errors.required"> Tipo de Evaluación es requerida
+            </div>
+        </div> -->
+        </div>
+    </div>
+    <label for="nombre">
+    <b class="text-danger">*</b> Elegir respuesta
+</label>
+    <td class="text-center">
+        <select name="respuesta" id="respuesta" [(ngModel)]="preguntaSeleccionada.eva_respuesta" class="form-control " required>
+        <!-- <option value="{{item.id}} " *ngFor="let item of respuestas ">{{item.nombre}}</option> -->
+        <option value="1 ">nunca</option>
+        <option value="2 ">Frecuente Mente</option>
+        <option value="3 ">a veces</option>
+        <option value="4 ">siempre</option>
+    </select>
+    </td>
+    <button (click)="crear() ">Guardar</button>
+</form>
