@@ -21,7 +21,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { DatosDocenteComponent } from './matriculacion/perfil-docente/datos-docente/datos-docente.component';
 
 import { AdminEvaluacionComponent } from './matriculacion/admin-evaluacion/admin-evaluacion.component';
-import { AdminRespuestasComponent } from './matriculacion/admin-respuestas/admin-respuestas.component';
+import { PreguntaRespuestaComponent } from './matriculacion/pregunta-respuesta/pregunta-respuesta.component';
 
 @NgModule({
     imports: [
@@ -44,7 +44,7 @@ import { AdminRespuestasComponent } from './matriculacion/admin-respuestas/admin
 
          AdminEvaluacionComponent,
 
-         AdminRespuestasComponent]
+         PreguntaRespuestaComponent]
 
 })
 export class LayoutModule {
