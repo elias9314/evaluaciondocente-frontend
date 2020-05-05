@@ -6,6 +6,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { EvaPregunta } from '../modelos/eva-pregunta.model';
+import { EvaRespuesta } from '../modelos/eva-respuesta.model';
+
 
 @Component({
   selector: 'app-pregunta-respuesta',
@@ -16,9 +19,11 @@ export class PreguntaRespuestaComponent implements OnInit {
     preguntas: Array<Respuestas>;
     preguntaSeleccionada: Respuestas;
     pregunta: Respuestas;
-    respuestas: any;
-    resultados: any;
+    // respuestas: any;
+    // resultados: any;
     tablas: any;
+    Preguntas: Array<EvaPregunta>;
+    Respuestas: Array<EvaRespuesta>;
   constructor(private spinner: NgxSpinnerService,
     private service: ServiceService,
     private modalService: NgbModal,
@@ -33,38 +38,17 @@ export class PreguntaRespuestaComponent implements OnInit {
       console.log(this.preguntas);
       console.log(this.preguntaSeleccionada);
   }
-//   getEvaPregunta() {
-//     this.spinner.show();
-//     this.service.get('evaluacion_preguntas').subscribe(
-//         (response) => {
-//             this.preguntas = response['preguntas'];
-//             console.log(response);
-//             this.spinner.hide();
-//             // this.preguntas.forEach((result) => {
-//             //     this.respuesta.push(result.orden);
-//             //     // console.log(this.respuesta);
-//             //     // tslint:disable-next-line:triple-equals
-//             //     this.validacion = result.orden;
-//             //     // console.log(this.respuesta);
-//             //     // console.log(this.validacion);
-//             // });
-//         },
-//         (Error) => {
-//             this.spinner.hide();
-//             console.log('error');
-//         }
-//     );
-// }
+
 getEvaPreguntas() {
-    this.http.get<any>(environment.API_URL + 'evaluacion_preguntas').subscribe(data => {
-        this.resultados = data['preguntas'];
-        console.log(this.resultados);
+    this.service.get('evaluacion_preguntas').subscribe(response => {
+        this.Preguntas = response['preguntas'];
+        console.log(this.Preguntas);
     });
 }
 getEvaRespuestas() {
-    this.http.get<any>(environment.API_URL + 'eva_respuestas').subscribe(response => {
-        this.respuestas = response;
-        console.log(this.respuestas);
+    this.service.get('eva_respuestas').subscribe(response => {
+        this.Respuestas = response['respuesta'];
+        console.log(this.Respuestas);
     });
 }
 
@@ -75,15 +59,6 @@ crear() {
     this.tablas = {'orden': this.preguntaSeleccionada.orden,
     'eva_pregunta': {'id': this.preguntaSeleccionada.eva_pregunta},
     'eva_respuesta': {'id': this.preguntaSeleccionada.eva_respuesta}};
-    // this.pregunta = {
-    //     orden: this.preguntaSeleccionada.orden,
-    //     eva_pregunta: this.preguntaSeleccionada.eva_pregunta,
-    //     eva_respuesta: this.preguntaSeleccionada.eva_respuesta
-    // };
-    // this.http.post(environment.API_URL + 'pregunta_respuesta', this.pregunta).subscribe(data => {
-    //     console.log(data);
-    //     console.log('guardado');
-    // });
     this.spinner.show();
             this.service
                 .post('pregunta_respuesta', {

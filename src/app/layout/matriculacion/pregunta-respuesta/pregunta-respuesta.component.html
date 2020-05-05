@@ -11,7 +11,7 @@
         </label>
             <td class="text-center">
                 <select name="pregunta" id="pregunta" [(ngModel)]="preguntaSeleccionada.eva_pregunta" class="form-control" required>
-                <option value="{{item.id}}" *ngFor="let item of resultados">{{item.nombre}}</option>
+                <option value="{{item.id}}" *ngFor="let item of Preguntas">{{item.nombre}}</option>
             </select>
             </td>
             <!-- <div class="alert-danger" *ngIf="evaluacion.invalid &&(evaluacion.dirty || evaluacion.touched)">
@@ -25,11 +25,11 @@
 </label>
     <td class="text-center">
         <select name="respuesta" id="respuesta" [(ngModel)]="preguntaSeleccionada.eva_respuesta" class="form-control " required>
-        <!-- <option value="{{item.id}} " *ngFor="let item of respuestas ">{{item.nombre}}</option> -->
-        <option value="1 ">nunca</option>
+         <option value="{{item.id}} " *ngFor="let item of Respuestas ">{{item.nombre}}</option> 
+        <!-- <option value="1 ">nunca</option>
         <option value="2 ">Frecuente Mente</option>
         <option value="3 ">a veces</option>
-        <option value="4 ">siempre</option>
+        <option value="4 ">siempre</option> -->
     </select>
     </td>
     <button (click)="crear() ">Guardar</button>
