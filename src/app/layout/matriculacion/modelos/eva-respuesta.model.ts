@@ -9,7 +9,7 @@ export class EvaRespuesta {
     orden: number;
     nombre: string;
     tipo: string;
-    valor: number;
+    valor: string;
     estado: string;
 
 

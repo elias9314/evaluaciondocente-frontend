@@ -12,7 +12,9 @@ import { EvaPreguntaComponent } from './matriculacion/eva-pregunta/eva-pregunta.
 import { DatosDocenteComponent} from './matriculacion/perfil-docente/datos-docente/datos-docente.component';
 
 import { AdminEvaluacionComponent } from './matriculacion/admin-evaluacion/admin-evaluacion.component';
-import { AdminRespuestasComponent } from './matriculacion/admin-respuestas/admin-respuestas.component';
+import { PreguntaRespuestaComponent } from './matriculacion/pregunta-respuesta/pregunta-respuesta.component';
+import { RespuestasComponent } from './matriculacion/respuestas/respuestas.component';
+
 
 const routes: Routes = [
     {
@@ -87,8 +89,8 @@ const routes: Routes = [
             {path: 'tipo-evaluacion', component: TipoEvaluacionComponent},
             {path: 'eva-pregunta', component: EvaPreguntaComponent},
             {path: 'admin-evaluacion', component: AdminEvaluacionComponent},
-            {path: 'admin-respuestas', component: AdminRespuestasComponent}
-
+            {path: 'pregunta-respuesta', component: PreguntaRespuestaComponent},
+            {path: 'respuestas', component: RespuestasComponent}
         ]
     }
 ];

@@ -1,0 +1,136 @@
+<h1>RESPUESTAS</h1><br>
+<div class="container">
+    <div>
+        <button type="button" class="btn btn-primary" (click)="agregarRespuesta(contentRespuesta,null)">AGREGAR</button>
+    </div><br>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">CÓDIGO</th>
+                <th scope="col">ORDEN</th>
+                <th scope="col">NOMBRE</th>
+                <th scope="col">VALOR</th>
+                <th scope="col">TIPO</th>
+                <th scope="col">ESTADO</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let eva of respuestas">
+              <td>{{eva.codigo}}</td>
+              <td>{{eva.orden}}</td>
+              <td>{{eva.nombre}}</td>
+                <td>{{eva.valor}}</td>
+                <td>{{eva.tipo}}</td>
+                <td>{{eva.estado}}</td>
+                <td>
+                    <button class="btn btn-warning ml-1 btn-sm text-white"  title="Actualizar" (click)="agregarRespuesta(contentRespuesta,eva)" title="Actualizar" *ngIf="eva.id != respuesta.id"><i class="fa fa-pencil" aria-hidden="true"></i>
+        </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Formulario para guardar y actualizar el tipo de respuestas -->
+<ng-template #contentRespuesta let-c="close" let-d="dismiss">
+  <div class="modal-header">
+      <div class="row">
+          <h3 class="col-12 text-center" name="titulo">Tipo de Evaluación</h3>
+      </div>
+  </div>
+  <div class="modal-body">
+      <form [formGroup] = "respuestaForm" name="respuesta" method="post" #formCtrl="ngForm">
+          <div class="form-group row">
+              <div class="col-lg-12">
+                  <label for="codigo">
+            <b class="text-danger">*</b> Código
+        </label>
+                  <input formControlName="codigo" id="codigo" name="codigo" type="text" [(ngModel)]="respuestaSeleccionada.codigo" class="text-uppercase form-control" required>
+                  <div class="alert-danger" *ngIf="codigo.invalid &&(codigo.dirty || codigo.touched)">
+                      <div class="container-error-mensage " *ngIf="codigo.invalid">
+                          Código incorrecto
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="form-group row">
+              <div class="col-lg-12">
+                  <label for="orden">
+            <b class="text-danger">*</b>Orden
+        </label>
+                  <input formControlName="orden" id="orden" name="orden" type="number" [(ngModel)]="respuestaSeleccionada.orden" class="text-uppercase form-control" required>
+                  <div class="alert-danger" *ngIf="orden.invalid &&(orden.dirty || orden.touched)">
+                      <div class="container-error-mensage " *ngIf="orden.invalid">
+                          Campo inválido
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="nombre">
+          <b class="text-danger">*</b> Respuesta
+      </label>
+                <input formControlName="nombre" id="nombre" name="nombre" type="text" [(ngModel)]="respuestaSeleccionada.nombre" class="text-uppercase form-control" required>
+                <div class="alert-danger" *ngIf="nombre.invalid &&(nombre.dirty || nombre.touched)">
+                    <div class="container-error-mensage " *ngIf="nombre.invalid">
+                        Campo inválido
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="valor">
+          <b class="text-danger">*</b>Valor
+      </label>
+                <input formControlName="valor" id="valor" name="valor" type="text" [(ngModel)]="respuestaSeleccionada.valor" class="text-uppercase form-control" required>
+                <div class="alert-danger" *ngIf="valor.invalid &&(valor.dirty || valor.touched)">
+                    <div class="container-error-mensage " *ngIf="valor.invalid">
+                        Campo inválido
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="tipo">
+          <b class="text-danger">*</b> Tipo Respuesta
+      </label>
+                <input formControlName="tipo" id="tipo" name="tipo" type="text" [(ngModel)]="respuestaSeleccionada.tipo" class="text-uppercase form-control" required>
+                <div class="alert-danger" *ngIf="tipo.invalid &&(tipo.dirty || tipo.touched)">
+                    <div class="container-error-mensage " *ngIf="tipo.invalid">
+                        Campo inválido
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          <div class="form-group row">
+              <div class="col-lg-12">
+                  <label for="estado">
+            <b class="text-danger">*</b> Estado
+        </label>
+                  <select formControlName="estado" class="text-uppercase form-control" required name="estado" id="estado" [(ngModel)]="respuestaSeleccionada.estado" [ngClass]=" {'bg-danger text-white': respuestaSeleccionada.estado=='INACTIVO'}" class="form-control-sm">
+        <option value="ACTIVO">ACTIVO</option>
+        <option value="INACTIVO">INACTIVO</option>
+    </select>
+                  <div class="alert-danger" *ngIf="estado.invalid &&(estado.dirty || estado.touched)">
+                      <div class="container-error-mensage " *ngIf="estado.errors.required"> estado es requerida
+                      </div>
+                  </div>
+              </div>
+              <br>
+              <div class="modal-footer">
+                  <h6 class="text-muted">
+                      <b class="text-danger">*</b>Todos los campos son requeridos
+                  </h6>
+                  <button type="button" class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid"><i class="fa fa-check" aria-hidden="true">&nbsp; Ok</i></button>
+                  <button type="button" class="btn btn-danger" (click)="c('close')"><i class="fa fa-times-circle" aria-hidden="true">&nbsp; Cerrar</i></button>
+              </div>
+          </div>
+      </form>
+  </div>
+</ng-template>

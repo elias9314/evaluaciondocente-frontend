@@ -22,6 +22,7 @@ import { DatosDocenteComponent } from './matriculacion/perfil-docente/datos-doce
 
 import { AdminEvaluacionComponent } from './matriculacion/admin-evaluacion/admin-evaluacion.component';
 import { PreguntaRespuestaComponent } from './matriculacion/pregunta-respuesta/pregunta-respuesta.component';
+import { RespuestasComponent } from './matriculacion/respuestas/respuestas.component';
 
 @NgModule({
     imports: [
@@ -44,7 +45,9 @@ import { PreguntaRespuestaComponent } from './matriculacion/pregunta-respuesta/p
 
          AdminEvaluacionComponent,
 
-         PreguntaRespuestaComponent]
+         PreguntaRespuestaComponent,
+
+         RespuestasComponent]
 
 })
 export class LayoutModule {

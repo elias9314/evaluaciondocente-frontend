@@ -70,6 +70,9 @@
         <a [routerLink]="['/pregunta-respuesta']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; Pregunta y respuesta Evaluación
         </a>
+        <a [routerLink]="['/respuestas']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role.rol=='8'">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; Respuestas
+        </a>
 
         <!--    <div class="nested-menu">-->
         <!--      <a class="list-group-item" (click)="addExpandClass('pages')">-->
